@@ -211,7 +211,7 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
   </div>
 
   <!-- Auth Step 1 -->
-  <div id="authStep1" class="card auth-card">
+  <div id="authStep1" class="card auth-card hidden">
     <div class="card-title">📮 邮箱登录</div>
     <p class="auth-desc">输入邮箱，我们会发送一封包含 8 位验证码的邮件。</p>
     <div class="auth-step-label"><span class="step-num">1</span> 输入邮箱</div>
@@ -454,11 +454,9 @@ function setupOtpInputs() {
   const inputs = document.querySelectorAll('.otp-input');
   inputs.forEach((input, i) => {
     input.value = ''; input.classList.remove('filled');
-    // 移除旧的事件监听器（通过克隆节点）
     const newInput = input.cloneNode(true);
     input.parentNode.replaceChild(newInput, input);
   });
-  // 重新获取并绑定事件
   const freshInputs = document.querySelectorAll('.otp-input');
   freshInputs.forEach((input, i) => {
     input.addEventListener('input', e => {
@@ -827,27 +825,41 @@ function renderArticleResults(data) {
 }
 
 // ============================================================
-// 初始化
+// 初始化（修复刷新重新登录问题）
 // ============================================================
 async function init() {
   setStatus("初始化...");
-  currentUser = null;
-  showStep(1);
-  setStatus("未登录");
 
-  // 检查现有 session（刷新页面不用重新登录）
+  // 初始全部隐藏，等待 session 检查完成再决定显示哪个界面
+  document.getElementById("authStep1").classList.add("hidden");
+  document.getElementById("authStep2").classList.add("hidden");
+  document.getElementById("appBox").classList.add("hidden");
+
+  // 先检查本地存储的 session
   const { data: { session } } = await client.auth.getSession();
   if (session?.user) {
     currentUser = session.user;
-    onLogin();
+    await onLogin();
+  } else {
+    showStep(1);
+    setStatus("未登录");
   }
 
+  // 监听后续的 auth 状态变化（token 刷新、退出、新登录等）
   client.auth.onAuthStateChange(async (_event, session) => {
-    currentUser = session?.user || null;
-    if (currentUser) {
-      onLogin();
-    } else {
-      showStep(1); phrases = []; updateDisplay(); setStatus("未登录");
+    const newUser = session?.user || null;
+
+    if (newUser && newUser.id !== currentUser?.id) {
+      // 新用户登录（或首次登录）
+      currentUser = newUser;
+      await onLogin();
+    } else if (!newUser && currentUser) {
+      // 用户已退出
+      currentUser = null;
+      phrases = [];
+      showStep(1);
+      updateDisplay();
+      setStatus("未登录");
     }
   });
 }
