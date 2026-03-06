@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#FAF8F5; --bg-deep:#F0EDE8; --sidebar:#1C1917; --sidebar-hover:#292524;
-  --sidebar-active:#C45D3E; --card:#FFFFFF; --text:#1C1917; --text-sec:#78716C;
-  --accent:#C45D3E; --accent-hover:#A94B30; --accent-light:rgba(196,93,62,0.07);
-  --accent-glow:rgba(196,93,62,0.12); --border:#E7E5E4; --border-lt:#F5F3F0;
-  --success:#16A34A; --success-bg:rgba(22,163,74,0.06); --danger:#DC2626;
-  --info:#2563EB; --warn:#F59E0B;
-  --display:'Fraunces',Georgia,serif; --body:'Outfit',system-ui,sans-serif;
-  --radius:14px; --radius-sm:10px;
-  --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 4px 16px rgba(0,0,0,0.06); --shadow-lg:0 8px 30px rgba(0,0,0,0.08);
+  --bg:#FAF8F5;--bg-deep:#F0EDE8;--sidebar:#1C1917;--sidebar-hover:#292524;
+  --sidebar-active:#C45D3E;--card:#FFFFFF;--text:#1C1917;--text-sec:#78716C;
+  --accent:#C45D3E;--accent-hover:#A94B30;--accent-light:rgba(196,93,62,0.07);
+  --accent-glow:rgba(196,93,62,0.12);--border:#E7E5E4;--border-lt:#F5F3F0;
+  --success:#16A34A;--success-bg:rgba(22,163,74,0.06);--danger:#DC2626;
+  --info:#2563EB;--warn:#F59E0B;
+  --display:'Fraunces',Georgia,serif;--body:'Outfit',system-ui,sans-serif;
+  --radius:14px;--radius-sm:10px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04);--shadow-md:0 4px 16px rgba(0,0,0,0.06);--shadow-lg:0 8px 30px rgba(0,0,0,0.08);
   --ease:0.2s cubic-bezier(0.4,0,0.2,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -24,7 +24,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:1
 .hidden{display:none!important}
 .app-layout{display:flex;min-height:100vh}
 
-/* ══════ SIDEBAR ══════ */
 .sidebar{width:230px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;padding:28px 0 20px}
 .sidebar-brand{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .sidebar-brand h1{font-family:var(--display);font-size:1.4rem;font-weight:700;letter-spacing:-0.02em}
@@ -41,13 +40,11 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:1
 .btn-logout{margin-top:10px;width:100%;padding:7px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:none;color:rgba(255,255,255,0.35);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--body);transition:all var(--ease)}
 .btn-logout:hover{color:#fff;border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.05)}
 
-/* ══════ MAIN ══════ */
 .main-content{flex:1;margin-left:230px;min-height:100vh}
 .page-wrap{max-width:760px;margin:0 auto;padding:32px 28px 100px}
 .page-title{font-family:var(--display);font-size:1.75rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
 .page-desc{color:var(--text-sec);font-size:13.5px;margin-bottom:24px}
 
-/* ══════ MOBILE ══════ */
 .mobile-head{display:none;position:sticky;top:0;z-index:90;background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px}
 .mobile-head-inner{display:flex;align-items:center;justify-content:space-between}
 .mobile-head h1{font-family:var(--display);font-size:1.15rem;font-weight:700}
@@ -57,7 +54,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:1
 .bnav .bi{font-size:20px}
 .bnav.active{color:var(--accent)}
 
-/* ══════ AUTH ══════ */
 .auth-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:var(--bg)}
 .auth-box{background:var(--card);border-radius:20px;padding:44px 38px;max-width:400px;width:100%;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
 .auth-box .ab-logo{font-family:var(--display);font-size:1.5rem;font-weight:700;margin-bottom:2px}
@@ -73,7 +69,6 @@ body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:1
 .link-btn{background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;font-family:var(--body);cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0;margin-top:12px}
 .countdown{font-size:12px;color:var(--text-sec);margin-top:8px}
 
-/* ══════ FORMS ══════ */
 input[type="text"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-size:14px;font-family:var(--body);color:var(--text);background:var(--bg);outline:none;transition:all var(--ease)}
 input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);background:#fff}
 input::placeholder,textarea::placeholder{color:#A8A29E}
@@ -83,7 +78,6 @@ select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%
 .input-row{display:flex;gap:10px}
 label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.04em}
 
-/* ══════ BUTTONS ══════ */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;font-family:var(--body);cursor:pointer;border:none;transition:all var(--ease);white-space:nowrap}
 .btn-p{background:var(--accent);color:#fff}
 .btn-p:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,93,62,0.25)}
@@ -99,12 +93,10 @@ label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;
 .btn-sm{padding:7px 14px;font-size:12.5px}
 .btn-xs{padding:4px 10px;font-size:11.5px;border-radius:7px}
 
-/* ══════ CARD ══════ */
 .card{background:var(--card);border-radius:var(--radius);padding:22px;border:1px solid var(--border);margin-bottom:14px;transition:box-shadow var(--ease)}
 .card:hover{box-shadow:var(--shadow-sm)}
 .card-title{font-family:var(--display);font-size:1.05rem;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 
-/* ══════ DASHBOARD ══════ */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .stat-card{background:var(--card);border-radius:14px;padding:18px;border:1px solid var(--border);text-align:center;transition:all var(--ease)}
 .stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
@@ -124,17 +116,11 @@ label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;
 .ring-info h3{font-family:var(--display);font-size:1.1rem;font-weight:600;margin-bottom:8px}
 .ring-info p{font-size:13px;color:var(--text-sec);line-height:1.6}
 
-.chart-bars{display:flex;align-items:flex-end;gap:8px;height:100px;padding:16px 0}
-.chart-bar{flex:1;border-radius:6px 6px 0 0;background:var(--accent-light);position:relative;min-width:20px;transition:all 0.6s ease}
-.chart-bar-inner{position:absolute;bottom:0;left:0;right:0;border-radius:6px 6px 0 0;background:var(--accent);transition:height 0.8s ease}
-.chart-bar-label{text-align:center;font-size:10px;color:var(--text-sec);margin-top:4px;font-weight:500}
-
 .quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
 .qa-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all var(--ease);font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--text)}
 .qa-btn:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--accent)}
 .qa-btn .qa-icon{font-size:28px}
 
-/* ══════ FLIP CARD ══════ */
 .flip-container{perspective:1000px;margin:20px auto;max-width:500px}
 .flip-card{width:100%;min-height:280px;position:relative;transition:transform 0.6s;transform-style:preserve-3d;cursor:pointer}
 .flip-card.flipped{transform:rotateY(180deg)}
@@ -159,7 +145,6 @@ label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;
 .flip-empty{text-align:center;padding:60px 0;color:var(--text-sec)}
 .flip-empty .fe-icon{font-size:48px;margin-bottom:12px}
 
-/* ══════ PHRASE LIST ══════ */
 .controls-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
 .search-wrap{flex:1;min-width:180px;position:relative}
 .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#A8A29E;pointer-events:none}
@@ -175,7 +160,6 @@ label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;
 .phrase .lb{font-weight:600;color:var(--text)}
 .phrase-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-lt)}
 
-/* ══════ ARTICLE ══════ */
 .ar-section{margin-bottom:10px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card)}
 .ar-sh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;transition:background var(--ease)}
 .ar-sh:hover{background:var(--bg)}
@@ -198,7 +182,6 @@ label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;
 .btn-add.added{background:var(--success);cursor:default}
 .ar-trans-box{background:var(--bg);padding:14px 16px;border-radius:12px;border:1px solid var(--border-lt);font-size:14px;line-height:1.8;color:#57534E;white-space:pre-wrap;max-height:280px;overflow-y:auto}
 
-/* ══════ SETTINGS ══════ */
 .platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:18px}
 .platform-card{padding:14px 8px;border:2px solid var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--bg)}
 .platform-card:hover{border-color:#D6D3D1;background:#fff}
@@ -207,37 +190,27 @@ label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;
 .platform-card .p-name{font-size:12.5px;font-weight:600}
 .platform-card .p-model{font-size:10.5px;color:var(--text-sec);margin-top:2px}
 
-/* ══════ TOAST ══════ */
 .toast{position:fixed;top:20px;right:20px;padding:12px 20px;border-radius:12px;color:#fff;font-size:13px;font-weight:600;z-index:9999;animation:slideIn 0.3s ease;box-shadow:var(--shadow-lg)}
 .toast-success{background:var(--success)}.toast-error{background:var(--danger)}.toast-info{background:var(--info)}
 @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-
 .loading-spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 input[type="file"]{font-family:var(--body);font-size:13px;color:var(--text-sec);padding:6px 0;border:none;background:none}
 input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--text);cursor:pointer;margin-right:10px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 
 @media(max-width:768px){
-  .sidebar{display:none}
-  .main-content{margin-left:0}
-  .page-wrap{padding:16px 14px 100px}
-  .mobile-head{display:block}
-  .bottom-nav{display:flex}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .quick-actions{grid-template-columns:repeat(3,1fr)}
-  .input-row{flex-direction:column}
-  .platform-grid{grid-template-columns:repeat(3,1fr)}
-  .progress-ring-wrap{flex-direction:column;text-align:center}
-  .flip-front h2{font-size:1.3rem}
+  .sidebar{display:none}.main-content{margin-left:0}.page-wrap{padding:16px 14px 100px}
+  .mobile-head{display:block}.bottom-nav{display:flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}.quick-actions{grid-template-columns:repeat(3,1fr)}
+  .input-row{flex-direction:column}.platform-grid{grid-template-columns:repeat(3,1fr)}
+  .progress-ring-wrap{flex-direction:column;text-align:center}.flip-front h2{font-size:1.3rem}
 }
 </style>
 </head>
 <body>
 <div class="app-layout">
-  <!-- SIDEBAR -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand"><h1>LinguaFlow</h1><span>英语复习助手</span></div>
     <div class="sidebar-nav">
@@ -255,12 +228,10 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   </nav>
 
   <div class="main-content">
-    <!-- Mobile Header -->
     <div class="mobile-head" id="mobileHead">
       <div class="mobile-head-inner"><h1>LinguaFlow</h1><div style="display:flex;align-items:center;gap:8px"><div class="m-avatar" id="mAvatar">U</div><button class="btn btn-g btn-xs" onclick="logout()">退出</button></div></div>
     </div>
 
-    <!-- AUTH 1 -->
     <div id="authStep1" class="auth-wrap hidden">
       <div class="auth-box"><div class="ab-logo">LinguaFlow</div><div class="ab-sub">英语复习助手</div>
         <p class="ab-desc">输入邮箱，发送 8 位验证码登录。</p>
@@ -269,7 +240,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         <button id="sendOtpBtn" class="btn btn-p btn-full" onclick="sendOtp()">发送验证码</button>
       </div>
     </div>
-    <!-- AUTH 2 -->
+
     <div id="authStep2" class="auth-wrap hidden">
       <div class="auth-box"><div class="ab-logo">🔐</div>
         <p class="ab-desc">验证码已发送至</p><div class="email-tag" id="otpEmailDisplay"></div>
@@ -281,39 +252,29 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       </div>
     </div>
 
-    <!-- APP -->
     <div id="appBox" class="hidden"><div class="page-wrap">
-
-      <!-- TAB: Dashboard -->
+      <!-- Dashboard -->
       <div id="tab-dash">
-        <div class="page-title">学习仪表盘</div>
-        <div class="page-desc">你的英语学习概览。</div>
+        <div class="page-title">学习仪表盘</div><div class="page-desc">你的英语学习概览。</div>
         <div class="stats-grid" id="statsGrid"></div>
         <div class="progress-ring-wrap" id="progressRing"></div>
-        <div class="card">
-          <div class="card-title">📊 分类掌握度</div>
-          <div id="chartArea"></div>
-        </div>
+        <div class="card"><div class="card-title">📊 分类掌握度</div><div id="chartArea"></div></div>
         <div class="quick-actions">
           <button class="qa-btn" onclick="switchTab('flip')"><span class="qa-icon">🃏</span>翻卡复习</button>
           <button class="qa-btn" onclick="switchTab('article')"><span class="qa-icon">📖</span>文章分析</button>
           <button class="qa-btn" onclick="switchTab('add')"><span class="qa-icon">✏️</span>手动添加</button>
         </div>
       </div>
-
-      <!-- TAB: Flip Review -->
+      <!-- Flip -->
       <div id="tab-flip" class="hidden">
-        <div class="page-title">翻卡复习</div>
-        <div class="page-desc">点击卡片翻转，标记你的掌握情况。</div>
+        <div class="page-title">翻卡复习</div><div class="page-desc">点击卡片翻转，标记你的掌握情况。</div>
         <div class="flip-progress" id="flipProgress"></div>
         <div class="flip-container"><div class="flip-card" id="flipCard" onclick="flipCardToggle()"><div class="flip-front" id="flipFront"></div><div class="flip-back" id="flipBack"></div></div></div>
         <div class="flip-actions" id="flipActions"></div>
       </div>
-
-      <!-- TAB: List -->
+      <!-- List -->
       <div id="tab-list" class="hidden">
-        <div class="page-title">卡片列表</div>
-        <div class="page-desc">管理你所有的短语和语法卡片。</div>
+        <div class="page-title">卡片列表</div><div class="page-desc">管理你所有的短语和语法卡片。</div>
         <div class="controls-bar">
           <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchInput" placeholder="搜索..." oninput="updateDisplay()"></div>
           <select id="categorySelect" onchange="updateDisplay()"><option value="全部">全部</option><option value="短语">短语</option><option value="语法">语法</option></select>
@@ -323,11 +284,9 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         <div id="phraseCount" style="font-size:12px;color:var(--text-sec);margin-bottom:10px"></div>
         <div id="results"></div>
       </div>
-
-      <!-- TAB: Add -->
+      <!-- Add -->
       <div id="tab-add" class="hidden">
-        <div class="page-title">手动添加</div>
-        <div class="page-desc">添加你遇到的短语或语法知识点。</div>
+        <div class="page-title">手动添加</div><div class="page-desc">添加你遇到的短语或语法知识点。</div>
         <div class="card"><div class="input-group">
           <select id="newType"><option value="短语">短语</option><option value="语法">语法</option></select>
           <div class="input-row"><input type="text" id="newEnglish" placeholder="英文短语 / 语法"><input type="text" id="newChinese" placeholder="中文释义"></div>
@@ -335,11 +294,9 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
           <div><button class="btn btn-p" onclick="addPhrase()">添加到复习</button></div>
         </div></div>
       </div>
-
-      <!-- TAB: Article -->
+      <!-- Article -->
       <div id="tab-article" class="hidden">
-        <div class="page-title">文章分析</div>
-        <div class="page-desc">粘贴英文文章或上传 PDF，AI 自动翻译并提取短语、语法。</div>
+        <div class="page-title">文章分析</div><div class="page-desc">粘贴英文文章或上传 PDF，AI 自动翻译并提取短语、语法。</div>
         <div class="card"><div class="input-group">
           <textarea id="articleInput" rows="5" placeholder="粘贴英文文章到这里..."></textarea>
           <input type="file" id="pdfInput" accept="application/pdf"/>
@@ -347,11 +304,9 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         </div></div>
         <div id="articleResults"></div>
       </div>
-
-      <!-- TAB: Settings -->
+      <!-- Settings -->
       <div id="tab-settings" class="hidden">
-        <div class="page-title">AI 设置</div>
-        <div class="page-desc">选择大模型平台并配置 API Key。</div>
+        <div class="page-title">AI 设置</div><div class="page-desc">选择大模型平台并配置 API Key。</div>
         <div class="card"><div class="card-title">选择平台</div>
           <div class="platform-grid">
             <div class="platform-card" data-platform="deepseek" onclick="selectPlatform('deepseek')"><div class="p-icon">🔮</div><div class="p-name">DeepSeek</div><div class="p-model">deepseek-chat</div></div>
@@ -376,12 +331,10 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
           • Gemini → <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com</a></p>
         </div>
       </div>
-
     </div></div>
   </div>
 </div>
 
-<!-- Bottom Nav -->
 <div class="bottom-nav" id="bottomNav">
   <button class="bnav active" onclick="switchTab('dash')" data-tab="dash"><span class="bi">📊</span>仪表盘</button>
   <button class="bnav" onclick="switchTab('flip')" data-tab="flip"><span class="bi">🃏</span>翻卡</button>
@@ -390,6 +343,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav" onclick="switchTab('settings')" data-tab="settings"><span class="bi">⚙️</span>设置</button>
 </div>
 
+<!-- PDF.js 库 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
 <script>
@@ -415,7 +369,7 @@ function switchTab(tab){
   if(tab==='flip')initFlipReview();
 }
 
-// ══════ OTP ══════
+// ═══ OTP ═══
 function setupOtpInputs(){const inputs=document.querySelectorAll('.otp-input');inputs.forEach(i=>{i.value='';i.classList.remove('filled');const n=i.cloneNode(true);i.parentNode.replaceChild(n,i)});const f=document.querySelectorAll('.otp-input');f.forEach((inp,i)=>{inp.addEventListener('input',e=>{const v=e.target.value.replace(/\D/g,'');e.target.value=v;v?(e.target.classList.add('filled'),i<f.length-1&&f[i+1].focus()):e.target.classList.remove('filled');checkOtp()});inp.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!e.target.value&&i>0){f[i-1].focus();f[i-1].value='';f[i-1].classList.remove('filled');checkOtp()}if(e.key==='Enter'&&getOtp().length===8)verifyOtp()});inp.addEventListener('paste',e=>{e.preventDefault();const p=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);if(p.length===8){f.forEach((x,j)=>{x.value=p[j];x.classList.add('filled')});f[7].focus();checkOtp()}})})}
 function getOtp(){return Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value).join('')}
 function checkOtp(){document.getElementById("verifyBtn").disabled=getOtp().length!==8}
@@ -426,127 +380,113 @@ async function verifyOtp(){const code=getOtp();if(code.length!==8)return;documen
 function backToEmail(){clearInterval(countdownTimer);showStep(1)}
 async function logout(){await client.auth.signOut();currentUser=null;phrases=[];showStep(1);updateDisplay()}
 
-// ══════ DATA ══════
+// ═══ DATA ═══
 async function loadData(){try{const{data,error}=await client.from('phrases').select('*').order('created_at',{ascending:false});if(error)throw error;phrases=data||[];updateDisplay()}catch(e){console.error('loadData:',e)}}
 
-// ══════ DASHBOARD ══════
+// ═══ DASHBOARD ═══
 function renderDashboard(){
   const total=phrases.length,mastered=phrases.filter(p=>p.mastered).length,unmastered=total-mastered;
   const phr=phrases.filter(p=>p.type==='短语'),gram=phrases.filter(p=>p.type==='语法');
   const pct=total?Math.round(mastered/total*100):0;
-
   document.getElementById('statsGrid').innerHTML=`
     <div class="stat-card accent"><div class="stat-num">${total}</div><div class="stat-label">总卡片数</div></div>
     <div class="stat-card green"><div class="stat-num">${mastered}</div><div class="stat-label">已掌握</div></div>
     <div class="stat-card warm"><div class="stat-num">${unmastered}</div><div class="stat-label">待复习</div></div>
     <div class="stat-card blue"><div class="stat-num">${pct}%</div><div class="stat-label">掌握率</div></div>`;
-
   const circ=2*Math.PI*45;const offset=circ-(pct/100)*circ;
   document.getElementById('progressRing').innerHTML=`
-    <svg class="ring-svg" viewBox="0 0 100 100">
-      <circle class="ring-bg" cx="50" cy="50" r="45"/>
-      <circle class="ring-fg" cx="50" cy="50" r="45" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/>
-      <text class="ring-text" x="50" y="48" text-anchor="middle">${pct}%</text>
-      <text class="ring-sub" x="50" y="62" text-anchor="middle">掌握率</text>
-    </svg>
-    <div class="ring-info"><h3>学习进度</h3><p>你已掌握 <strong>${mastered}</strong> 张卡片，还有 <strong>${unmastered}</strong> 张待复习。${unmastered>0?'点击「翻卡复习」开始今天的学习吧！':'太棒了，你已经掌握了全部内容！'}</p></div>`;
-
+    <svg class="ring-svg" viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="45"/><circle class="ring-fg" cx="50" cy="50" r="45" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/><text class="ring-text" x="50" y="48" text-anchor="middle">${pct}%</text><text class="ring-sub" x="50" y="62" text-anchor="middle">掌握率</text></svg>
+    <div class="ring-info"><h3>学习进度</h3><p>已掌握 <strong>${mastered}</strong> 张，待复习 <strong>${unmastered}</strong> 张。${unmastered>0?'去翻卡复习吧！':'全部掌握了！'}</p></div>`;
   const phrM=phr.filter(p=>p.mastered).length,gramM=gram.filter(p=>p.mastered).length;
-  const phrPct=phr.length?Math.round(phrM/phr.length*100):0;
-  const gramPct=gram.length?Math.round(gramM/gram.length*100):0;
-  document.getElementById('chartArea').innerHTML=`
-    <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
-      <div style="flex:1;min-width:150px">
-        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>短语 (${phr.length})</span><span style="color:var(--success)">${phrPct}%</span></div>
-        <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:${phrPct}%;background:var(--accent);border-radius:99px;transition:width 0.8s ease"></div></div>
-      </div>
-      <div style="flex:1;min-width:150px">
-        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>语法 (${gram.length})</span><span style="color:var(--success)">${gramPct}%</span></div>
-        <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:${gramPct}%;background:var(--info);border-radius:99px;transition:width 0.8s ease"></div></div>
-      </div>
-    </div>`;
+  const phrPct=phr.length?Math.round(phrM/phr.length*100):0,gramPct=gram.length?Math.round(gramM/gram.length*100):0;
+  document.getElementById('chartArea').innerHTML=`<div style="display:flex;gap:20px;flex-wrap:wrap"><div style="flex:1;min-width:150px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>短语 (${phr.length})</span><span style="color:var(--success)">${phrPct}%</span></div><div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:${phrPct}%;background:var(--accent);border-radius:99px;transition:width 0.8s ease"></div></div></div><div style="flex:1;min-width:150px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>语法 (${gram.length})</span><span style="color:var(--success)">${gramPct}%</span></div><div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:${gramPct}%;background:var(--info);border-radius:99px;transition:width 0.8s ease"></div></div></div></div>`;
 }
 
-// ══════ FLIP CARD REVIEW ══════
+// ═══ FLIP CARD ═══
 function initFlipReview(){
   flipQueue=phrases.filter(p=>!p.mastered);flipIdx=0;
-  if(!flipQueue.length){
-    document.getElementById('flipProgress').innerHTML='';
-    document.getElementById('flipCard').style.display='none';
-    document.getElementById('flipActions').innerHTML='<div class="flip-empty"><div class="fe-icon">🎉</div><p>所有卡片已掌握！</p><button class="btn btn-p btn-sm" onclick="switchTab(\'article\')" style="margin-top:12px">去分析文章获取新内容</button></div>';
-    return;
-  }
-  document.getElementById('flipCard').style.display='';
-  showFlipCard();
+  if(!flipQueue.length){document.getElementById('flipProgress').innerHTML='';document.getElementById('flipCard').style.display='none';document.getElementById('flipActions').innerHTML='<div class="flip-empty"><div class="fe-icon">🎉</div><p>所有卡片已掌握！</p><button class="btn btn-p btn-sm" onclick="switchTab(\'article\')" style="margin-top:12px">去分析文章获取新内容</button></div>';return}
+  document.getElementById('flipCard').style.display='';showFlipCard();
 }
 function showFlipCard(){
-  if(flipIdx>=flipQueue.length){
-    document.getElementById('flipCard').style.display='none';
-    document.getElementById('flipActions').innerHTML='<div class="flip-empty"><div class="fe-icon">✅</div><p>本轮复习完成！</p><button class="btn btn-p btn-sm" onclick="initFlipReview()" style="margin-top:12px">再来一轮</button></div>';
-    document.getElementById('flipProgress').innerHTML='';
-    return;
-  }
+  if(flipIdx>=flipQueue.length){document.getElementById('flipCard').style.display='none';document.getElementById('flipActions').innerHTML='<div class="flip-empty"><div class="fe-icon">✅</div><p>本轮复习完成！</p><button class="btn btn-p btn-sm" onclick="initFlipReview()" style="margin-top:12px">再来一轮</button></div>';document.getElementById('flipProgress').innerHTML='';return}
   const p=flipQueue[flipIdx],tot=flipQueue.length,pct=Math.round(flipIdx/tot*100);
   document.getElementById('flipCard').classList.remove('flipped');
   document.getElementById('flipFront').innerHTML=`<div style="font-size:12px;color:var(--text-sec);margin-bottom:8px">${p.type}</div><h2>${escHtml(p.english)}</h2><div class="flip-hint">点击卡片查看答案 →</div>`;
   document.getElementById('flipBack').innerHTML=`<h3>${escHtml(p.chinese)}</h3>${p.example?`<p><span class="fb-label">例句：</span>${escHtml(p.example)}</p>`:''}${p.explanation?`<p><span class="fb-label">解释：</span>${escHtml(p.explanation)}</p>`:''}`;
-  document.getElementById('flipProgress').innerHTML=`<span>${flipIdx+1} / ${tot}</span><div class="flip-progress-bar"><div class="flip-progress-fill" style="width:${pct}%"></div></div><span>${pct}%</span>`;
-  document.getElementById('flipActions').innerHTML=`
-    <button class="flip-btn dunno" onclick="flipNext(false)">😕 不认识</button>
-    <button class="flip-btn skip" onclick="flipNext(null)">⏭ 跳过</button>
-    <button class="flip-btn know" onclick="flipNext(true)">😊 认识</button>`;
+  document.getElementById('flipProgress').innerHTML=`<span>${flipIdx+1}/${tot}</span><div class="flip-progress-bar"><div class="flip-progress-fill" style="width:${pct}%"></div></div><span>${pct}%</span>`;
+  document.getElementById('flipActions').innerHTML=`<button class="flip-btn dunno" onclick="flipNext(false)">😕 不认识</button><button class="flip-btn skip" onclick="flipNext(null)">⏭ 跳过</button><button class="flip-btn know" onclick="flipNext(true)">😊 认识</button>`;
 }
 function flipCardToggle(){document.getElementById('flipCard').classList.toggle('flipped')}
-async function flipNext(know){
-  if(know===true){
-    const p=flipQueue[flipIdx];
-    try{await client.from('phrases').update({mastered:true}).eq('id',p.id);const x=phrases.find(q=>q.id===p.id);if(x)x.mastered=true}catch(e){}
-  }
-  flipIdx++;showFlipCard();
-}
+async function flipNext(know){if(know===true){const p=flipQueue[flipIdx];try{await client.from('phrases').update({mastered:true}).eq('id',p.id);const x=phrases.find(q=>q.id===p.id);if(x)x.mastered=true}catch(e){}}flipIdx++;showFlipCard()}
 
-// ══════ PHRASE LIST ══════
+// ═══ PHRASE LIST ═══
 function updateDisplay(){
-  const search=(document.getElementById('searchInput')?.value||'').toLowerCase();
-  const cat=document.getElementById('categorySelect')?.value||'全部';
-  const c=document.getElementById('results'),cnt=document.getElementById('phraseCount');
-  if(!c)return;
+  const search=(document.getElementById('searchInput')?.value||'').toLowerCase(),cat=document.getElementById('categorySelect')?.value||'全部';
+  const c=document.getElementById('results'),cnt=document.getElementById('phraseCount');if(!c)return;
   const f=phrases.filter(p=>{if(cat!=='全部'&&p.type!==cat)return false;if(search&&!(p.english||'').toLowerCase().includes(search)&&!(p.chinese||'').toLowerCase().includes(search))return false;return true});
   if(cnt)cnt.textContent=`共 ${f.length} 条`;
   if(!f.length){c.innerHTML='<div style="text-align:center;color:var(--text-sec);padding:50px 0"><div style="font-size:40px;margin-bottom:10px">📭</div><p>暂无数据</p></div>';return}
   c.innerHTML=f.map(p=>`<div class="phrase ${p.mastered?'mastered':''}" id="p-${p.id}"><div class="phrase-header"><h3>${escHtml(p.english)}</h3><span class="badge">${p.type}</span></div><p><span class="lb">释义：</span>${escHtml(p.chinese)}</p>${p.example?`<p><span class="lb">例句：</span>${escHtml(p.example)}</p>`:''}${p.explanation?`<p><span class="lb">解释：</span>${escHtml(p.explanation)}</p>`:''}<div class="phrase-actions"><button class="btn btn-sm ${p.mastered?'btn-g':'btn-s'}" onclick="toggleMastered('${p.id}',${!p.mastered})">${p.mastered?'取消掌握':'✓ 已掌握'}</button><button class="btn btn-g btn-sm" onclick="speakText('${escAttr(p.english)}')">🔊</button><button class="btn btn-d" onclick="deletePhrase('${p.id}')">删除</button></div></div>`).join('')}
-
 async function toggleMastered(id,val){try{await client.from('phrases').update({mastered:val}).eq('id',id);const p=phrases.find(x=>x.id===id);if(p)p.mastered=val;updateDisplay();toast(val?'已掌握':'已取消','success')}catch(e){toast('失败','error')}}
 async function deletePhrase(id){if(!confirm('确定删除？'))return;try{await client.from('phrases').delete().eq('id',id);phrases=phrases.filter(x=>x.id!==id);updateDisplay();toast('已删除','info')}catch(e){toast('失败','error')}}
 function speakText(t){const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u)}
 function randomPhrase(){const f=phrases.filter(p=>!p.mastered);if(!f.length)return toast('全部已掌握！','info');const p=f[Math.floor(Math.random()*f.length)];document.getElementById('searchInput').value=p.english;updateDisplay();setTimeout(()=>document.getElementById('p-'+p.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100)}
 async function clearMastered(){if(!confirm('清除所有标记？'))return;try{await client.from('phrases').update({mastered:false}).eq('user_id',currentUser.id).eq('mastered',true);phrases.forEach(p=>p.mastered=false);updateDisplay();toast('已清除','success')}catch(e){toast('失败','error')}}
 
-// ══════ ADD ══════
+// ═══ ADD ═══
 async function addPhrase(){const type=document.getElementById('newType').value,eng=document.getElementById('newEnglish').value.trim(),chn=document.getElementById('newChinese').value.trim(),ex=document.getElementById('newExample').value.trim();if(!eng)return toast('请输入英文','error');try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type,english:eng,chinese:chn,example:ex,mastered:false}]);if(error)throw error;document.getElementById('newEnglish').value='';document.getElementById('newChinese').value='';document.getElementById('newExample').value='';toast('添加成功！','success');await loadData();switchTab('list')}catch(e){toast('失败: '+e.message,'error')}}
 
-// ══════ ARTICLE ADD ITEMS ══════
-async function addItemToReview(idx){const item=lastArticleItems[idx];if(!item||!currentUser)return;try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type:item.item_type==='难句'?'语法':item.item_type,english:item.english||'',chinese:item.chinese||'',example:item.example||'',explanation:item.explanation||'',source_sentence:item.source_sentence||'',mastered:false}]);if(error)throw error;const b=document.getElementById('ab-'+idx);if(b){b.classList.add('added');b.textContent='已添加';b.disabled=true}const c=document.getElementById('ai-'+idx);if(c)c.classList.add('added');toast('已添加','success');await loadData()}catch(e){toast('失败','error')}}
-async function addAllOfType(t){const items=lastArticleItems.filter(x=>x.item_type===t);if(!items.length)return;try{const{error}=await client.from('phrases').insert(items.map(i=>({user_id:currentUser.id,type:i.item_type==='难句'?'语法':i.item_type,english:i.english||'',chinese:i.chinese||'',example:i.example||'',explanation:i.explanation||'',source_sentence:i.source_sentence||'',mastered:false})));if(error)throw error;lastArticleItems.forEach((i,idx)=>{if(i.item_type===t){const b=document.getElementById('ab-'+idx);if(b){b.classList.add('added');b.textContent='已添加';b.disabled=true}const c=document.getElementById('ai-'+idx);if(c)c.classList.add('added')}});toast(`已添加 ${items.length} 条`,'success');await loadData()}catch(e){toast('失败','error')}}
-async function addAllItems(){if(!lastArticleItems.length)return;try{const{error}=await client.from('phrases').insert(lastArticleItems.map(i=>({user_id:currentUser.id,type:i.item_type==='难句'?'语法':i.item_type,english:i.english||'',chinese:i.chinese||'',example:i.example||'',explanation:i.explanation||'',source_sentence:i.source_sentence||'',mastered:false})));if(error)throw error;document.querySelectorAll('.btn-add').forEach(b=>{b.classList.add('added');b.textContent='已添加';b.disabled=true});document.querySelectorAll('.ar-item').forEach(c=>c.classList.add('added'));toast(`已全部添加`,'success');await loadData()}catch(e){toast('失败','error')}}
+// ═══ ARTICLE ADD ═══
+async function addItemToReview(idx){const item=lastArticleItems[idx];if(!item||!currentUser)return;try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type:item.item_type==='难句'?'语法':item.item_type,english:item.english||'',chinese:item.chinese||'',example:item.example||'',explanation:item.explanation||'',source_sentence:item.source_sentence||'',mastered:false}]);if(error)throw error;const b=document.getElementById('ab-'+idx);if(b){b.classList.add('added');b.textContent='已添加';b.disabled=true}const card=document.getElementById('ai-'+idx);if(card)card.classList.add('added');toast('已添加','success');await loadData()}catch(e){toast('失败','error')}}
+async function addAllOfType(t){const items=lastArticleItems.filter(x=>x.item_type===t);if(!items.length)return;try{const{error}=await client.from('phrases').insert(items.map(i=>({user_id:currentUser.id,type:i.item_type==='难句'?'语法':i.item_type,english:i.english||'',chinese:i.chinese||'',example:i.example||'',explanation:i.explanation||'',source_sentence:i.source_sentence||'',mastered:false})));if(error)throw error;lastArticleItems.forEach((i,idx)=>{if(i.item_type===t){const b=document.getElementById('ab-'+idx);if(b){b.classList.add('added');b.textContent='已添加';b.disabled=true}const card=document.getElementById('ai-'+idx);if(card)card.classList.add('added')}});toast(`已添加 ${items.length} 条`,'success');await loadData()}catch(e){toast('失败','error')}}
+async function addAllItems(){if(!lastArticleItems.length)return;try{const{error}=await client.from('phrases').insert(lastArticleItems.map(i=>({user_id:currentUser.id,type:i.item_type==='难句'?'语法':i.item_type,english:i.english||'',chinese:i.chinese||'',example:i.example||'',explanation:i.explanation||'',source_sentence:i.source_sentence||'',mastered:false})));if(error)throw error;document.querySelectorAll('.btn-add').forEach(b=>{b.classList.add('added');b.textContent='已添加';b.disabled=true});document.querySelectorAll('.ar-item').forEach(c=>c.classList.add('added'));toast('已全部添加','success');await loadData()}catch(e){toast('失败','error')}}
 
-// ══════ SETTINGS ══════
+// ═══ SETTINGS ═══
 function selectPlatform(p){selectedPlatform=p;document.querySelectorAll('.platform-card').forEach(e=>e.classList.toggle('selected',e.dataset.platform===p))}
 async function loadAISettings(){try{const d=await apiCall('/api/settings');if(d.ai_platform){selectedPlatform=d.ai_platform;selectPlatform(d.ai_platform)}if(d.api_key)document.getElementById('settingsApiKey').value=d.api_key;if(d.model_name)document.getElementById('settingsModel').value=d.model_name}catch(e){}}
 async function saveAISettings(){if(!selectedPlatform)return toast('请选择平台','error');const k=document.getElementById('settingsApiKey').value.trim();if(!k)return toast('请输入 Key','error');const m=document.getElementById('settingsModel').value.trim();try{await apiCall('/api/settings',{method:'POST',body:JSON.stringify({ai_platform:selectedPlatform,api_key:k,model_name:m})});toast('已保存 ✓','success');document.getElementById('settingsMsg').innerHTML='<span style="color:var(--success)">✓ 已保存</span>'}catch(e){toast('失败','error')}}
 async function testKey(){if(!selectedPlatform)return toast('请选择平台','error');const k=document.getElementById('settingsApiKey').value.trim();if(!k)return toast('请输入 Key','error');const m=document.getElementById('settingsModel').value.trim(),el=document.getElementById('settingsMsg');el.innerHTML='<span style="color:var(--info)">测试中...</span>';try{const d=await apiCall('/api/test-key',{method:'POST',body:JSON.stringify({platform:selectedPlatform,api_key:k,model_name:m})});el.innerHTML=d.ok?`<span style="color:var(--success)">✓ ${d.message}</span>`:`<span style="color:var(--danger)">✗ ${d.error}</span>`}catch(e){el.innerHTML=`<span style="color:var(--danger)">✗ ${e.message}</span>`}}
 
-// ══════ ARTICLE ANALYSIS ══════
+// ═══ ARTICLE ANALYSIS ═══
 async function processArticle(){
-  let text=document.getElementById('articleInput').value.trim();const pf=document.getElementById('pdfInput').files[0];
-  if(!text&&pf){try{text=await extractPdfText(pf)}catch(e){toast('PDF 读取失败: '+e.message,'error');console.error('PDF error:',e);return}}
+  let text=document.getElementById('articleInput').value.trim();
+  const pf=document.getElementById('pdfInput').files[0];
+  if(!text&&pf){
+    try{text=await extractPdfText(pf)}
+    catch(e){toast('PDF 读取失败: '+e.message,'error');console.error('PDF error:',e);return}
+  }
   if(!text)return toast('请输入文章或上传 PDF','error');
-  const btn=document.getElementById('analyzeBtn'),old=btn.innerHTML;btn.disabled=true;document.getElementById('articleResults').innerHTML='';
+  const btn=document.getElementById('analyzeBtn'),old=btn.innerHTML;
+  btn.disabled=true;document.getElementById('articleResults').innerHTML='';
   const steps=[{t:'📡 连接 AI...',d:0},{t:'📖 阅读文章...',d:2000},{t:'📝 翻译中...',d:5000},{t:'🔤 提取短语...',d:10000},{t:'📐 分析语法...',d:16000},{t:'💡 解析难句...',d:22000},{t:'📦 整理结果...',d:28000}];
   const timers=steps.map(s=>setTimeout(()=>{btn.innerHTML=`<span class="loading-spinner"></span> ${s.t}`},s.d));
-  try{const data=await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text})});timers.forEach(clearTimeout);lastArticleItems=data.items||[];btn.innerHTML='✅ 完成！';renderArticleResults(data);toast('分析完成！','success');setTimeout(()=>{btn.innerHTML=old},2000)}catch(e){timers.forEach(clearTimeout);toast('失败: '+e.message,'error');document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px">❌ ${escHtml(e.message)}</p>`;btn.innerHTML=old}finally{btn.disabled=false}}
+  try{
+    const data=await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text})});
+    timers.forEach(clearTimeout);lastArticleItems=data.items||[];
+    btn.innerHTML='✅ 完成！';renderArticleResults(data);toast('分析完成！','success');
+    setTimeout(()=>{btn.innerHTML=old},2000);
+  }catch(e){
+    timers.forEach(clearTimeout);toast('失败: '+e.message,'error');
+    document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px">❌ ${escHtml(e.message)}</p>`;
+    btn.innerHTML=old;
+  }finally{btn.disabled=false}
+}
 
-async function extractPdfText(f){const ab=await f.arrayBuffer();pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';const pdf=await pdfjsLib.getDocument({data:ab}).promise;let t='';for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n'}if(!t.trim())throw new Error('无文字');return t.trim()}
+async function extractPdfText(f){
+  if(typeof pdfjsLib==='undefined') throw new Error('PDF.js 库未加载，请刷新页面重试');
+  const ab=await f.arrayBuffer();
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  let t='';
+  for(let i=1;i<=pdf.numPages;i++){
+    const pg=await pdf.getPage(i);
+    const c=await pg.getTextContent();
+    t+=c.items.map(x=>x.str).join(' ')+'\n';
+  }
+  if(!t.trim()) throw new Error('PDF 中没有可提取的文字');
+  return t.trim();
+}
 
 function toggleSection(id){const b=document.getElementById('sb-'+id),h=document.getElementById('sh-'+id);if(b&&h){b.classList.toggle('collapsed');h.classList.toggle('open')}}
 
@@ -555,29 +495,38 @@ function renderArticleResults(data){
   const types={'短语':{i:'🔤',items:[]},'语法':{i:'📐',items:[]},'难句':{i:'💡',items:[]}};
   items.forEach((item,idx)=>{item._idx=idx;if(types[item.item_type])types[item.item_type].items.push(item)});
   let h='';
-  if(data.title)h+=`<div class="card" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px"><div style="font-family:var(--display);font-size:1.2rem;font-weight:700">📌 ${escHtml(data.title)}</div><button class="btn btn-p btn-sm" onclick="addAllItems()">📥 全部添加</button></div>${data.summary?`<div style="font-size:13.5px;color:var(--text-sec);line-height:1.7;padding:14px;background:var(--bg);border-radius:12px">${escHtml(data.summary)}</div>`:''}</div>`;
-  if(data.translated_text)h+=`<div class="ar-section"><div class="ar-sh" id="sh-trans" onclick="toggleSection('trans')"><div class="ar-sl">📝 全文翻译</div><span class="ar-arr">▼</span></div><div class="ar-sb collapsed" id="sb-trans"><div class="ar-trans-box">${escHtml(data.translated_text)}</div></div></div>`;
+  if(data.title) h+=`<div class="card" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px"><div style="font-family:var(--display);font-size:1.2rem;font-weight:700">📌 ${escHtml(data.title)}</div><button class="btn btn-p btn-sm" onclick="addAllItems()">📥 全部添加</button></div>${data.summary?`<div style="font-size:13.5px;color:var(--text-sec);line-height:1.7;padding:14px;background:var(--bg);border-radius:12px">${escHtml(data.summary)}</div>`:''}</div>`;
+  if(data.translated_text) h+=`<div class="ar-section"><div class="ar-sh" id="sh-trans" onclick="toggleSection('trans')"><div class="ar-sl">📝 全文翻译</div><span class="ar-arr">▼</span></div><div class="ar-sb collapsed" id="sb-trans"><div class="ar-trans-box">${escHtml(data.translated_text)}</div></div></div>`;
   Object.keys(types).forEach(type=>{const g=types[type];if(!g.items.length)return;
     h+=`<div class="ar-section"><div class="ar-sh open" id="sh-${type}" onclick="toggleSection('${type}')"><div class="ar-sl">${g.i} ${type} <span class="ar-cnt">${g.items.length}</span></div><div style="display:flex;align-items:center;gap:8px"><button class="btn btn-xs btn-p" onclick="event.stopPropagation();addAllOfType('${type}')">全部添加</button><span class="ar-arr" style="transform:rotate(180deg)">▼</span></div></div><div class="ar-sb" id="sb-${type}">`;
-    g.items.forEach(item=>{const idx=item._idx;h+=`<div class="ar-item" id="ai-${idx}"><div class="ar-item-top"><h4>${escHtml(item.english)}</h4><button class="btn-add" id="ab-${idx}" onclick="addItemToReview(${idx})">+ 添加</button></div><p><span class="lbl">释义：</span>${escHtml(item.chinese)}</p>${item.explanation?`<p><span class="lbl">解释：</span>${escHtml(item.explanation)}</p>`:''}${item.example?`<p><span class="lbl">例句：</span>${escHtml(item.example)}</p>`:''}${item.source_sentence?`<p style="color:#A8A29E;font-size:12px;margin-top:3px"><span class="lbl">原文：</span>${escHtml(item.source_sentence)}</p>`:''}</div>`});
+    g.items.forEach(item=>{const idx=item._idx;
+      h+=`<div class="ar-item" id="ai-${idx}"><div class="ar-item-top"><h4>${escHtml(item.english)}</h4><button class="btn-add" id="ab-${idx}" onclick="addItemToReview(${idx})">+ 添加</button></div><p><span class="lbl">释义：</span>${escHtml(item.chinese)}</p>${item.explanation?`<p><span class="lbl">解释：</span>${escHtml(item.explanation)}</p>`:''}${item.example?`<p><span class="lbl">例句：</span>${escHtml(item.example)}</p>`:''}${item.source_sentence?`<p style="color:#A8A29E;font-size:12px;margin-top:3px"><span class="lbl">原文：</span>${escHtml(item.source_sentence)}</p>`:''}</div>`});
     h+='</div></div>'});
-  el.innerHTML=h}
+  el.innerHTML=h;
+}
 
-// ══════ INIT ══════
+// ═══ INIT ═══
 async function init(){
-  showStep(0);document.getElementById("authStep1").classList.add("hidden");document.getElementById("authStep2").classList.add("hidden");document.getElementById("appBox").classList.add("hidden");document.getElementById("sidebar").style.display='none';
-  client.auth.onAuthStateChange(async(ev,session)=>{if(ev==='SIGNED_IN'){const u=session?.user;if(u&&(!currentUser||u.id!==currentUser.id)){currentUser=u;await onLogin()}}else if(ev==='SIGNED_OUT'){currentUser=null;phrases=[];showStep(1);updateDisplay()}});
+  showStep(0);
+  document.getElementById("authStep1").classList.add("hidden");
+  document.getElementById("authStep2").classList.add("hidden");
+  document.getElementById("appBox").classList.add("hidden");
+  document.getElementById("sidebar").style.display='none';
+  client.auth.onAuthStateChange(async(ev,session)=>{
+    if(ev==='SIGNED_IN'){const u=session?.user;if(u&&(!currentUser||u.id!==currentUser.id)){currentUser=u;await onLogin()}}
+    else if(ev==='SIGNED_OUT'){currentUser=null;phrases=[];showStep(1);updateDisplay()}
+  });
   const u=getLocalUser(),t=getToken();
   if(u&&t){currentUser=u;await onLogin()}else{showStep(1)}
 }
 async function onLogin(){
   showStep(3);const email=currentUser.email||currentUser.id,ini=email.charAt(0).toUpperCase();
-  document.getElementById("userText").textContent=email;document.getElementById("userAvatar").textContent=ini;
+  document.getElementById("userText").textContent=email;
+  document.getElementById("userAvatar").textContent=ini;
   if(document.getElementById("mAvatar"))document.getElementById("mAvatar").textContent=ini;
-  switchTab('dash');await loadData();await loadAISettings();setStatus("已登录")
+  switchTab('dash');await loadData();await loadAISettings();setStatus("已登录");
 }
 init();
 </script>
 </body>
 </html>
-
