@@ -452,7 +452,7 @@ function switchTab(tab) {
 // ============================================================
 function setupOtpInputs() {
   const inputs = document.querySelectorAll('.otp-input');
-  inputs.forEach((input, i) => {
+  inputs.forEach((input) => {
     input.value = ''; input.classList.remove('filled');
     const newInput = input.cloneNode(true);
     input.parentNode.replaceChild(newInput, input);
@@ -466,13 +466,18 @@ function setupOtpInputs() {
       checkOtpComplete();
     });
     input.addEventListener('keydown', e => {
-      if (e.key === 'Backspace' && !e.target.value && i > 0) { freshInputs[i-1].focus(); freshInputs[i-1].value=''; freshInputs[i-1].classList.remove('filled'); checkOtpComplete(); }
+      if (e.key === 'Backspace' && !e.target.value && i > 0) {
+        freshInputs[i-1].focus(); freshInputs[i-1].value=''; freshInputs[i-1].classList.remove('filled'); checkOtpComplete();
+      }
       if (e.key === 'Enter' && getOtpCode().length === 8) verifyOtp();
     });
     input.addEventListener('paste', e => {
       e.preventDefault();
       const paste = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);
-      if (paste.length === 8) { freshInputs.forEach((inp,j)=>{inp.value=paste[j];inp.classList.add('filled');}); freshInputs[7].focus(); checkOtpComplete(); }
+      if (paste.length === 8) {
+        freshInputs.forEach((inp,j) => { inp.value=paste[j]; inp.classList.add('filled'); });
+        freshInputs[7].focus(); checkOtpComplete();
+      }
     });
   });
 }
@@ -485,7 +490,11 @@ function startCountdown(s) {
   rb.style.display = 'none'; let r = s;
   el.textContent = `${r} 秒后可重新发送`;
   clearInterval(countdownTimer);
-  countdownTimer = setInterval(() => { r--; if(r<=0){clearInterval(countdownTimer);el.textContent='';rb.style.display='inline';}else el.textContent=`${r} 秒后可重新发送`; }, 1000);
+  countdownTimer = setInterval(() => {
+    r--;
+    if (r <= 0) { clearInterval(countdownTimer); el.textContent=''; rb.style.display='inline'; }
+    else el.textContent = `${r} 秒后可重新发送`;
+  }, 1000);
 }
 
 // ============================================================
@@ -530,6 +539,7 @@ async function verifyOtp() {
       if (e2) throw e2;
     }
     setStatus("登录成功！");
+    // onAuthStateChange 会自动触发 SIGNED_IN，无需手动调用 onLogin
   } catch(e) {
     const {data} = await client.auth.getUser();
     if (data?.user) { setStatus("登录成功！"); return; }
@@ -544,8 +554,7 @@ function backToEmail() { clearInterval(countdownTimer); showStep(1); }
 
 async function logout() {
   await client.auth.signOut();
-  currentUser = null; phrases = [];
-  showStep(1); setStatus("已退出");
+  // SIGNED_OUT 事件会自动触发，状态由 onAuthStateChange 统一处理
 }
 
 // ============================================================
@@ -741,7 +750,6 @@ async function processArticle() {
     try {
       text = await extractPdfText(pdfFile);
     } catch(e) {
-      console.error('PDF error:', e);
       toast('PDF 读取失败: ' + e.message, 'error');
       setStatus("PDF 读取失败");
       return;
@@ -825,30 +833,32 @@ function renderArticleResults(data) {
 }
 
 // ============================================================
-// 初始化（修复刷新重新登录问题）
+// 初始化（彻底修复刷新重新登录问题）
 // ============================================================
 async function init() {
   setStatus("初始化...");
 
-  // 初始全部隐藏
+  // 初始全部隐藏，等 onAuthStateChange 触发后再决定显示哪个界面
   document.getElementById("authStep1").classList.add("hidden");
   document.getElementById("authStep2").classList.add("hidden");
   document.getElementById("appBox").classList.add("hidden");
 
-  // 先用 onAuthStateChange 统一处理所有状态
-  // 它会在注册时立刻触发一次 INITIAL_SESSION，所以不需要再单独调用 getSession()
+  // 唯一入口：通过事件类型处理所有 auth 状态
+  // 注册时 Supabase 会立即触发一次 INITIAL_SESSION，无需额外调用 getSession()
   client.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
+    console.log('[Auth event]', event, session?.user?.email || 'no user');
+
+    if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
       const newUser = session?.user || null;
       if (newUser) {
         if (newUser.id !== currentUser?.id) {
-          // 新用户或刷新页面恢复 session
+          // 刷新页面恢复 session，或全新登录
           currentUser = newUser;
           await onLogin();
         }
-        // 同一用户的 TOKEN_REFRESHED 等事件，忽略
+        // 同一用户的 TOKEN_REFRESHED，忽略，不重复加载数据
       } else {
-        // INITIAL_SESSION 但 session 为空 → 未登录
+        // INITIAL_SESSION 触发但 session 为空 → 用户未登录
         showStep(1);
         setStatus("未登录");
       }
@@ -877,4 +887,3 @@ init();
 </script>
 </body>
 </html>
-
