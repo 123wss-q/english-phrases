@@ -161,13 +161,6 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
 
-/* Debug panel */
-.debug-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; color: #0f0; font-family: monospace; font-size: 11px; padding: 8px 12px; max-height: 150px; overflow-y: auto; z-index: 10000; border-top: 2px solid #c45d3e; }
-.debug-panel .debug-line { margin: 2px 0; white-space: pre-wrap; word-break: break-all; }
-.debug-panel .debug-warn { color: #ffa500; }
-.debug-panel .debug-err { color: #ff4444; }
-.debug-toggle { position: fixed; bottom: 8px; right: 8px; z-index: 10001; background: #1a1a2e; color: #0f0; border: 1px solid #333; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-family: monospace; cursor: pointer; }
-
 @media (max-width: 600px) {
   .site-header h1 { font-size: 2rem; }
   .card { padding: 18px; }
@@ -351,38 +344,9 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
   </div>
 </div>
 
-<!-- Debug toggle (上线稳定后删除这两行) -->
-<button class="debug-toggle" onclick="toggleDebug()">🐛</button>
-<div class="debug-panel hidden" id="debugPanel"></div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
 <script>
-// ============================================================
-// Debug 工具（上线稳定后可整段删除）
-// ============================================================
-const debugLogs = [];
-function dbg(msg, level = 'info') {
-  const ts = new Date().toLocaleTimeString();
-  debugLogs.push({ ts, msg, level });
-  console[level === 'err' ? 'error' : level === 'warn' ? 'warn' : 'log'](`[${ts}] ${msg}`);
-  renderDebug();
-}
-function renderDebug() {
-  const panel = document.getElementById('debugPanel');
-  if (!panel || panel.classList.contains('hidden')) return;
-  panel.innerHTML = debugLogs.slice(-40).map(e => {
-    const cls = e.level === 'err' ? 'debug-err' : e.level === 'warn' ? 'debug-warn' : '';
-    return `<div class="debug-line ${cls}">[${e.ts}] ${e.msg}</div>`;
-  }).join('');
-  panel.scrollTop = panel.scrollHeight;
-}
-function toggleDebug() {
-  const panel = document.getElementById('debugPanel');
-  panel.classList.toggle('hidden');
-  if (!panel.classList.contains('hidden')) renderDebug();
-}
-
 // ============================================================
 // 配置
 // ============================================================
@@ -391,7 +355,6 @@ const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const WORKER_URL    = "https://english-ai-api.wgh052098.workers.dev";
 const STORAGE_KEY   = 'sb-zvlgxvpcoghtmyoppfyv-auth-token';
 
-// 显式指定所有 auth 配置
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
   auth: {
     persistSession: true,
@@ -429,16 +392,31 @@ function toast(msg, type = 'info') {
 function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escAttr(s) { return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
-async function getToken() {
-  const { data } = await client.auth.getSession();
-  return data?.session?.access_token || '';
+// ============================================================
+// 关键修复：getToken 直接从 localStorage 读取
+// 避免调用 client.auth.getSession() 导致的死锁
+// ============================================================
+function getToken() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return '';
+    const parsed = JSON.parse(raw);
+    return parsed?.access_token || '';
+  } catch(e) {
+    console.error('getToken error:', e);
+    return '';
+  }
 }
 
 async function apiCall(path, options = {}) {
-  const token = await getToken();
+  const token = getToken();
   const res = await fetch(WORKER_URL + path, {
     ...options,
-    headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${token}`, ...(options.headers||{}) }
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      ...(options.headers || {})
+    }
   });
   const data = await res.json();
   if (!res.ok || data.error) throw new Error(data.error || 'API 请求失败');
@@ -542,24 +520,15 @@ async function verifyOtp() {
       const {data:d2, error:e2} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'magiclink' });
       if (e2) throw e2;
     }
-    dbg('verifyOtp 成功');
-    // 验证成功后手动检查 localStorage 是否写入
-    setTimeout(() => {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      dbg('验证后 localStorage: ' + (raw ? '有数据 ✓' : '空！！'), raw ? 'info' : 'err');
-    }, 500);
     setStatus("登录成功！");
-    // onAuthStateChange SIGNED_IN 会触发，但加一个保底
+    // onAuthStateChange SIGNED_IN 会触发，保底 2 秒后检查
     setTimeout(async () => {
       if (!currentUser) {
-        dbg('onAuthStateChange 未触发，保底恢复', 'warn');
-        const {data} = await client.auth.getSession();
-        if (data?.session?.user) { currentUser = data.session.user; await onLogin(); }
+        const user = getLocalUser();
+        if (user) { currentUser = user; await onLogin(); }
       }
     }, 2000);
   } catch(e) {
-    const {data} = await client.auth.getUser();
-    if (data?.user) { setStatus("登录成功！"); return; }
     const c = document.getElementById("otpContainer");
     c.style.animation = 'shake 0.4s ease'; setTimeout(()=>c.style.animation='',400);
     alert("验证码错误，请重新输入");
@@ -573,7 +542,18 @@ async function logout() {
   await client.auth.signOut();
   currentUser = null; phrases = [];
   showStep(1); updateDisplay(); setStatus("已退出");
-  dbg('已退出登录');
+}
+
+// ============================================================
+// 从 localStorage 读取用户信息（不调用 SDK，避免死锁）
+// ============================================================
+function getLocalUser() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed?.user || null;
+  } catch(e) { return null; }
 }
 
 // ============================================================
@@ -581,12 +561,11 @@ async function logout() {
 // ============================================================
 async function loadData() {
   try {
-    const {data,error} = await client.from('phrases').select('*').order('created_at',{ascending:false});
+    const { data, error } = await client.from('phrases').select('*').order('created_at', { ascending: false });
     if (error) throw error;
     phrases = data || [];
     updateDisplay();
-    dbg(`加载 ${phrases.length} 条短语`);
-  } catch(e) { dbg('loadData 失败: '+e.message,'err'); }
+  } catch(e) { console.error('loadData error:', e); }
 }
 
 // ============================================================
@@ -599,7 +578,7 @@ async function addPhrase() {
   const example = document.getElementById('newExample').value.trim();
   if (!english) return toast('请输入英文内容','error');
   try {
-    const {error} = await client.from('phrases').insert([{ user_id:currentUser.id, type, english, chinese, example, mastered:false }]);
+    const { error } = await client.from('phrases').insert([{ user_id:currentUser.id, type, english, chinese, example, mastered:false }]);
     if (error) throw error;
     document.getElementById('newEnglish').value='';
     document.getElementById('newChinese').value='';
@@ -707,7 +686,7 @@ async function loadAISettings() {
     if (data.ai_platform) { selectedPlatform=data.ai_platform; selectPlatform(data.ai_platform); }
     if (data.api_key) document.getElementById('settingsApiKey').value = data.api_key;
     if (data.model_name) document.getElementById('settingsModel').value = data.model_name;
-  } catch(e) { console.log('No settings yet'); }
+  } catch(e) { console.log('No settings yet:', e.message); }
 }
 
 async function saveAISettings() {
@@ -813,153 +792,46 @@ function renderArticleResults(data) {
 }
 
 // ============================================================
-// 核心：初始化 —— 4 层恢复策略 + 完整调试日志
+// 初始化
 // ============================================================
 async function init() {
   setStatus("初始化...");
-  dbg('===== init() 开始 =====');
 
-  // 隐藏所有面板
   document.getElementById("authStep1").classList.add("hidden");
   document.getElementById("authStep2").classList.add("hidden");
   document.getElementById("appBox").classList.add("hidden");
 
-  // ── 第 0 步：诊断 localStorage ──
-  try {
-    // 测试 localStorage 是否可用
-    localStorage.setItem('__test__', '1');
-    localStorage.removeItem('__test__');
-    dbg('localStorage 可用 ✓');
-  } catch(e) {
-    dbg('localStorage 不可用！这就是问题根源', 'err');
-    dbg('原因: ' + e.message, 'err');
-    showStep(1); setStatus("存储不可用，无法保持登录");
-    return;
-  }
-
-  // 检查 Supabase token 是否存在
-  const rawToken = localStorage.getItem(STORAGE_KEY);
-  if (rawToken) {
-    try {
-      const parsed = JSON.parse(rawToken);
-      const now = Math.floor(Date.now() / 1000);
-      dbg(`localStorage 找到 token: email=${parsed?.user?.email || '?'}`);
-      dbg(`  access_token: ${parsed?.access_token ? '有 (前20字=' + parsed.access_token.substring(0,20) + '...)' : '无!'}`);
-      dbg(`  refresh_token: ${parsed?.refresh_token ? '有' : '无!'}`);
-      dbg(`  expires_at: ${parsed?.expires_at || 'N/A'} (${parsed?.expires_at ? (parsed.expires_at > now ? '未过期 ✓' : '已过期 ✗') : '?'})`);
-    } catch(e) {
-      dbg('localStorage token 解析失败: ' + e.message, 'err');
-    }
-  } else {
-    dbg('localStorage 没有 Supabase token', 'warn');
-    // 扫描看是否存在其他格式的 key
-    const sbKeys = Object.keys(localStorage).filter(k => k.includes('sb-') || k.includes('supabase'));
-    if (sbKeys.length) dbg('发现其他 sb keys: ' + sbKeys.join(', '), 'warn');
-    else dbg('localStorage 中完全没有 Supabase 相关数据', 'warn');
-  }
-
-  // ── 第 1 步：注册 auth 事件监听 ──
+  // 监听后续的 auth 事件
   client.auth.onAuthStateChange(async (event, session) => {
-    dbg(`[onAuthStateChange] event=${event}, user=${session?.user?.email || 'null'}`);
+    console.log('[Auth]', event, session?.user?.email || 'null');
 
     if (event === 'SIGNED_IN') {
       const u = session?.user;
       if (u && (!currentUser || u.id !== currentUser.id)) {
-        dbg('SIGNED_IN → onLogin');
         currentUser = u;
         await onLogin();
       }
     } else if (event === 'TOKEN_REFRESHED') {
-      dbg('Token 已自动刷新 ✓');
+      console.log('[Auth] token refreshed');
     } else if (event === 'SIGNED_OUT') {
-      dbg('SIGNED_OUT 触发');
       currentUser = null; phrases = [];
       showStep(1); updateDisplay(); setStatus("已退出");
     }
-    // INITIAL_SESSION: 不依赖，由下方手动处理
   });
 
-  // ── 第 2 步：多层恢复会话 ──
-  let user = null;
+  // 从 localStorage 直接恢复用户（不调用 SDK 避免死锁）
+  const localUser = getLocalUser();
+  const localToken = getToken();
 
-  // 策略 A: getSession
-  dbg('策略 A: getSession()...');
-  try {
-    const { data, error } = await client.auth.getSession();
-    if (error) dbg('  A 错误: ' + error.message, 'warn');
-    else if (data?.session?.user) {
-      user = data.session.user;
-      dbg(`  A 成功 ✓ email=${user.email}`);
-    } else {
-      dbg('  A 返回空 session', 'warn');
-    }
-  } catch(e) { dbg('  A 异常: ' + e.message, 'err'); }
-
-  // 策略 B: refreshSession
-  if (!user) {
-    dbg('策略 B: refreshSession()...');
-    try {
-      const { data, error } = await client.auth.refreshSession();
-      if (error) dbg('  B 错误: ' + error.message, 'warn');
-      else if (data?.session?.user) {
-        user = data.session.user;
-        dbg(`  B 成功 ✓ email=${user.email}`);
-      } else {
-        dbg('  B 返回空', 'warn');
-      }
-    } catch(e) { dbg('  B 异常: ' + e.message, 'err'); }
-  }
-
-  // 策略 C: 手动从 localStorage 取 token 再 setSession
-  if (!user && rawToken) {
-    dbg('策略 C: 手动 setSession()...');
-    try {
-      const parsed = JSON.parse(rawToken);
-      if (parsed?.access_token && parsed?.refresh_token) {
-        const { data, error } = await client.auth.setSession({
-          access_token: parsed.access_token,
-          refresh_token: parsed.refresh_token,
-        });
-        if (error) dbg('  C 错误: ' + error.message, 'warn');
-        else if (data?.session?.user) {
-          user = data.session.user;
-          dbg(`  C 成功 ✓ email=${user.email}`);
-        } else {
-          dbg('  C 返回空', 'warn');
-        }
-      } else {
-        dbg('  C 跳过: token 不完整', 'warn');
-      }
-    } catch(e) { dbg('  C 异常: ' + e.message, 'err'); }
-  }
-
-  // 策略 D: getUser (网络请求)
-  if (!user) {
-    dbg('策略 D: getUser()...');
-    try {
-      const { data, error } = await client.auth.getUser();
-      if (error) dbg('  D 错误: ' + error.message, 'warn');
-      else if (data?.user) {
-        user = data.user;
-        dbg(`  D 成功 ✓ email=${user.email}`);
-      } else {
-        dbg('  D 返回空', 'warn');
-      }
-    } catch(e) { dbg('  D 异常: ' + e.message, 'err'); }
-  }
-
-  // ── 第 3 步：决定界面 ──
-  if (user) {
-    dbg(`会话恢复成功 → ${user.email}`);
-    currentUser = user;
+  if (localUser && localToken) {
+    console.log('[Init] localStorage 恢复用户:', localUser.email);
+    currentUser = localUser;
     await onLogin();
   } else {
-    dbg('所有恢复策略失败 → 显示登录', 'warn');
+    console.log('[Init] 没有本地 session，显示登录');
     showStep(1);
     setStatus("未登录");
   }
-
-  dbg('===== init() 完成 =====');
 }
 
 async function onLogin() {
