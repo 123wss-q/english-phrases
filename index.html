@@ -27,6 +27,7 @@
     .row > * { flex: 1 1 220px; }
     .chip { display: inline-block; background: #eef6ff; color: #195a8a; border: 1px solid #cfe7ff; border-radius: 999px; padding: 2px 10px; font-size: 12px; margin-right: 6px; }
     .hidden { display: none; }
+    #articleResults pre { white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
 <body>
@@ -54,6 +55,7 @@
     <button onclick="logout()">退出登录</button>
   </div>
 
+  <!-- 控制面板 -->
   <div class="controls">
     <input type="text" id="searchInput" placeholder="搜索英文短语或语法..." onkeyup="updateDisplay()">
     <select id="categorySelect" onchange="updateDisplay()">
@@ -65,6 +67,7 @@
     <button onclick="clearMastered()">清除掌握标记</button>
   </div>
 
+  <!-- 添加短语/语法 -->
   <div class="add-section">
     <h3>添加新短语/语法</h3>
     <select id="newType">
@@ -77,15 +80,26 @@
     <button onclick="addPhrase()">添加</button>
   </div>
 
+  <!-- 新增：文章翻译 & 短语提取 -->
+  <div class="panel">
+    <h3>文章翻译 & 短语/语法提取</h3>
+    <textarea id="articleInput" rows="6" placeholder="粘贴英文文章"></textarea>
+    <input type="file" id="pdfInput" accept="application/pdf" />
+    <button onclick="processArticle()">生成翻译 & 短语/语法</button>
+    <div id="articleResults" style="margin-top:12px;"></div>
+  </div>
+
   <div id="results"></div>
 </div>
 
+<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- PDF.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
 <script>
   const SUPABASE_URL = "https://zvlgxvpcoghtmyoppfyv.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
 
-  // ✅ 回跳地址写死
   const REDIRECT_URL = "https://english-phrases.wgh052098.workers.dev";
 
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -107,6 +121,7 @@
     document.getElementById("appBox").classList.toggle("hidden", !loggedIn);
   }
 
+  // 登录/登出
   async function sendOtp() {
     const email = document.getElementById("emailInput").value.trim();
     if (!email) return alert("请先输入邮箱");
@@ -114,10 +129,7 @@
     const btn = document.getElementById("sendOtpBtn");
     btn.disabled = true;
     try {
-      const { error } = await client.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: REDIRECT_URL }
-      });
+      const { error } = await client.auth.signInWithOtp({ email, options: { emailRedirectTo: REDIRECT_URL } });
       if (error) throw error;
       alert("登录邮件已发送，请去邮箱点击链接登录。");
       setStatus("已发送登录邮件");
@@ -125,17 +137,13 @@
       console.error(e);
       alert("发送失败：" + e.message);
       setStatus("发送失败");
-    } finally {
-      btn.disabled = false;
-    }
+    } finally { btn.disabled = false; }
   }
 
   async function logout() {
     await client.auth.signOut();
-    currentUser = null;
-    phrases = [];
-    showApp(false);
-    updateDisplay();
+    currentUser = null; phrases = [];
+    showApp(false); updateDisplay();
     setStatus("已退出");
   }
 
@@ -145,14 +153,12 @@
     return data?.user || null;
   }
 
+  // 加载短语数据
   async function loadData() {
     if (!currentUser) return;
     setStatus("加载云端数据...");
     const { data, error } = await client.from("phrases").select("*").order("id", { ascending: true });
-    if (error) {
-      setStatus("加载失败");
-      return alert("加载失败：" + error.message);
-    }
+    if (error) { setStatus("加载失败"); return alert("加载失败：" + error.message); }
     phrases = data || [];
     updateDisplay();
     setStatus(`已同步 ${phrases.length} 条`);
@@ -164,18 +170,9 @@
     const chinese = document.getElementById("newChinese").value.trim();
     const example = document.getElementById("newExample").value.trim();
     if (!english || !chinese) return alert("英文和中文不能为空");
-
     setStatus("添加中...");
-    const { error } = await client.from("phrases").insert([{
-      user_id: currentUser.id,
-      type, english, chinese, example, mastered: false
-    }]);
-
-    if (error) {
-      setStatus("添加失败");
-      return alert("添加失败：" + error.message);
-    }
-
+    const { error } = await client.from("phrases").insert([{ user_id: currentUser.id, type, english, chinese, example, mastered: false }]);
+    if (error) { setStatus("添加失败"); return alert("添加失败：" + error.message); }
     document.getElementById("newEnglish").value = "";
     document.getElementById("newChinese").value = "";
     document.getElementById("newExample").value = "";
@@ -183,27 +180,19 @@
   }
 
   async function toggleMastered(index) {
-    const row = phrases[index];
-    if (!row) return;
+    const row = phrases[index]; if (!row) return;
     setStatus("更新中...");
     const { error } = await client.from("phrases").update({ mastered: !row.mastered }).eq("id", row.id);
-    if (error) {
-      setStatus("更新失败");
-      return alert("更新失败：" + error.message);
-    }
+    if (error) { setStatus("更新失败"); return alert("更新失败：" + error.message); }
     await loadData();
   }
 
   async function deletePhrase(index) {
-    const row = phrases[index];
-    if (!row) return;
+    const row = phrases[index]; if (!row) return;
     if (!confirm("确定要删除吗？")) return;
     setStatus("删除中...");
     const { error } = await client.from("phrases").delete().eq("id", row.id);
-    if (error) {
-      setStatus("删除失败");
-      return alert("删除失败：" + error.message);
-    }
+    if (error) { setStatus("删除失败"); return alert("删除失败：" + error.message); }
     await loadData();
   }
 
@@ -212,10 +201,7 @@
     const masteredIds = phrases.filter(p => p.mastered).map(p => p.id);
     if (!masteredIds.length) return setStatus("无需清除");
     const { error } = await client.from("phrases").update({ mastered: false }).in("id", masteredIds);
-    if (error) {
-      setStatus("清除失败");
-      return alert("清除失败：" + error.message);
-    }
+    if (error) { setStatus("清除失败"); return alert("清除失败：" + error.message); }
     await loadData();
   }
 
@@ -227,12 +213,9 @@
 
   function speakText(text) {
     if ('speechSynthesis' in window){
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
+      const utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'en-US';
       window.speechSynthesis.speak(utterance);
-    } else {
-      alert('抱歉，你的浏览器不支持语音播放');
-    }
+    } else alert('抱歉，你的浏览器不支持语音播放');
   }
 
   function displaySingle(index, p) {
@@ -252,16 +235,13 @@
   function updateDisplay() {
     const query = document.getElementById("searchInput").value.toLowerCase();
     const category = document.getElementById("categorySelect").value;
-    const resultsDiv = document.getElementById("results");
-    resultsDiv.innerHTML = "";
+    const resultsDiv = document.getElementById("results"); resultsDiv.innerHTML = "";
 
     phrases.forEach((p, i) => {
       if ((category === "全部" || p.type === category) && (p.english || "").toLowerCase().includes(query)) {
-        const div = document.createElement("div");
-        div.className = "phrase";
+        const div = document.createElement("div"); div.className = "phrase";
         if (p.mastered) div.classList.add("mastered");
         const typeText = (category === "全部") ? ` (${p.type})` : "";
-
         div.innerHTML = `<h3>${p.english || ""}${typeText}</h3>
           <button class="play-btn" onclick="speakText('${escQuote(p.english)}')">🔊</button>
           <p>中文: ${p.chinese || ""}</p>
@@ -275,16 +255,75 @@
     if (resultsDiv.innerHTML === "") resultsDiv.innerHTML = "<p>未找到匹配项</p>";
   }
 
+  // ====== 新增文章分析功能 ======
+  async function processArticle() {
+    const textArea = document.getElementById("articleInput");
+    const pdfFile = document.getElementById("pdfInput").files[0];
+    const resultsDiv = document.getElementById("articleResults");
+    let text = textArea.value.trim();
+
+    if (pdfFile) {
+      setStatus("解析 PDF 中...");
+      text = await extractTextFromPdf(pdfFile);
+    }
+    if (!text) return alert("请输入文章或上传 PDF");
+
+    setStatus("调用 AI 生成翻译和短语/语法...");
+    try {
+      const session = await client.auth.getSession();
+      if (!session.data.session) return alert("请先登录");
+      const token = session.data.session.access_token;
+
+      const res = await fetch("https://english-ai-api.wgh052098.workers.dev/api/analyze-text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({ text })
+      });
+
+      const data = await res.json();
+      if (!data.ok) return alert("生成失败：" + (data.error || "未知错误"));
+
+      resultsDiv.innerHTML = `
+        <h4>文章标题: ${data.title}</h4>
+        <p><strong>摘要:</strong> ${data.summary}</p>
+        <p><strong>全文翻译:</strong></p>
+        <pre>${data.translated_text}</pre>
+      `;
+
+      if (Array.isArray(data.items)) {
+        data.items.forEach(item => {
+          phrases.push({
+            type: item.item_type === "短语" ? "短语" : item.item_type === "语法" ? "语法" : "难句",
+            english: item.english,
+            chinese: item.chinese,
+            example: item.example || item.source_sentence,
+            mastered: false
+          });
+        });
+      }
+
+      updateDisplay(); setStatus("生成完成");
+    } catch (e) {
+      console.error(e); setStatus("生成失败"); alert("生成失败：" + e.message);
+    }
+  }
+
+  async function extractTextFromPdf(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      fullText += content.items.map(i => i.str).join(" ") + "\n";
+    }
+    return fullText;
+  }
+
   async function init() {
     setStatus("检测登录状态...");
     currentUser = await getSessionUser();
-
-    if (!currentUser) {
-      showApp(false);
-      setStatus("未登录");
-      return;
-    }
-
+    if (!currentUser) { showApp(false); setStatus("未登录"); return; }
     showApp(true);
     document.getElementById("userText").textContent = `当前用户：${currentUser.email || currentUser.id}`;
     await loadData();
@@ -292,21 +331,11 @@
 
   client.auth.onAuthStateChange(async (_event, session) => {
     currentUser = session?.user || null;
-    if (currentUser) {
-      showApp(true);
-      document.getElementById("userText").textContent = `当前用户：${currentUser.email || currentUser.id}`;
-      await loadData();
-    } else {
-      showApp(false);
-      phrases = [];
-      updateDisplay();
-      setStatus("未登录");
-    }
+    if (currentUser) { showApp(true); document.getElementById("userText").textContent = `当前用户：${currentUser.email || currentUser.id}`; await loadData(); }
+    else { showApp(false); phrases = []; updateDisplay(); setStatus("未登录"); }
   });
 
   init();
 </script>
-
 </body>
 </html>
-
