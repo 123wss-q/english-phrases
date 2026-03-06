@@ -539,7 +539,7 @@ async function verifyOtp() {
       if (e2) throw e2;
     }
     setStatus("登录成功！");
-    // onAuthStateChange 会自动触发 SIGNED_IN，无需手动调用 onLogin
+    // onAuthStateChange 的 SIGNED_IN 事件会自动触发 onLogin
   } catch(e) {
     const {data} = await client.auth.getUser();
     if (data?.user) { setStatus("登录成功！"); return; }
@@ -554,7 +554,7 @@ function backToEmail() { clearInterval(countdownTimer); showStep(1); }
 
 async function logout() {
   await client.auth.signOut();
-  // SIGNED_OUT 事件会自动触发，状态由 onAuthStateChange 统一处理
+  // SIGNED_OUT 事件会自动触发
 }
 
 // ============================================================
@@ -833,35 +833,43 @@ function renderArticleResults(data) {
 }
 
 // ============================================================
-// 初始化（彻底修复刷新重新登录问题）
+// 初始化 —— 修复刷新后跳转登录界面的问题
 // ============================================================
 async function init() {
   setStatus("初始化...");
 
-  // 初始全部隐藏，等 onAuthStateChange 触发后再决定显示哪个界面
+  // 初始全部隐藏
   document.getElementById("authStep1").classList.add("hidden");
   document.getElementById("authStep2").classList.add("hidden");
   document.getElementById("appBox").classList.add("hidden");
 
-  // 唯一入口：通过事件类型处理所有 auth 状态
-  // 注册时 Supabase 会立即触发一次 INITIAL_SESSION，无需额外调用 getSession()
+  // 防止 onLogin 被多次调用的标志
+  let initialSessionHandled = false;
+
+  // 注册 auth 事件监听（处理后续的登录、登出、token 刷新）
   client.auth.onAuthStateChange(async (event, session) => {
     console.log('[Auth event]', event, session?.user?.email || 'no user');
 
-    if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-      const newUser = session?.user || null;
-      if (newUser) {
-        if (newUser.id !== currentUser?.id) {
-          // 刷新页面恢复 session，或全新登录
-          currentUser = newUser;
-          await onLogin();
-        }
-        // 同一用户的 TOKEN_REFRESHED，忽略，不重复加载数据
-      } else {
-        // INITIAL_SESSION 触发但 session 为空 → 用户未登录
-        showStep(1);
-        setStatus("未登录");
+    if (event === 'INITIAL_SESSION') {
+      // 标记：INITIAL_SESSION 已到达
+      // 如果 getSession() 已经先完成并处理了，就跳过
+      if (initialSessionHandled) {
+        console.log('[Auth] INITIAL_SESSION skipped, already handled by getSession');
+        return;
       }
+      // 如果 getSession() 还没完成（理论上不会，因为是 await），也由 getSession 处理
+      return;
+    }
+
+    if (event === 'SIGNED_IN') {
+      const newUser = session?.user || null;
+      if (newUser && newUser.id !== currentUser?.id) {
+        currentUser = newUser;
+        await onLogin();
+      }
+    } else if (event === 'TOKEN_REFRESHED') {
+      // token 自动刷新，不需要重载界面
+      console.log('[Auth] token refreshed');
     } else if (event === 'SIGNED_OUT') {
       currentUser = null;
       phrases = [];
@@ -870,6 +878,36 @@ async function init() {
       setStatus("已退出");
     }
   });
+
+  // 主动调用 getSession() 恢复会话 —— 这是修复的关键
+  // 不依赖 INITIAL_SESSION 事件，而是显式检查 localStorage 中的 session
+  try {
+    const { data, error } = await client.auth.getSession();
+    initialSessionHandled = true;
+
+    if (error) {
+      console.error('[Init] getSession error:', error);
+      showStep(1);
+      setStatus("未登录");
+      return;
+    }
+
+    if (data?.session?.user) {
+      // 已有有效 session，直接进入应用
+      currentUser = data.session.user;
+      console.log('[Init] Session restored for:', currentUser.email);
+      await onLogin();
+    } else {
+      // 没有 session，显示登录界面
+      showStep(1);
+      setStatus("未登录");
+    }
+  } catch(e) {
+    console.error('[Init] Unexpected error:', e);
+    initialSessionHandled = true;
+    showStep(1);
+    setStatus("未登录");
+  }
 }
 
 async function onLogin() {
