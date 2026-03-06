@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>英语短语 & 语法复习网站（语音版）</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
     h1 { text-align: center; color: #333; margin-bottom: 15px; }
-    input, select, textarea { width: 100%; padding: 6px; margin: 4px 0; font-size: 16px; }
+    input, select, textarea { width: 100%; padding: 6px; margin: 4px 0; font-size: 16px; box-sizing: border-box; }
     button { padding: 6px 10px; margin-right: 5px; background: #007acc; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
     button:hover { background: #005fa3; }
     .controls, .add-section { margin-bottom: 15px; }
@@ -20,14 +21,22 @@
     .delete-btn:hover { background: #a71d2a; }
     .play-btn { background: #6c757d; margin-left: 10px; }
     .play-btn:hover { background: #5a6268; }
+    .muted { color: #666; font-size: 13px; }
+    .toolbar { display: flex; gap: 8px; align-items: center; margin: 8px 0 14px; flex-wrap: wrap; }
+    .chip { background: #eef6ff; color: #195a8a; border: 1px solid #cfe7ff; border-radius: 999px; padding: 2px 10px; font-size: 12px; }
   </style>
 </head>
 <body>
 
 <h1>英语短语 & 语法复习网站（语音版）</h1>
 
+<div class="toolbar">
+  <span class="chip">云端同步：Supabase</span>
+  <span id="statusText" class="muted">状态：初始化中...</span>
+</div>
+
 <div class="controls">
-  <input type="text" id="searchInput" placeholder="搜索英文短语或语法..." onkeyup="updateDisplay()">
+  <input type="text" id="searchInput" placeholder="搜索英文短语或语法..." onkeyup="updateDisplay()" />
   <select id="categorySelect" onchange="updateDisplay()">
     <option value="全部">全部</option>
     <option value="短语">短语</option>
@@ -43,8 +52,8 @@
     <option value="短语">短语</option>
     <option value="语法">语法</option>
   </select>
-  <input type="text" id="newEnglish" placeholder="英文短语/语法">
-  <input type="text" id="newChinese" placeholder="中文意思">
+  <input type="text" id="newEnglish" placeholder="英文短语/语法" />
+  <input type="text" id="newChinese" placeholder="中文意思" />
   <textarea id="newExample" placeholder="例句" rows="2"></textarea>
   <button onclick="addPhrase()">添加</button>
 </div>
@@ -52,118 +61,204 @@
 <div id="results"></div>
 
 <script>
-let phrases = JSON.parse(localStorage.getItem("phrases")) || [
-  {type: "短语", english: "seems almost too good to be true", chinese: "似乎好得令人难以置信", example: "The offer seems almost too good to be true."},
-  {type: "短语", english: "as a … myself", chinese: "作为……本人", example: "As a student myself, I understand the pressure of exams."},
-  {type: "语法", english: "Not only … but also …", chinese: "不仅……而且……", example: "Not only did she finish the project, but she also presented it beautifully."}
-];
+  // ====== 你的 Supabase 配置 ======
+  const SUPABASE_URL = "https://zvlgxvpcoghtmyoppfyv.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
 
-let mastered = JSON.parse(localStorage.getItem("mastered")) || {};
+  let phrases = [];
 
-function saveData() {
-  localStorage.setItem("phrases", JSON.stringify(phrases));
-  localStorage.setItem("mastered", JSON.stringify(mastered));
-}
-
-function addPhrase() {
-  const type = document.getElementById("newType").value;
-  const english = document.getElementById("newEnglish").value.trim();
-  const chinese = document.getElementById("newChinese").value.trim();
-  const example = document.getElementById("newExample").value.trim();
-  if(!english || !chinese) { alert("英文和中文不能为空"); return; }
-  phrases.push({type, english, chinese, example});
-  saveData();
-  document.getElementById("newEnglish").value = "";
-  document.getElementById("newChinese").value = "";
-  document.getElementById("newExample").value = "";
-  updateDisplay();
-}
-
-function toggleMastered(index) {
-  if(mastered[index]) delete mastered[index];
-  else mastered[index] = true;
-  saveData();
-  updateDisplay();
-}
-
-function deletePhrase(index) {
-  if(confirm("确定要删除吗？")) {
-    phrases.splice(index,1);
-    delete mastered[index];
-    saveData();
-    updateDisplay();
+  function setStatus(msg) {
+    const el = document.getElementById("statusText");
+    if (el) el.textContent = "状态：" + msg;
   }
-}
 
-function randomPhrase() {
-  const index = Math.floor(Math.random() * phrases.length);
-  const p = phrases[index];
-  displaySingle(index,p);
-}
+  async function sbRequest(path, method = "GET", body = null) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      method,
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: body ? JSON.stringify(body) : null
+    });
 
-function speakText(text) {
-  if('speechSynthesis' in window){
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    window.speechSynthesis.speak(utterance);
-  } else {
-    alert('抱歉，你的浏览器不支持语音播放');
-  }
-}
-
-function displaySingle(index,p) {
-  const resultsDiv = document.getElementById("results");
-  const currentCategory = document.getElementById("categorySelect").value;
-  const typeText = (currentCategory === "全部") ? ` (${p.type})` : "";
-  resultsDiv.innerHTML = `<div class="phrase ${mastered[index]? 'mastered':''}">
-      <h3>${p.english}${typeText}</h3>
-      <button class="play-btn" onclick="speakText('${p.english.replace(/'/g,"\\'")}')">🔊</button>
-      <p>中文: ${p.chinese}</p>
-      <p>例句: ${p.example}</p>
-      <button class="edit-btn" onclick="toggleMastered(${index})">
-        ${mastered[index]? '取消掌握':'标记已掌握'}
-      </button>
-      <button class="delete-btn" onclick="deletePhrase(${index})">删除</button>
-    </div>`;
-}
-
-function clearMastered() {
-  mastered = {};
-  saveData();
-  updateDisplay();
-}
-
-function updateDisplay() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const category = document.getElementById("categorySelect").value;
-  const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "";
-
-  phrases.forEach((p,i) => {
-    if((category === "全部" || p.type===category) && p.english.toLowerCase().includes(query)) {
-      const div = document.createElement("div");
-      div.className = "phrase";
-      if(mastered[i]) div.classList.add("mastered");
-
-      const typeText = (category === "全部") ? ` (${p.type})` : "";
-
-      div.innerHTML = `<h3>${p.english}${typeText}</h3>
-        <button class="play-btn" onclick="speakText('${p.english.replace(/'/g,"\\'")}')">🔊</button>
-        <p>中文: ${p.chinese}</p>
-        <p>例句: ${p.example}</p>
-        <button class="edit-btn" onclick="toggleMastered(${i})">
-          ${mastered[i]? '取消掌握':'标记已掌握'}
-        </button>
-        <button class="delete-btn" onclick="deletePhrase(${i})">删除</button>`;
-
-      resultsDiv.appendChild(div);
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || `HTTP ${res.status}`);
     }
-  });
 
-  if(resultsDiv.innerHTML==="") resultsDiv.innerHTML="<p>未找到匹配项</p>";
-}
+    const txt = await res.text();
+    return txt ? JSON.parse(txt) : null;
+  }
 
-updateDisplay();
+  async function loadData() {
+    try {
+      setStatus("正在加载云端数据...");
+      const data = await sbRequest("phrases?select=*&order=id.asc");
+      phrases = data || [];
+      updateDisplay();
+      setStatus(`已同步 ${phrases.length} 条`);
+    } catch (e) {
+      console.error(e);
+      setStatus("加载失败");
+      alert("加载云端数据失败：\n" + e.message);
+    }
+  }
+
+  async function addPhrase() {
+    const type = document.getElementById("newType").value;
+    const english = document.getElementById("newEnglish").value.trim();
+    const chinese = document.getElementById("newChinese").value.trim();
+    const example = document.getElementById("newExample").value.trim();
+
+    if (!english || !chinese) {
+      alert("英文和中文不能为空");
+      return;
+    }
+
+    try {
+      setStatus("正在添加...");
+      await sbRequest("phrases", "POST", [{ type, english, chinese, example, mastered: false }]);
+
+      document.getElementById("newEnglish").value = "";
+      document.getElementById("newChinese").value = "";
+      document.getElementById("newExample").value = "";
+
+      await loadData();
+    } catch (e) {
+      console.error(e);
+      setStatus("添加失败");
+      alert("添加失败：\n" + e.message);
+    }
+  }
+
+  async function toggleMastered(index) {
+    const row = phrases[index];
+    if (!row) return;
+
+    try {
+      setStatus("正在更新...");
+      await sbRequest(`phrases?id=eq.${row.id}`, "PATCH", { mastered: !row.mastered });
+      await loadData();
+    } catch (e) {
+      console.error(e);
+      setStatus("更新失败");
+      alert("更新失败：\n" + e.message);
+    }
+  }
+
+  async function deletePhrase(index) {
+    const row = phrases[index];
+    if (!row) return;
+    if (!confirm("确定要删除吗？")) return;
+
+    try {
+      setStatus("正在删除...");
+      await sbRequest(`phrases?id=eq.${row.id}`, "DELETE");
+      await loadData();
+    } catch (e) {
+      console.error(e);
+      setStatus("删除失败");
+      alert("删除失败：\n" + e.message);
+    }
+  }
+
+  async function clearMastered() {
+    try {
+      setStatus("正在清除掌握标记...");
+      const tasks = phrases
+        .filter(p => p.mastered)
+        .map(p => sbRequest(`phrases?id=eq.${p.id}`, "PATCH", { mastered: false }));
+
+      await Promise.all(tasks);
+      await loadData();
+    } catch (e) {
+      console.error(e);
+      setStatus("清除失败");
+      alert("清除失败：\n" + e.message);
+    }
+  }
+
+  function randomPhrase() {
+    if (!phrases.length) {
+      alert("暂无数据");
+      return;
+    }
+    const index = Math.floor(Math.random() * phrases.length);
+    displaySingle(index, phrases[index]);
+  }
+
+  function speakText(text) {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert('抱歉，你的浏览器不支持语音播放');
+    }
+  }
+
+  function escQuote(str = "") {
+    return String(str).replace(/'/g, "\\'");
+  }
+
+  function displaySingle(index, p) {
+    const resultsDiv = document.getElementById("results");
+    const currentCategory = document.getElementById("categorySelect").value;
+    const typeText = (currentCategory === "全部") ? ` (${p.type})` : "";
+
+    resultsDiv.innerHTML = `
+      <div class="phrase ${p.mastered ? 'mastered' : ''}">
+        <h3>${p.english || ""}${typeText}</h3>
+        <button class="play-btn" onclick="speakText('${escQuote(p.english)}')">🔊</button>
+        <p>中文: ${p.chinese || ""}</p>
+        <p>例句: ${p.example || ""}</p>
+        <button class="edit-btn" onclick="toggleMastered(${index})">
+          ${p.mastered ? '取消掌握' : '标记已掌握'}
+        </button>
+        <button class="delete-btn" onclick="deletePhrase(${index})">删除</button>
+      </div>
+    `;
+  }
+
+  function updateDisplay() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const category = document.getElementById("categorySelect").value;
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    phrases.forEach((p, i) => {
+      const en = (p.english || "").toLowerCase();
+      if ((category === "全部" || p.type === category) && en.includes(query)) {
+        const div = document.createElement("div");
+        div.className = "phrase";
+        if (p.mastered) div.classList.add("mastered");
+
+        const typeText = (category === "全部") ? ` (${p.type})` : "";
+
+        div.innerHTML = `
+          <h3>${p.english || ""}${typeText}</h3>
+          <button class="play-btn" onclick="speakText('${escQuote(p.english)}')">🔊</button>
+          <p>中文: ${p.chinese || ""}</p>
+          <p>例句: ${p.example || ""}</p>
+          <button class="edit-btn" onclick="toggleMastered(${i})">
+            ${p.mastered ? '取消掌握' : '标记已掌握'}
+          </button>
+          <button class="delete-btn" onclick="deletePhrase(${i})">删除</button>
+        `;
+        resultsDiv.appendChild(div);
+      }
+    });
+
+    if (resultsDiv.innerHTML === "") {
+      resultsDiv.innerHTML = "<p>未找到匹配项</p>";
+    }
+  }
+
+  // 启动加载
+  loadData();
 </script>
 
 </body>
