@@ -539,7 +539,7 @@ async function testKey(){if(!selectedPlatform)return toast('请选择平台','er
 // ══════ ARTICLE ANALYSIS ══════
 async function processArticle(){
   let text=document.getElementById('articleInput').value.trim();const pf=document.getElementById('pdfInput').files[0];
-  if(!text&&pf){try{text=await extractPdfText(pf)}catch(e){toast('PDF 失败','error');return}}
+  if(!text&&pf){try{text=await extractPdfText(pf)}catch(e){toast('PDF 读取失败: '+e.message,'error');console.error('PDF error:',e);return}}
   if(!text)return toast('请输入文章或上传 PDF','error');
   const btn=document.getElementById('analyzeBtn'),old=btn.innerHTML;btn.disabled=true;document.getElementById('articleResults').innerHTML='';
   const steps=[{t:'📡 连接 AI...',d:0},{t:'📖 阅读文章...',d:2000},{t:'📝 翻译中...',d:5000},{t:'🔤 提取短语...',d:10000},{t:'📐 分析语法...',d:16000},{t:'💡 解析难句...',d:22000},{t:'📦 整理结果...',d:28000}];
@@ -580,3 +580,4 @@ init();
 </script>
 </body>
 </html>
+
