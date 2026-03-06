@@ -31,7 +31,7 @@
 </head>
 <body>
 
-<h1>英语短语 & 语法复习网站（安全同步版）</h1>
+<h1>英语短语 & 语法复习网站</h1>
 
 <div class="panel">
   <span class="chip">Supabase Auth</span>
@@ -80,13 +80,13 @@
   <div id="results"></div>
 </div>
 
-<!-- Supabase JS SDK (官方) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // ===== 你的配置 =====
   const SUPABASE_URL = "https://zvlgxvpcoghtmyoppfyv.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
-  const REDIRECT_URL = window.location.origin + window.location.pathname; // 邮件回跳地址
+
+  // ✅ 回跳地址写死
+  const REDIRECT_URL = "https://english-phrases.wgh052098.workers.dev";
 
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -141,26 +141,17 @@
 
   async function getSessionUser() {
     const { data, error } = await client.auth.getUser();
-    if (error) {
-      console.error(error);
-      return null;
-    }
+    if (error) return null;
     return data?.user || null;
   }
 
   async function loadData() {
     if (!currentUser) return;
     setStatus("加载云端数据...");
-    const { data, error } = await client
-      .from("phrases")
-      .select("*")
-      .order("id", { ascending: true });
-
+    const { data, error } = await client.from("phrases").select("*").order("id", { ascending: true });
     if (error) {
-      console.error(error);
       setStatus("加载失败");
-      alert("加载失败：" + error.message);
-      return;
+      return alert("加载失败：" + error.message);
     }
     phrases = data || [];
     updateDisplay();
@@ -172,10 +163,7 @@
     const english = document.getElementById("newEnglish").value.trim();
     const chinese = document.getElementById("newChinese").value.trim();
     const example = document.getElementById("newExample").value.trim();
-    if (!english || !chinese) {
-      alert("英文和中文不能为空");
-      return;
-    }
+    if (!english || !chinese) return alert("英文和中文不能为空");
 
     setStatus("添加中...");
     const { error } = await client.from("phrases").insert([{
@@ -184,7 +172,6 @@
     }]);
 
     if (error) {
-      console.error(error);
       setStatus("添加失败");
       return alert("添加失败：" + error.message);
     }
@@ -199,13 +186,8 @@
     const row = phrases[index];
     if (!row) return;
     setStatus("更新中...");
-    const { error } = await client
-      .from("phrases")
-      .update({ mastered: !row.mastered })
-      .eq("id", row.id);
-
+    const { error } = await client.from("phrases").update({ mastered: !row.mastered }).eq("id", row.id);
     if (error) {
-      console.error(error);
       setStatus("更新失败");
       return alert("更新失败：" + error.message);
     }
@@ -216,11 +198,9 @@
     const row = phrases[index];
     if (!row) return;
     if (!confirm("确定要删除吗？")) return;
-
     setStatus("删除中...");
     const { error } = await client.from("phrases").delete().eq("id", row.id);
     if (error) {
-      console.error(error);
       setStatus("删除失败");
       return alert("删除失败：" + error.message);
     }
@@ -231,13 +211,8 @@
     setStatus("清除中...");
     const masteredIds = phrases.filter(p => p.mastered).map(p => p.id);
     if (!masteredIds.length) return setStatus("无需清除");
-    const { error } = await client
-      .from("phrases")
-      .update({ mastered: false })
-      .in("id", masteredIds);
-
+    const { error } = await client.from("phrases").update({ mastered: false }).in("id", masteredIds);
     if (error) {
-      console.error(error);
       setStatus("清除失败");
       return alert("清除失败：" + error.message);
     }
@@ -265,15 +240,13 @@
     const currentCategory = document.getElementById("categorySelect").value;
     const typeText = (currentCategory === "全部") ? ` (${p.type})` : "";
     resultsDiv.innerHTML = `<div class="phrase ${p.mastered ? 'mastered':''}">
-        <h3>${p.english || ""}${typeText}</h3>
-        <button class="play-btn" onclick="speakText('${escQuote(p.english)}')">🔊</button>
-        <p>中文: ${p.chinese || ""}</p>
-        <p>例句: ${p.example || ""}</p>
-        <button class="edit-btn" onclick="toggleMastered(${index})">
-          ${p.mastered ? '取消掌握':'标记已掌握'}
-        </button>
-        <button class="delete-btn" onclick="deletePhrase(${index})">删除</button>
-      </div>`;
+      <h3>${p.english || ""}${typeText}</h3>
+      <button class="play-btn" onclick="speakText('${escQuote(p.english)}')">🔊</button>
+      <p>中文: ${p.chinese || ""}</p>
+      <p>例句: ${p.example || ""}</p>
+      <button class="edit-btn" onclick="toggleMastered(${index})">${p.mastered ? '取消掌握':'标记已掌握'}</button>
+      <button class="delete-btn" onclick="deletePhrase(${index})">删除</button>
+    </div>`;
   }
 
   function updateDisplay() {
@@ -283,21 +256,17 @@
     resultsDiv.innerHTML = "";
 
     phrases.forEach((p, i) => {
-      const en = (p.english || "").toLowerCase();
-      if ((category === "全部" || p.type === category) && en.includes(query)) {
+      if ((category === "全部" || p.type === category) && (p.english || "").toLowerCase().includes(query)) {
         const div = document.createElement("div");
         div.className = "phrase";
         if (p.mastered) div.classList.add("mastered");
-
         const typeText = (category === "全部") ? ` (${p.type})` : "";
 
         div.innerHTML = `<h3>${p.english || ""}${typeText}</h3>
           <button class="play-btn" onclick="speakText('${escQuote(p.english)}')">🔊</button>
           <p>中文: ${p.chinese || ""}</p>
           <p>例句: ${p.example || ""}</p>
-          <button class="edit-btn" onclick="toggleMastered(${i})">
-            ${p.mastered ? '取消掌握':'标记已掌握'}
-          </button>
+          <button class="edit-btn" onclick="toggleMastered(${i})">${p.mastered ? '取消掌握':'标记已掌握'}</button>
           <button class="delete-btn" onclick="deletePhrase(${i})">删除</button>`;
         resultsDiv.appendChild(div);
       }
@@ -321,7 +290,6 @@
     await loadData();
   }
 
-  // 监听登录状态变更（点击邮件链接回跳后会触发）
   client.auth.onAuthStateChange(async (_event, session) => {
     currentUser = session?.user || null;
     if (currentUser) {
