@@ -19,12 +19,13 @@
   --success: #3a7d5c;
   --success-light: rgba(58,125,92,0.08);
   --danger: #c0392b;
+  --info: #2d6ea7;
+  --info-light: rgba(45,110,167,0.08);
   --serif: 'DM Serif Display', Georgia, serif;
   --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --radius: 16px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -39,529 +40,163 @@ body {
 
 body::before {
   content: '';
-  position: fixed;
-  top: -30%; right: -15%;
+  position: fixed; top: -30%; right: -15%;
   width: 600px; height: 600px;
   background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
+  border-radius: 50%; pointer-events: none; z-index: 0;
 }
 body::after {
   content: '';
-  position: fixed;
-  bottom: -20%; left: -10%;
+  position: fixed; bottom: -20%; left: -10%;
   width: 500px; height: 500px;
   background: radial-gradient(circle, rgba(58,125,92,0.06) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
+  border-radius: 50%; pointer-events: none; z-index: 0;
 }
 
 .hidden { display: none !important; }
+.container { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-.container {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 0 24px;
-  position: relative;
-  z-index: 1;
-}
+/* Header */
+.site-header { text-align: center; padding: 48px 0 16px; }
+.site-header h1 { font-family: var(--serif); font-size: 2.6rem; font-weight: 400; animation: fadeUp 0.6s ease-out; }
+.site-header .subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 6px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; animation: fadeUp 0.6s ease-out 0.1s both; }
 
-/* === Header === */
-.site-header {
-  text-align: center;
-  padding: 56px 0 20px;
-}
-.site-header h1 {
-  font-family: var(--serif);
-  font-size: 2.6rem;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  animation: fadeUp 0.6s ease-out;
-}
-.site-header .subtitle {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-top: 8px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  animation: fadeUp 0.6s ease-out 0.1s both;
-}
+/* Status bar */
+.status-bar { display: flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 16px; border: 1px solid var(--border); animation: fadeUp 0.6s ease-out 0.15s both; }
+.chip { display: inline-flex; align-items: center; gap: 4px; background: var(--accent-light); color: var(--accent); border-radius: 999px; padding: 4px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+.chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.status-text { color: var(--muted); font-size: 13px; margin-left: auto; font-weight: 500; }
 
-/* === Status bar === */
-.status-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 20px;
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 20px;
-  border: 1px solid var(--border);
-  animation: fadeUp 0.6s ease-out 0.15s both;
-}
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--accent-light);
-  color: var(--accent);
-  border-radius: 999px;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-}
-.chip::before {
-  content: '';
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-.status-text {
-  color: var(--muted);
-  font-size: 13px;
-  margin-left: auto;
-  font-weight: 500;
-}
+/* Card */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: 24px; margin-bottom: 16px; border: 1px solid var(--border); animation: fadeUp 0.5s ease-out both; }
+.card-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; gap: 10px; }
 
-/* === Card === */
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  padding: 28px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border);
-  transition: box-shadow 0.3s;
-  animation: fadeUp 0.5s ease-out both;
-}
+/* Auth */
+.auth-card { max-width: 460px; margin: 40px auto; text-align: center; padding: 40px 32px; }
+.auth-card .card-title { justify-content: center; font-size: 1.5rem; margin-bottom: 8px; }
+.auth-card .auth-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 24px; line-height: 1.6; }
 
-.card-title {
-  font-family: var(--serif);
-  font-size: 1.4rem;
-  font-weight: 400;
-  margin-bottom: 20px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.card-title .icon {
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
+/* OTP */
+.otp-container { display: flex; gap: 6px; justify-content: center; margin: 20px 0; }
+.otp-input { width: 40px; height: 50px; text-align: center; font-size: 20px; font-weight: 700; font-family: var(--sans); border: 2px solid var(--border); border-radius: 10px; background: #faf9f7; color: var(--text); outline: none; transition: all 0.25s; }
+.otp-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: #fff; }
+.otp-input.filled { border-color: var(--accent); background: var(--accent-light); }
+.auth-step-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 12px; }
+.auth-step-label .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+.email-display { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-light); color: var(--accent); padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.link-btn { background: none; border: none; color: var(--accent); font-size: 13px; font-weight: 600; font-family: var(--sans); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; margin-top: 12px; }
+.countdown { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
-/* === Auth card === */
-.auth-card {
-  max-width: 480px;
-  margin: 40px auto;
-  text-align: center;
-  padding: 44px 36px;
-}
-.auth-card .card-title {
-  justify-content: center;
-  font-size: 1.6rem;
-  margin-bottom: 8px;
-}
-.auth-card .auth-desc {
-  color: var(--muted);
-  font-size: 0.88rem;
-  margin-bottom: 28px;
-  line-height: 1.6;
-}
-
-/* === OTP input === */
-.otp-container {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  margin: 24px 0;
-}
-.otp-input {
-  width: 42px;
-  height: 52px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-  font-family: var(--sans);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  background: #faf9f7;
-  color: var(--text);
-  outline: none;
-  transition: all 0.25s;
-  caret-color: var(--accent);
-}
-.otp-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
-  background: #fff;
-}
-.otp-input.filled {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
-
-.auth-step-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-.auth-step-label .step-num {
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-}
-
-.email-display {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--accent-light);
-  color: var(--accent);
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 600;
-  font-family: var(--sans);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  padding: 0;
-  margin-top: 16px;
-  transition: color 0.2s;
-}
-.link-btn:hover { color: var(--accent-hover); }
-
-.countdown {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 8px;
-}
-
-/* === Inputs === */
-input[type="text"], input[type="email"], select, textarea {
-  width: 100%;
-  padding: 12px 16px;
-  margin: 0;
-  border-radius: 10px;
-  border: 1.5px solid var(--border);
-  font-size: 14px;
-  font-family: var(--sans);
-  color: var(--text);
-  background: #faf9f7;
-  outline: none;
+/* Inputs */
+input[type="text"], input[type="email"], input[type="password"], select, textarea {
+  width: 100%; padding: 11px 14px; margin: 0; border-radius: 10px; border: 1.5px solid var(--border);
+  font-size: 14px; font-family: var(--sans); color: var(--text); background: #faf9f7; outline: none;
   transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
-input:focus, select:focus, textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
-  background: #fff;
-}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: #fff; }
 input::placeholder, textarea::placeholder { color: #b5b0a8; }
 textarea { resize: vertical; line-height: 1.6; }
-select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7570' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
-}
-
+select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7570' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
 .input-group { display: flex; flex-direction: column; gap: 10px; }
 .input-row { display: flex; gap: 10px; }
+label.field-label { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 2px; }
 
-/* === Buttons === */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: var(--sans);
-  cursor: pointer;
-  border: none;
-  transition: all 0.25s;
-  white-space: nowrap;
-}
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(196,93,62,0.25);
-}
-.btn-primary:hover {
-  background: var(--accent-hover);
-  box-shadow: 0 4px 16px rgba(196,93,62,0.3);
-  transform: translateY(-1px);
-}
-.btn-primary:active { transform: translateY(0); }
-.btn-primary:disabled {
-  background: #d4b8ad;
-  box-shadow: none;
-  cursor: not-allowed;
-  transform: none;
-}
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; border: none; transition: all 0.25s; white-space: nowrap; }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(196,93,62,0.25); }
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-primary:disabled { background: #d4b8ad; cursor: not-allowed; transform: none; box-shadow: none; }
 .btn-full { width: 100%; }
-
-.btn-ghost {
-  background: transparent;
-  color: var(--muted);
-  border: 1.5px solid var(--border);
-}
-.btn-ghost:hover {
-  border-color: #ccc;
-  color: var(--text);
-  background: rgba(0,0,0,0.02);
-}
-
-.btn-success {
-  background: var(--success);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(58,125,92,0.25);
-}
-.btn-success:hover {
-  background: #2e6a4b;
-  box-shadow: 0 4px 16px rgba(58,125,92,0.3);
-  transform: translateY(-1px);
-}
-
+.btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: #ccc; color: var(--text); background: rgba(0,0,0,0.02); }
+.btn-success { background: var(--success); color: #fff; box-shadow: 0 2px 8px rgba(58,125,92,0.25); }
+.btn-success:hover { background: #2e6a4b; transform: translateY(-1px); }
 .btn-danger { background: var(--danger); color: #fff; }
-.btn-danger:hover { background: #a5321f; transform: translateY(-1px); }
-
+.btn-danger:hover { background: #a5321f; }
+.btn-info { background: var(--info); color: #fff; }
+.btn-info:hover { background: #1f5a8f; }
 .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 8px; }
 
-/* === User bar === */
-.user-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 24px;
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 20px;
-  border: 1px solid var(--border);
-  animation: fadeUp 0.5s ease-out both;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 500;
-}
-.user-avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: var(--accent-light);
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 13px;
-}
+/* User bar */
+.user-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 16px; border: 1px solid var(--border); }
+.user-info { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); font-weight: 500; }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+.user-actions { display: flex; gap: 8px; }
 
-/* === Search / controls === */
-.controls-bar {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 20px;
-  animation: fadeUp 0.5s ease-out 0.05s both;
-}
-.controls-bar .search-wrap {
-  flex: 1;
-  min-width: 200px;
-  position: relative;
-}
-.controls-bar .search-wrap::before {
-  content: '🔍';
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  pointer-events: none;
-  opacity: 0.5;
-}
+/* Tabs */
+.tab-bar { display: flex; gap: 4px; margin-bottom: 16px; background: var(--card); border-radius: 12px; padding: 4px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.tab-btn { flex: 1; padding: 10px 8px; border: none; background: transparent; border-radius: 8px; font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+.tab-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 6px rgba(196,93,62,0.3); }
+
+/* Controls */
+.controls-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.controls-bar .search-wrap { flex: 1; min-width: 200px; position: relative; }
+.controls-bar .search-wrap::before { content: '🔍'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; opacity: 0.5; }
 .controls-bar .search-wrap input { padding-left: 38px; }
-.controls-bar select { flex: 0 0 130px; }
-.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.controls-bar select { flex: 0 0 120px; }
 
-/* === Phrase card === */
-.phrase {
-  background: var(--card);
-  border-radius: 14px;
-  padding: 20px 24px;
-  margin-bottom: 14px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-  transition: all 0.25s;
-  animation: fadeUp 0.4s ease-out both;
-}
-.phrase:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-.phrase.mastered {
-  background: var(--success-light);
-  border-color: rgba(58,125,92,0.2);
-}
-.phrase-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.phrase h3 {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: var(--accent);
-  margin: 0;
-}
-.phrase .type-badge {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: var(--accent-light);
-  color: var(--accent);
-  flex-shrink: 0;
-}
-.phrase p {
-  margin: 4px 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #555;
-}
+/* Phrase card */
+.phrase { background: var(--card); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: all 0.25s; }
+.phrase:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.phrase.mastered { background: var(--success-light); border-color: rgba(58,125,92,0.2); }
+.phrase-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.phrase h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--accent); margin: 0; }
+.phrase .type-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 6px; background: var(--accent-light); color: var(--accent); flex-shrink: 0; }
+.phrase p { margin: 3px 0; font-size: 13px; line-height: 1.5; color: #555; }
 .phrase .label { font-weight: 600; color: var(--text); }
-.phrase-actions {
-  display: flex;
-  gap: 6px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
-}
+.phrase-actions { display: flex; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 
-/* === Article results === */
-#articleResults { margin-top: 16px; }
-#articleResults pre {
-  background: #faf9f7;
-  padding: 16px 20px;
-  border-radius: 12px;
-  overflow-x: auto;
-  font-size: 13px;
-  line-height: 1.7;
-  border: 1px solid var(--border);
-  font-family: var(--sans);
-  color: #444;
-}
+/* Settings: platform cards */
+.platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 16px; }
+.platform-card { padding: 14px 10px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: #faf9f7; }
+.platform-card:hover { border-color: #ccc; background: #fff; }
+.platform-card.selected { border-color: var(--accent); background: var(--accent-light); }
+.platform-card .p-icon { font-size: 24px; margin-bottom: 4px; }
+.platform-card .p-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.platform-card .p-model { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-/* === File input === */
-input[type="file"] {
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--muted);
-  padding: 10px 0;
-  border: none;
-  background: none;
-}
-input[type="file"]::file-selector-button {
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: #fff;
-  color: var(--text);
-  cursor: pointer;
-  margin-right: 10px;
-  transition: all 0.2s;
-}
-input[type="file"]::file-selector-button:hover {
-  background: var(--bg);
-  border-color: #ccc;
-}
+/* Toast */
+.toast { position: fixed; top: 20px; right: 20px; padding: 14px 20px; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 600; z-index: 9999; animation: fadeUp 0.3s ease-out; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+.toast-success { background: var(--success); }
+.toast-error { background: var(--danger); }
+.toast-info { background: var(--info); }
 
-/* === Animations === */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
-}
+/* Loading spinner */
+.loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* === Responsive === */
+/* Article result */
+.article-result { margin-top: 16px; }
+.article-result .section-title { font-family: var(--serif); font-size: 1.1rem; margin: 16px 0 8px; color: var(--text); }
+.article-result .translated { background: #faf9f7; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--border); font-size: 14px; line-height: 1.8; color: #444; white-space: pre-wrap; }
+
+/* File input */
+input[type="file"] { font-family: var(--sans); font-size: 13px; color: var(--muted); padding: 8px 0; border: none; background: none; }
+input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--border); background: #fff; color: var(--text); cursor: pointer; margin-right: 10px; }
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+
+/* Responsive */
 @media (max-width: 600px) {
   .site-header h1 { font-size: 2rem; }
-  .site-header { padding-top: 36px; }
-  .card { padding: 20px; }
-  .auth-card { padding: 28px 20px; margin: 20px auto; }
-  .otp-input { width: 36px; height: 46px; font-size: 18px; }
-  .otp-container { gap: 4px; }
+  .card { padding: 18px; }
+  .auth-card { padding: 24px 18px; margin: 20px auto; }
+  .otp-input { width: 36px; height: 44px; font-size: 18px; }
   .controls-bar { flex-direction: column; }
   .controls-bar select { flex: 1; }
   .input-row { flex-direction: column; }
-  .user-bar { flex-direction: column; gap: 12px; text-align: center; }
-  .container { padding: 0 16px; }
+  .user-bar { flex-direction: column; gap: 10px; text-align: center; }
+  .container { padding: 0 14px; }
+  .platform-grid { grid-template-columns: repeat(3, 1fr); }
+  .tab-bar { overflow-x: auto; }
 }
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1cdc6; border-radius: 3px; }
 
 .footer-space { height: 60px; }
 </style>
 </head>
 <body>
-
 <div class="container">
 
   <header class="site-header">
@@ -570,48 +205,43 @@ input[type="file"]::file-selector-button:hover {
   </header>
 
   <div class="status-bar">
-    <span class="chip">Supabase Auth</span>
+    <span class="chip">Auth</span>
     <span class="chip">RLS</span>
     <span id="statusText" class="status-text">初始化中...</span>
   </div>
 
-  <!-- ============ Auth: Step 1 - Email ============ -->
+  <!-- Auth Step 1 -->
   <div id="authStep1" class="card auth-card">
     <div class="card-title">📮 邮箱登录</div>
-    <p class="auth-desc">输入你的邮箱，我们会发送一封包含 8 位验证码的邮件。</p>
-    <div class="auth-step-label">
-      <span class="step-num">1</span> 输入邮箱
-    </div>
-    <input id="emailInput" type="email" placeholder="your@email.com" style="margin-bottom:14px;" />
+    <p class="auth-desc">输入邮箱，我们会发送一封包含 8 位验证码的邮件。</p>
+    <div class="auth-step-label"><span class="step-num">1</span> 输入邮箱</div>
+    <input id="emailInput" type="email" placeholder="your@email.com" style="margin-bottom:12px;" />
     <button id="sendOtpBtn" class="btn btn-primary btn-full" onclick="sendOtp()">发送验证码</button>
   </div>
 
-  <!-- ============ Auth: Step 2 - OTP ============ -->
+  <!-- Auth Step 2 -->
   <div id="authStep2" class="card auth-card hidden">
     <div class="card-title">🔐 输入验证码</div>
     <p class="auth-desc">验证码已发送至</p>
     <div class="email-display" id="otpEmailDisplay"></div>
-    <div class="auth-step-label">
-      <span class="step-num">2</span> 输入 8 位验证码
-    </div>
+    <div class="auth-step-label"><span class="step-num">2</span> 输入 8 位验证码</div>
     <div class="otp-container" id="otpContainer">
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
-      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
     </div>
     <button id="verifyBtn" class="btn btn-primary btn-full" onclick="verifyOtp()" disabled>验证并登录</button>
     <div class="countdown" id="countdownText"></div>
     <button class="link-btn" id="resendBtn" onclick="resendOtp()">重新发送验证码</button>
-    <br/>
-    <button class="link-btn" onclick="backToEmail()" style="margin-top:8px;">← 更换邮箱</button>
+    <br/><button class="link-btn" onclick="backToEmail()" style="margin-top:6px;">← 更换邮箱</button>
   </div>
 
-  <!-- ============ App ============ -->
+  <!-- App -->
   <div id="appBox" class="hidden">
 
     <div class="user-bar">
@@ -619,310 +249,621 @@ input[type="file"]::file-selector-button:hover {
         <div class="user-avatar" id="userAvatar">U</div>
         <span id="userText"></span>
       </div>
-      <button class="btn btn-ghost btn-sm" onclick="logout()">退出登录</button>
-    </div>
-
-    <div class="controls-bar">
-      <div class="search-wrap">
-        <input type="text" id="searchInput" placeholder="搜索短语或语法..." onkeyup="updateDisplay()">
-      </div>
-      <select id="categorySelect" onchange="updateDisplay()">
-        <option value="全部">全部分类</option>
-        <option value="短语">短语</option>
-        <option value="语法">语法</option>
-      </select>
-      <div class="btn-row">
-        <button class="btn btn-ghost btn-sm" onclick="randomPhrase()">🎲 随机复习</button>
-        <button class="btn btn-ghost btn-sm" onclick="clearMastered()">✨ 清除标记</button>
+      <div class="user-actions">
+        <button class="btn btn-ghost btn-sm" onclick="switchTab('settings')">⚙️ AI 设置</button>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">退出</button>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">
-        <span class="icon" style="background:var(--accent-light);color:var(--accent);">✏️</span>
-        添加新内容
-      </div>
-      <div class="input-group">
-        <select id="newType">
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('review')" data-tab="review">📚 复习</button>
+      <button class="tab-btn" onclick="switchTab('add')" data-tab="add">✏️ 添加</button>
+      <button class="tab-btn" onclick="switchTab('article')" data-tab="article">📖 文章分析</button>
+      <button class="tab-btn" onclick="switchTab('settings')" data-tab="settings">⚙️ AI 设置</button>
+    </div>
+
+    <!-- Tab: Review -->
+    <div id="tab-review">
+      <div class="controls-bar">
+        <div class="search-wrap">
+          <input type="text" id="searchInput" placeholder="搜索短语或语法..." oninput="updateDisplay()">
+        </div>
+        <select id="categorySelect" onchange="updateDisplay()">
+          <option value="全部">全部</option>
           <option value="短语">短语</option>
           <option value="语法">语法</option>
         </select>
-        <div class="input-row">
-          <input type="text" id="newEnglish" placeholder="英文短语 / 语法">
-          <input type="text" id="newChinese" placeholder="中文释义">
+        <button class="btn btn-ghost btn-sm" onclick="randomPhrase()">🎲 随机</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearMastered()">✨ 清除标记</button>
+      </div>
+      <div id="phraseCount" style="font-size:13px;color:var(--muted);margin-bottom:10px;"></div>
+      <div id="results"></div>
+    </div>
+
+    <!-- Tab: Add -->
+    <div id="tab-add" class="hidden">
+      <div class="card">
+        <div class="card-title">✏️ 添加新内容</div>
+        <div class="input-group">
+          <select id="newType"><option value="短语">短语</option><option value="语法">语法</option></select>
+          <div class="input-row">
+            <input type="text" id="newEnglish" placeholder="英文短语 / 语法">
+            <input type="text" id="newChinese" placeholder="中文释义">
+          </div>
+          <textarea id="newExample" placeholder="输入例句（可选）" rows="2"></textarea>
+          <div><button class="btn btn-primary" onclick="addPhrase()">添加</button></div>
         </div>
-        <textarea id="newExample" placeholder="输入例句（可选）" rows="2"></textarea>
-        <div><button class="btn btn-primary" onclick="addPhrase()">添加</button></div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">
-        <span class="icon" style="background:var(--success-light);color:var(--success);">📖</span>
-        文章翻译 & 提取
+    <!-- Tab: Article -->
+    <div id="tab-article" class="hidden">
+      <div class="card">
+        <div class="card-title">📖 文章翻译 & 短语提取</div>
+        <div class="input-group">
+          <textarea id="articleInput" rows="6" placeholder="粘贴英文文章到这里..."></textarea>
+          <input type="file" id="pdfInput" accept="application/pdf" />
+          <div><button class="btn btn-success" id="analyzeBtn" onclick="processArticle()">🚀 生成翻译 & 短语/语法</button></div>
+        </div>
+        <div id="articleResults"></div>
       </div>
-      <div class="input-group">
-        <textarea id="articleInput" rows="5" placeholder="粘贴英文文章到这里..."></textarea>
-        <input type="file" id="pdfInput" accept="application/pdf" />
-        <div><button class="btn btn-success" onclick="processArticle()">生成翻译 & 短语/语法</button></div>
-      </div>
-      <div id="articleResults"></div>
     </div>
 
-    <div id="results"></div>
+    <!-- Tab: Settings -->
+    <div id="tab-settings" class="hidden">
+      <div class="card">
+        <div class="card-title">⚙️ AI 平台设置</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">选择你想使用的大模型平台，并填入你的 API Key。配置只对你可见。</p>
+
+        <div class="platform-grid" id="platformGrid">
+          <div class="platform-card" data-platform="deepseek" onclick="selectPlatform('deepseek')">
+            <div class="p-icon">🔮</div>
+            <div class="p-name">DeepSeek</div>
+            <div class="p-model">deepseek-chat</div>
+          </div>
+          <div class="platform-card" data-platform="qianwen" onclick="selectPlatform('qianwen')">
+            <div class="p-icon">☁️</div>
+            <div class="p-name">通义千问</div>
+            <div class="p-model">qwen-plus</div>
+          </div>
+          <div class="platform-card" data-platform="openai" onclick="selectPlatform('openai')">
+            <div class="p-icon">🤖</div>
+            <div class="p-name">OpenAI</div>
+            <div class="p-model">gpt-4o-mini</div>
+          </div>
+          <div class="platform-card" data-platform="claude" onclick="selectPlatform('claude')">
+            <div class="p-icon">🧠</div>
+            <div class="p-name">Claude</div>
+            <div class="p-model">claude-sonnet</div>
+          </div>
+          <div class="platform-card" data-platform="gemini" onclick="selectPlatform('gemini')">
+            <div class="p-icon">💎</div>
+            <div class="p-name">Gemini</div>
+            <div class="p-model">gemini-2.0-flash</div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div>
+            <label class="field-label">API Key</label>
+            <input type="password" id="settingsApiKey" placeholder="输入你的 API Key">
+          </div>
+          <div>
+            <label class="field-label">模型名称（可选，留空使用默认）</label>
+            <input type="text" id="settingsModel" placeholder="如 gpt-4o, deepseek-chat, qwen-max 等">
+          </div>
+          <div class="input-row">
+            <button class="btn btn-info" onclick="testKey()">🔑 测试 Key</button>
+            <button class="btn btn-primary" onclick="saveAISettings()">💾 保存设置</button>
+          </div>
+          <div id="settingsMsg" style="font-size:13px;margin-top:4px;"></div>
+        </div>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">
+            <strong>如何获取 API Key：</strong><br>
+            • DeepSeek：<a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a><br>
+            • 通义千问：<a href="https://dashscope.console.aliyun.com/apiKey" target="_blank">dashscope.console.aliyun.com</a><br>
+            • OpenAI：<a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com</a><br>
+            • Claude：<a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com</a><br>
+            • Gemini：<a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
     <div class="footer-space"></div>
   </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
 <script>
-const SUPABASE_URL="https://zvlgxvpcoghtmyoppfyv.supabase.co";
-const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
-const REDIRECT_URL="https://english-phrases.wgh052098.workers.dev";
-const client = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+// ============================================================
+// 配置
+// ============================================================
+const SUPABASE_URL = "https://zvlgxvpcoghtmyoppfyv.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
+const WORKER_URL = "https://english-ai-api.wgh052098.workers.dev";
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-let phrases=[], currentUser=null, otpEmail='', countdownTimer=null;
+let phrases = [], currentUser = null, otpEmail = '', countdownTimer = null;
+let selectedPlatform = '';
 
-// ================= 基本函数 ==================
-function setStatus(msg){ document.getElementById("statusText").textContent=msg; }
-function escQuote(str=""){ return String(str).replace(/'/g,"\\'"); }
+// ============================================================
+// 工具函数
+// ============================================================
+function setStatus(msg) { document.getElementById("statusText").textContent = msg; }
 
-function showStep(step){
-  document.getElementById("authStep1").classList.toggle("hidden", step!==1);
-  document.getElementById("authStep2").classList.toggle("hidden", step!==2);
-  document.getElementById("appBox").classList.toggle("hidden", step!==3);
+function showStep(step) {
+  document.getElementById("authStep1").classList.toggle("hidden", step !== 1);
+  document.getElementById("authStep2").classList.toggle("hidden", step !== 2);
+  document.getElementById("appBox").classList.toggle("hidden", step !== 3);
 }
 
-// ================= OTP 输入框逻辑 ==================
-function setupOtpInputs(){
+function toast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity 0.3s'; }, 2500);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+
+async function getToken() {
+  const { data } = await client.auth.getSession();
+  return data?.session?.access_token || '';
+}
+
+async function apiCall(path, options = {}) {
+  const token = await getToken();
+  const res = await fetch(WORKER_URL + path, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+      ...(options.headers || {})
+    }
+  });
+  const data = await res.json();
+  if (!res.ok || data.error) throw new Error(data.error || 'API 请求失败');
+  return data;
+}
+
+// ============================================================
+// Tab 切换
+// ============================================================
+function switchTab(tab) {
+  ['review', 'add', 'article', 'settings'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.classList.toggle('hidden', t !== tab);
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+}
+
+// ============================================================
+// OTP 输入框
+// ============================================================
+function setupOtpInputs() {
   const inputs = document.querySelectorAll('.otp-input');
   inputs.forEach((input, i) => {
-    input.value = '';
-    input.classList.remove('filled');
-
-    input.addEventListener('input', (e) => {
+    input.value = ''; input.classList.remove('filled');
+    // 移除旧的事件监听器（通过克隆节点）
+    const newInput = input.cloneNode(true);
+    input.parentNode.replaceChild(newInput, input);
+  });
+  // 重新获取并绑定事件
+  const freshInputs = document.querySelectorAll('.otp-input');
+  freshInputs.forEach((input, i) => {
+    input.addEventListener('input', e => {
       const val = e.target.value.replace(/\D/g, '');
       e.target.value = val;
-      if(val) {
-        e.target.classList.add('filled');
-        if(i < inputs.length - 1) inputs[i+1].focus();
-      } else {
-        e.target.classList.remove('filled');
-      }
+      val ? (e.target.classList.add('filled'), i < freshInputs.length - 1 && freshInputs[i+1].focus()) : e.target.classList.remove('filled');
       checkOtpComplete();
     });
-
-    input.addEventListener('keydown', (e) => {
-      if(e.key === 'Backspace' && !e.target.value && i > 0){
-        inputs[i-1].focus();
-        inputs[i-1].value = '';
-        inputs[i-1].classList.remove('filled');
-        checkOtpComplete();
-      }
-      if(e.key === 'Enter'){
-        const code = getOtpCode();
-        if(code.length === 8) verifyOtp();
-      }
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !e.target.value && i > 0) { freshInputs[i-1].focus(); freshInputs[i-1].value=''; freshInputs[i-1].classList.remove('filled'); checkOtpComplete(); }
+      if (e.key === 'Enter' && getOtpCode().length === 8) verifyOtp();
     });
-
-    // 支持粘贴整段验证码
-    input.addEventListener('paste', (e) => {
+    input.addEventListener('paste', e => {
       e.preventDefault();
       const paste = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);
-      if(paste.length === 8){
-        inputs.forEach((inp, j) => {
-          inp.value = paste[j];
-          inp.classList.add('filled');
-        });
-        inputs[7].focus();
-        checkOtpComplete();
-      }
+      if (paste.length === 8) { freshInputs.forEach((inp,j)=>{inp.value=paste[j];inp.classList.add('filled');}); freshInputs[7].focus(); checkOtpComplete(); }
     });
   });
 }
 
-function getOtpCode(){
-  return Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value).join('');
-}
+function getOtpCode() { return Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value).join(''); }
+function checkOtpComplete() { document.getElementById("verifyBtn").disabled = getOtpCode().length !== 8; }
 
-function checkOtpComplete(){
-  const code = getOtpCode();
-  document.getElementById("verifyBtn").disabled = code.length !== 8;
-}
-
-// ================= 倒计时 ==================
-function startCountdown(seconds){
-  const el = document.getElementById("countdownText");
-  const resendBtn = document.getElementById("resendBtn");
-  resendBtn.style.display = 'none';
-  let remaining = seconds;
-  el.textContent = `${remaining} 秒后可重新发送`;
+function startCountdown(s) {
+  const el = document.getElementById("countdownText"), rb = document.getElementById("resendBtn");
+  rb.style.display = 'none'; let r = s;
+  el.textContent = `${r} 秒后可重新发送`;
   clearInterval(countdownTimer);
-  countdownTimer = setInterval(()=>{
-    remaining--;
-    if(remaining <= 0){
-      clearInterval(countdownTimer);
-      el.textContent = '';
-      resendBtn.style.display = 'inline';
-    } else {
-      el.textContent = `${remaining} 秒后可重新发送`;
-    }
-  }, 1000);
+  countdownTimer = setInterval(() => { r--; if(r<=0){clearInterval(countdownTimer);el.textContent='';rb.style.display='inline';}else el.textContent=`${r} 秒后可重新发送`; }, 1000);
 }
 
-// ================= 发送验证码 ==================
-async function sendOtp(){
+// ============================================================
+// 登录/注册
+// ============================================================
+async function sendOtp() {
   const email = document.getElementById("emailInput").value.trim();
-  if(!email) return alert("请输入邮箱");
+  if (!email) return alert("请输入邮箱");
   otpEmail = email;
   setStatus("发送验证码中...");
-  const btn = document.getElementById("sendOtpBtn");
-  btn.disabled = true;
+  const btn = document.getElementById("sendOtpBtn"); btn.disabled = true;
   try {
-    const {error} = await client.auth.signInWithOtp({
-      email,
-      options: { shouldCreateUser: true }
-    });
-    if(error) throw error;
-
-    // 切换到验证码输入步骤
+    const {error} = await client.auth.signInWithOtp({ email, options:{ shouldCreateUser:true } });
+    if (error) throw error;
     document.getElementById("otpEmailDisplay").textContent = email;
-    showStep(2);
-    setupOtpInputs();
+    showStep(2); setupOtpInputs();
     document.querySelector('.otp-input').focus();
-    startCountdown(60);
-    setStatus("验证码已发送");
-  } catch(e) {
-    console.error(e);
-    alert("发送失败: " + e.message);
-    setStatus("发送失败");
-  } finally {
-    btn.disabled = false;
-  }
+    startCountdown(60); setStatus("验证码已发送");
+  } catch(e) { alert("发送失败: " + e.message); setStatus("发送失败"); }
+  finally { btn.disabled = false; }
 }
 
-// ================= 重新发送 ==================
-async function resendOtp(){
-  if(!otpEmail) return;
+async function resendOtp() {
+  if (!otpEmail) return;
   setStatus("重新发送中...");
   try {
-    const {error} = await client.auth.signInWithOtp({
-      email: otpEmail,
-      options: { shouldCreateUser: true }
-    });
-    if(error) throw error;
-    setupOtpInputs();
-    document.querySelector('.otp-input').focus();
-    startCountdown(60);
-    setStatus("验证码已重新发送");
-  } catch(e) {
-    console.error(e);
-    alert("发送失败: " + e.message);
-    setStatus("重新发送失败");
-  }
+    const {error} = await client.auth.signInWithOtp({ email: otpEmail, options:{ shouldCreateUser:true } });
+    if (error) throw error;
+    setupOtpInputs(); document.querySelector('.otp-input').focus();
+    startCountdown(60); setStatus("已重新发送");
+  } catch(e) { alert("发送失败: " + e.message); }
 }
 
-// ================= 验证 OTP ==================
-async function verifyOtp(){
+async function verifyOtp() {
   const code = getOtpCode();
-  if(code.length !== 8) return;
-  setStatus("验证中...");
-  const btn = document.getElementById("verifyBtn");
-  btn.disabled = true;
+  if (code.length !== 8) return;
+  setStatus("验证中..."); document.getElementById("verifyBtn").disabled = true;
   try {
-    // 先尝试 email 类型
-    const {data, error} = await client.auth.verifyOtp({
-      email: otpEmail,
-      token: code,
-      type: 'email'
-    });
-    if(error) {
-      // 如果 email 类型失败，尝试 magiclink 类型
-      const {data: data2, error: error2} = await client.auth.verifyOtp({
-        email: otpEmail,
-        token: code,
-        type: 'magiclink'
-      });
-      if(error2) throw error2;
+    const {error} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'email' });
+    if (error) {
+      const {error: e2} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'magiclink' });
+      if (e2) throw e2;
     }
     setStatus("登录成功！");
   } catch(e) {
-    console.error(e);
-    // 检查是否其实已经登录成功了
-    const {data: userData} = await client.auth.getUser();
-    if(userData?.user) {
-      // 实际上已登录，忽略错误
-      setStatus("登录成功！");
-      return;
-    }
-    // 真正失败了，抖动提示
-    const container = document.getElementById("otpContainer");
-    container.style.animation = 'shake 0.4s ease';
-    setTimeout(()=> container.style.animation = '', 400);
+    const {data} = await client.auth.getUser();
+    if (data?.user) { setStatus("登录成功！"); return; }
+    const c = document.getElementById("otpContainer");
+    c.style.animation = 'shake 0.4s ease'; setTimeout(()=>c.style.animation='',400);
     alert("验证码错误，请重新输入");
-    setupOtpInputs();
-    document.querySelector('.otp-input').focus();
-    setStatus("验证失败");
-  } finally {
-    btn.disabled = false;
+    setupOtpInputs(); document.querySelector('.otp-input').focus(); setStatus("验证失败");
+  } finally { document.getElementById("verifyBtn").disabled = false; }
+}
+
+function backToEmail() { clearInterval(countdownTimer); showStep(1); }
+
+async function logout() {
+  await client.auth.signOut();
+  currentUser = null; phrases = [];
+  showStep(1); setStatus("已退出");
+}
+
+// ============================================================
+// 数据加载
+// ============================================================
+async function loadData() {
+  try {
+    const { data, error } = await client.from('phrases').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    phrases = data || [];
+    updateDisplay();
+  } catch(e) { console.error('loadData error:', e); }
+}
+
+// ============================================================
+// 添加短语
+// ============================================================
+async function addPhrase() {
+  const type = document.getElementById('newType').value;
+  const english = document.getElementById('newEnglish').value.trim();
+  const chinese = document.getElementById('newChinese').value.trim();
+  const example = document.getElementById('newExample').value.trim();
+  if (!english) return toast('请输入英文内容', 'error');
+
+  try {
+    const { error } = await client.from('phrases').insert([{
+      user_id: currentUser.id, type, english, chinese, example, mastered: false
+    }]);
+    if (error) throw error;
+    document.getElementById('newEnglish').value = '';
+    document.getElementById('newChinese').value = '';
+    document.getElementById('newExample').value = '';
+    toast('添加成功！', 'success');
+    await loadData();
+    switchTab('review');
+  } catch(e) { toast('添加失败: ' + e.message, 'error'); }
+}
+
+// ============================================================
+// 显示短语列表
+// ============================================================
+function updateDisplay() {
+  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const cat = document.getElementById('categorySelect')?.value || '全部';
+  const container = document.getElementById('results');
+  const countEl = document.getElementById('phraseCount');
+  if (!container) return;
+
+  const filtered = phrases.filter(p => {
+    if (cat !== '全部' && p.type !== cat) return false;
+    if (search && !(p.english||'').toLowerCase().includes(search) && !(p.chinese||'').toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  if (countEl) countEl.textContent = `共 ${filtered.length} 条记录`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 0;">暂无数据，去「添加」或「文章分析」中创建吧</p>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(p => `
+    <div class="phrase ${p.mastered ? 'mastered' : ''}" id="p-${p.id}">
+      <div class="phrase-header">
+        <h3>${escHtml(p.english)}</h3>
+        <span class="type-badge">${p.type}</span>
+      </div>
+      <p><span class="label">释义：</span>${escHtml(p.chinese)}</p>
+      ${p.example ? `<p><span class="label">例句：</span>${escHtml(p.example)}</p>` : ''}
+      ${p.explanation ? `<p><span class="label">解释：</span>${escHtml(p.explanation)}</p>` : ''}
+      <div class="phrase-actions">
+        <button class="btn btn-sm ${p.mastered?'btn-ghost':'btn-success'}" onclick="toggleMastered('${p.id}',${!p.mastered})">${p.mastered?'取消掌握':'✓ 已掌握'}</button>
+        <button class="btn btn-sm btn-ghost" onclick="speakText('${escAttr(p.english)}')">🔊 发音</button>
+        <button class="btn btn-sm btn-danger" onclick="deletePhrase('${p.id}')">删除</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function toggleMastered(id, val) {
+  try {
+    await client.from('phrases').update({ mastered: val }).eq('id', id);
+    const p = phrases.find(x => x.id === id);
+    if (p) p.mastered = val;
+    updateDisplay();
+    toast(val ? '已标记为掌握' : '已取消掌握', 'success');
+  } catch(e) { toast('操作失败', 'error'); }
+}
+
+async function deletePhrase(id) {
+  if (!confirm('确定删除？')) return;
+  try {
+    await client.from('phrases').delete().eq('id', id);
+    phrases = phrases.filter(x => x.id !== id);
+    updateDisplay();
+    toast('已删除', 'info');
+  } catch(e) { toast('删除失败', 'error'); }
+}
+
+function speakText(text) {
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.9;
+  speechSynthesis.speak(u);
+}
+
+function randomPhrase() {
+  const filtered = phrases.filter(p => !p.mastered);
+  if (!filtered.length) return toast('没有未掌握的内容了！', 'info');
+  const p = filtered[Math.floor(Math.random() * filtered.length)];
+  document.getElementById('searchInput').value = p.english;
+  updateDisplay();
+  setTimeout(() => document.getElementById('p-'+p.id)?.scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+}
+
+async function clearMastered() {
+  if (!confirm('确定清除所有「已掌握」标记？')) return;
+  try {
+    await client.from('phrases').update({ mastered: false }).eq('user_id', currentUser.id).eq('mastered', true);
+    phrases.forEach(p => p.mastered = false);
+    updateDisplay();
+    toast('已清除所有标记', 'success');
+  } catch(e) { toast('操作失败', 'error'); }
+}
+
+// ============================================================
+// AI 设置
+// ============================================================
+function selectPlatform(platform) {
+  selectedPlatform = platform;
+  document.querySelectorAll('.platform-card').forEach(el => {
+    el.classList.toggle('selected', el.dataset.platform === platform);
+  });
+}
+
+async function loadAISettings() {
+  try {
+    const data = await apiCall('/api/settings');
+    if (data.ai_platform) { selectedPlatform = data.ai_platform; selectPlatform(data.ai_platform); }
+    if (data.api_key) document.getElementById('settingsApiKey').value = data.api_key;
+    if (data.model_name) document.getElementById('settingsModel').value = data.model_name;
+  } catch(e) { console.log('No settings yet'); }
+}
+
+async function saveAISettings() {
+  if (!selectedPlatform) return toast('请选择一个 AI 平台', 'error');
+  const apiKey = document.getElementById('settingsApiKey').value.trim();
+  if (!apiKey) return toast('请输入 API Key', 'error');
+  const model = document.getElementById('settingsModel').value.trim();
+  try {
+    await apiCall('/api/settings', {
+      method: 'POST',
+      body: JSON.stringify({ ai_platform: selectedPlatform, api_key: apiKey, model_name: model })
+    });
+    toast('设置已保存 ✓', 'success');
+    document.getElementById('settingsMsg').innerHTML = '<span style="color:var(--success)">✓ 设置已保存</span>';
+  } catch(e) { toast('保存失败: ' + e.message, 'error'); }
+}
+
+async function testKey() {
+  if (!selectedPlatform) return toast('请先选择平台', 'error');
+  const apiKey = document.getElementById('settingsApiKey').value.trim();
+  if (!apiKey) return toast('请输入 API Key', 'error');
+  const model = document.getElementById('settingsModel').value.trim();
+  const msgEl = document.getElementById('settingsMsg');
+  msgEl.innerHTML = '<span style="color:var(--info)">测试中...</span>';
+  try {
+    const data = await apiCall('/api/test-key', {
+      method: 'POST',
+      body: JSON.stringify({ platform: selectedPlatform, api_key: apiKey, model_name: model })
+    });
+    if (data.ok) {
+      msgEl.innerHTML = '<span style="color:var(--success)">✓ ' + data.message + '</span>';
+      toast('API Key 有效！', 'success');
+    } else {
+      msgEl.innerHTML = '<span style="color:var(--danger)">✗ ' + data.error + '</span>';
+      toast(data.error, 'error');
+    }
+  } catch(e) {
+    msgEl.innerHTML = '<span style="color:var(--danger)">✗ ' + e.message + '</span>';
+    toast('测试失败', 'error');
   }
 }
 
-// ================= 返回邮箱输入 ==================
-function backToEmail(){
-  clearInterval(countdownTimer);
-  showStep(1);
-  document.getElementById("emailInput").focus();
+// ============================================================
+// 文章分析
+// ============================================================
+async function processArticle() {
+  let text = document.getElementById('articleInput').value.trim();
+  const pdfFile = document.getElementById('pdfInput').files[0];
+
+  if (!text && pdfFile) {
+    setStatus("读取 PDF 中...");
+    try {
+      text = await extractPdfText(pdfFile);
+    } catch(e) {
+      console.error('PDF error:', e);
+      toast('PDF 读取失败: ' + e.message, 'error');
+      setStatus("PDF 读取失败");
+      return;
+    }
+  }
+  if (!text) return toast('请输入文章或上传 PDF', 'error');
+
+  const btn = document.getElementById('analyzeBtn');
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span> 分析中...';
+  setStatus("AI 分析中，请稍候...");
+  document.getElementById('articleResults').innerHTML = '';
+
+  try {
+    const data = await apiCall('/api/analyze-text', {
+      method: 'POST',
+      body: JSON.stringify({ text })
+    });
+    renderArticleResults(data);
+    await loadData();
+    toast('分析完成！', 'success');
+    setStatus("分析完成");
+  } catch(e) {
+    toast('分析失败: ' + e.message, 'error');
+    document.getElementById('articleResults').innerHTML = `<p style="color:var(--danger);margin-top:12px;">❌ ${escHtml(e.message)}</p>`;
+    setStatus("分析失败");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
 }
 
-// ================= 登出 ==================
-async function logout(){
-  await client.auth.signOut();
-  localStorage.removeItem('supabase.auth.token');
-  currentUser = null;
-  phrases = [];
-  showStep(1);
-  updateDisplay();
-  setStatus("已退出登录");
+async function extractPdfText(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  let text = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(x => x.str).join(' ') + '\n';
+    setStatus(`读取 PDF 中... (${i}/${pdf.numPages})`);
+  }
+  if (!text.trim()) throw new Error('PDF 中没有可提取的文字');
+  return text.trim();
 }
 
-async function getSessionUser(){
-  const {data,error} = await client.auth.getUser();
-  if(error) return null;
-  return data?.user || null;
+function renderArticleResults(data) {
+  const el = document.getElementById('articleResults');
+  let html = '<div class="article-result">';
+
+  if (data.title) html += `<div class="section-title">📌 ${escHtml(data.title)}</div>`;
+  if (data.summary) html += `<p style="font-size:14px;color:#555;margin-bottom:12px;">${escHtml(data.summary)}</p>`;
+  if (data.translated_text) {
+    html += `<div class="section-title">📝 全文翻译</div>`;
+    html += `<div class="translated">${escHtml(data.translated_text)}</div>`;
+  }
+
+  if (data.items && data.items.length) {
+    const types = { '短语': '🔤', '语法': '📐', '难句': '💡' };
+    Object.keys(types).forEach(type => {
+      const items = data.items.filter(x => x.item_type === type);
+      if (items.length) {
+        html += `<div class="section-title">${types[type]} ${type}（${items.length}条）</div>`;
+        items.forEach(item => {
+          html += `<div class="phrase">
+            <div class="phrase-header"><h3>${escHtml(item.english)}</h3><span class="type-badge">${type}</span></div>
+            <p><span class="label">释义：</span>${escHtml(item.chinese)}</p>
+            ${item.explanation ? `<p><span class="label">解释：</span>${escHtml(item.explanation)}</p>` : ''}
+            ${item.example ? `<p><span class="label">例句：</span>${escHtml(item.example)}</p>` : ''}
+            ${item.source_sentence ? `<p><span class="label">原文：</span>${escHtml(item.source_sentence)}</p>` : ''}
+          </div>`;
+        });
+      }
+    });
+  }
+
+  html += '</div>';
+  el.innerHTML = html;
 }
 
-// ================= 初始化 ==================
-async function init(){
+// ============================================================
+// 初始化
+// ============================================================
+async function init() {
   setStatus("初始化...");
-  await client.auth.signOut();
-  localStorage.removeItem('supabase.auth.token');
   currentUser = null;
   showStep(1);
   setStatus("未登录");
 
+  // 检查现有 session（刷新页面不用重新登录）
+  const { data: { session } } = await client.auth.getSession();
+  if (session?.user) {
+    currentUser = session.user;
+    onLogin();
+  }
+
   client.auth.onAuthStateChange(async (_event, session) => {
     currentUser = session?.user || null;
-    if(currentUser){
-      showStep(3);
-      const email = currentUser.email || currentUser.id;
-      document.getElementById("userText").textContent = email;
-      document.getElementById("userAvatar").textContent = email.charAt(0).toUpperCase();
-      await loadData();
-      setStatus("已登录: " + email);
+    if (currentUser) {
+      onLogin();
     } else {
-      showStep(1);
-      phrases = [];
-      updateDisplay();
-      setStatus("未登录");
+      showStep(1); phrases = []; updateDisplay(); setStatus("未登录");
     }
   });
 }
-init();
 
-// ========== 其它功能函数 loadData, addPhrase, updateDisplay, processArticle 等保持原来完整逻辑 ==========
+async function onLogin() {
+  showStep(3);
+  const email = currentUser.email || currentUser.id;
+  document.getElementById("userText").textContent = email;
+  document.getElementById("userAvatar").textContent = email.charAt(0).toUpperCase();
+  switchTab('review');
+  await loadData();
+  await loadAISettings();
+  setStatus("已登录: " + email);
+}
+
+init();
 </script>
 </body>
 </html>
