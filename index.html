@@ -165,7 +165,7 @@ body::after {
 
 /* === Auth card === */
 .auth-card {
-  max-width: 440px;
+  max-width: 480px;
   margin: 40px auto;
   text-align: center;
   padding: 44px 36px;
@@ -185,15 +185,15 @@ body::after {
 /* === OTP input === */
 .otp-container {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   justify-content: center;
   margin: 24px 0;
 }
 .otp-input {
-  width: 48px;
-  height: 56px;
+  width: 42px;
+  height: 52px;
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   font-family: var(--sans);
   border: 2px solid var(--border);
@@ -544,8 +544,8 @@ input[type="file"]::file-selector-button:hover {
   .site-header { padding-top: 36px; }
   .card { padding: 20px; }
   .auth-card { padding: 28px 20px; margin: 20px auto; }
-  .otp-input { width: 42px; height: 50px; font-size: 20px; }
-  .otp-container { gap: 6px; }
+  .otp-input { width: 36px; height: 46px; font-size: 18px; }
+  .otp-container { gap: 4px; }
   .controls-bar { flex-direction: column; }
   .controls-bar select { flex: 1; }
   .input-row { flex-direction: column; }
@@ -578,7 +578,7 @@ input[type="file"]::file-selector-button:hover {
   <!-- ============ Auth: Step 1 - Email ============ -->
   <div id="authStep1" class="card auth-card">
     <div class="card-title">📮 邮箱登录</div>
-    <p class="auth-desc">输入你的邮箱，我们会发送一封包含 6 位验证码的邮件。</p>
+    <p class="auth-desc">输入你的邮箱，我们会发送一封包含 8 位验证码的邮件。</p>
     <div class="auth-step-label">
       <span class="step-num">1</span> 输入邮箱
     </div>
@@ -592,10 +592,12 @@ input[type="file"]::file-selector-button:hover {
     <p class="auth-desc">验证码已发送至</p>
     <div class="email-display" id="otpEmailDisplay"></div>
     <div class="auth-step-label">
-      <span class="step-num">2</span> 输入 6 位验证码
+      <span class="step-num">2</span> 输入 8 位验证码
     </div>
     <div class="otp-container" id="otpContainer">
       <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code" />
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
+      <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
       <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
       <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
       <input type="text" class="otp-input" maxlength="1" inputmode="numeric" />
@@ -721,20 +723,20 @@ function setupOtpInputs(){
       }
       if(e.key === 'Enter'){
         const code = getOtpCode();
-        if(code.length === 6) verifyOtp();
+        if(code.length === 8) verifyOtp();
       }
     });
 
     // 支持粘贴整段验证码
     input.addEventListener('paste', (e) => {
       e.preventDefault();
-      const paste = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
-      if(paste.length === 6){
+      const paste = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);
+      if(paste.length === 8){
         inputs.forEach((inp, j) => {
           inp.value = paste[j];
           inp.classList.add('filled');
         });
-        inputs[5].focus();
+        inputs[7].focus();
         checkOtpComplete();
       }
     });
@@ -747,7 +749,7 @@ function getOtpCode(){
 
 function checkOtpComplete(){
   const code = getOtpCode();
-  document.getElementById("verifyBtn").disabled = code.length !== 6;
+  document.getElementById("verifyBtn").disabled = code.length !== 8;
 }
 
 // ================= 倒计时 ==================
@@ -825,7 +827,7 @@ async function resendOtp(){
 // ================= 验证 OTP ==================
 async function verifyOtp(){
   const code = getOtpCode();
-  if(code.length !== 6) return;
+  if(code.length !== 8) return;
   setStatus("验证中...");
   const btn = document.getElementById("verifyBtn");
   btn.disabled = true;
