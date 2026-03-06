@@ -832,17 +832,32 @@ async function verifyOtp(){
   const btn = document.getElementById("verifyBtn");
   btn.disabled = true;
   try {
+    // 先尝试 email 类型
     const {data, error} = await client.auth.verifyOtp({
       email: otpEmail,
       token: code,
       type: 'email'
     });
-    if(error) throw error;
-    // 登录成功，onAuthStateChange 会自动处理
+    if(error) {
+      // 如果 email 类型失败，尝试 magiclink 类型
+      const {data: data2, error: error2} = await client.auth.verifyOtp({
+        email: otpEmail,
+        token: code,
+        type: 'magiclink'
+      });
+      if(error2) throw error2;
+    }
     setStatus("登录成功！");
   } catch(e) {
     console.error(e);
-    // 验证码错误，抖动动画
+    // 检查是否其实已经登录成功了
+    const {data: userData} = await client.auth.getUser();
+    if(userData?.user) {
+      // 实际上已登录，忽略错误
+      setStatus("登录成功！");
+      return;
+    }
+    // 真正失败了，抖动提示
     const container = document.getElementById("otpContainer");
     container.style.animation = 'shake 0.4s ease';
     setTimeout(()=> container.style.animation = '', 400);
