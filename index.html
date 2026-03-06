@@ -32,6 +32,7 @@ pre { background:#f0f0f0; padding:10px; border-radius:8px; overflow-x:auto; font
 </style>
 </head>
 <body>
+
 <h1>英语短语 & 语法复习网站</h1>
 
 <div class="panel">
@@ -50,6 +51,7 @@ pre { background:#f0f0f0; padding:10px; border-radius:8px; overflow-x:auto; font
 </div>
 
 <div id="appBox" class="hidden">
+
   <div class="panel row" style="justify-content: space-between; align-items:center;">
     <span id="userText" class="muted"></span>
     <button onclick="logout()">退出登录</button>
@@ -94,20 +96,21 @@ pre { background:#f0f0f0; padding:10px; border-radius:8px; overflow-x:auto; font
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
-
 <script>
 // ================= Supabase 配置 ==================
 const SUPABASE_URL="https://zvlgxvpcoghtmyoppfyv.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY"; 
 const REDIRECT_URL="https://english-phrases.wgh052098.workers.dev";
 const client = supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 let phrases=[], currentUser=null;
+
+// ================= 基本函数 ==================
 function setStatus(msg){document.getElementById("statusText").textContent="状态："+msg;}
 function showApp(loggedIn){document.getElementById("authBox").classList.toggle("hidden",loggedIn);document.getElementById("appBox").classList.toggle("hidden",!loggedIn);}
 function escQuote(str=""){return String(str).replace(/'/g,"\\'");}
 
-// ========== 登录登出 ==========
+// ========== 登录/登出 ==========
 async function sendOtp(){ 
   const email=document.getElementById("emailInput").value.trim(); 
   if(!email) return alert("请输入邮箱"); 
@@ -118,7 +121,6 @@ async function sendOtp(){
   catch(e){ console.error(e); alert("发送失败:"+e.message); setStatus("发送失败"); } 
   finally{btn.disabled=false;} 
 }
-
 async function logout(){await client.auth.signOut(); currentUser=null; phrases=[]; showApp(false); updateDisplay(); setStatus("已退出");}
 async function getSessionUser(){const {data,error}=await client.auth.getUser(); if(error) return null; return data?.user||null;}
 
@@ -131,19 +133,8 @@ async function loadData(){
   phrases=data||[]; updateDisplay(); setStatus(`已同步 ${phrases.length} 条`);
 }
 
-async function addPhrase(){
-  const type=document.getElementById("newType").value;
-  const english=document.getElementById("newEnglish").value.trim();
-  const chinese=document.getElementById("newChinese").value.trim();
-  const example=document.getElementById("newExample").value.trim();
-  if(!english||!chinese) return alert("英文和中文不能为空");
-  setStatus("添加中...");
-  const {error}=await client.from("phrases").insert([{user_id:currentUser.id,type,english,chinese,example,mastered:false}]);
-  if(error){setStatus("添加失败"); return alert("添加失败:"+error.message);}
-  document.getElementById("newEnglish").value="";document.getElementById("newChinese").value="";document.getElementById("newExample").value="";
-  await loadData();
-}
-
+// ================= 短语操作 =================
+async function addPhrase(){const type=document.getElementById("newType").value;const english=document.getElementById("newEnglish").value.trim();const chinese=document.getElementById("newChinese").value.trim();const example=document.getElementById("newExample").value.trim();if(!english||!chinese) return alert("英文和中文不能为空");setStatus("添加中...");const {error}=await client.from("phrases").insert([{user_id:currentUser.id,type,english,chinese,example,mastered:false}]);if(error){setStatus("添加失败"); return alert("添加失败:"+error.message);}document.getElementById("newEnglish").value="";document.getElementById("newChinese").value="";document.getElementById("newExample").value="";await loadData();}
 async function toggleMastered(index){const row=phrases[index]; if(!row) return; setStatus("更新中..."); const {error}=await client.from("phrases").update({mastered:!row.mastered}).eq("id",row.id); if(error){setStatus("更新失败"); return alert("更新失败:"+error.message);} await loadData();}
 async function deletePhrase(index){const row=phrases[index]; if(!row) return; if(!confirm("确定要删除吗？")) return; setStatus("删除中..."); const {error}=await client.from("phrases").delete().eq("id",row.id); if(error){setStatus("删除失败"); return alert("删除失败:"+error.message);} await loadData();}
 async function clearMastered(){setStatus("清除中..."); const masteredIds=phrases.filter(p=>p.mastered).map(p=>p.id); if(!masteredIds.length)return setStatus("无需清除"); const {error}=await client.from("phrases").update({mastered:false}).in("id",masteredIds); if(error){setStatus("清除失败"); return alert("清除失败:"+error.message);} await loadData();}
@@ -183,8 +174,27 @@ async function extractTextFromPdf(file){
   let fullText=""; for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i); const content=await page.getTextContent(); fullText+=content.items.map(i=>i.str).join(" ")+"\n";} return fullText;
 }
 
-// ================== 初始化 ==================
-async function init(){setStatus("检测登录状态..."); currentUser=await getSessionUser(); if(!currentUser){showApp(false); setStatus("未登录"); return;} showApp(true); document.getElementById("userText").textContent=`当前用户：${currentUser.email||currentUser.id}`; await loadData();}
+// ================== 初始化 init ==================
+async function init(){
+  setStatus("检测登录状态...");
+  await client.auth.signOut(); // 清除旧 session
+  currentUser=null;
+  showApp(false); // 默认显示登录界面
+  setStatus("未登录");
+
+  // 监听登录状态变化
+  client.auth.onAuthStateChange(async (_event, session)=>{
+    currentUser=session?.user||null;
+    if(currentUser){
+      showApp(true);
+      document.getElementById("userText").textContent=`当前用户：${currentUser.email||currentUser.id}`;
+      await loadData();
+      setStatus(`已登录: ${currentUser.email}`);
+    }else{
+      showApp(false); phrases=[]; updateDisplay(); setStatus("未登录");
+    }
+  });
+}
 init();
 </script>
 </body>
