@@ -334,7 +334,7 @@ let lastArticleItems = []; // 存储最新分析结果
 function setStatus(msg){ document.getElementById("statusText").textContent=msg; }
 function showStep(step){ document.getElementById("authStep1").classList.toggle("hidden",step!==1); document.getElementById("authStep2").classList.toggle("hidden",step!==2); document.getElementById("appBox").classList.toggle("hidden",step!==3); }
 function toast(msg,type='info'){ const el=document.createElement('div'); el.className=`toast toast-${type}`; el.textContent=msg; document.body.appendChild(el); setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity 0.3s';},2500); setTimeout(()=>el.remove(),3000); }
-function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escHtml(s){ if(s===null||s===undefined) return ''; if(typeof s!=='string') s=JSON.stringify(s); return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escAttr(s){ return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
 function getToken(){ try{ const r=localStorage.getItem(STORAGE_KEY); if(!r)return''; return JSON.parse(r)?.access_token||''; }catch(e){return'';} }
@@ -608,3 +608,4 @@ init();
 </script>
 </body>
 </html>
+
