@@ -345,7 +345,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 
 <!-- PDF.js 库 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script>
 const SUPABASE_URL="https://zvlgxvpcoghtmyoppfyv.supabase.co",SUPABASE_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY",WORKER_URL="https://english-ai-api.wgh052098.workers.dev",STORAGE_KEY='sb-zvlgxvpcoghtmyoppfyv-auth-token';
 const client=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:STORAGE_KEY,flowType:'implicit'}});
@@ -476,7 +476,7 @@ async function processArticle(){
 async function extractPdfText(f){
   if(typeof pdfjsLib==='undefined') throw new Error('PDF.js 库未加载，请刷新页面重试');
   const ab=await f.arrayBuffer();
-  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
   const pdf=await pdfjsLib.getDocument({data:ab}).promise;
   let t='';
   for(let i=1;i<=pdf.numPages;i++){
@@ -530,3 +530,4 @@ init();
 </script>
 </body>
 </html>
+
