@@ -7,731 +7,575 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #FAF8F5;
-  --bg-deep: #F0EDE8;
-  --sidebar: #1C1917;
-  --sidebar-hover: #292524;
-  --sidebar-active: #c45d3e;
-  --card: #FFFFFF;
-  --text: #1C1917;
-  --text-secondary: #78716C;
-  --accent: #C45D3E;
-  --accent-hover: #A94B30;
-  --accent-light: rgba(196,93,62,0.07);
-  --accent-glow: rgba(196,93,62,0.12);
-  --border: #E7E5E4;
-  --border-light: #F5F3F0;
-  --success: #16A34A;
-  --success-bg: rgba(22,163,74,0.06);
-  --danger: #DC2626;
-  --info: #2563EB;
-  --display: 'Fraunces', Georgia, serif;
-  --body: 'Outfit', system-ui, sans-serif;
-  --radius: 14px;
-  --radius-sm: 10px;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
-  --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
-  --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+  --bg:#FAF8F5; --bg-deep:#F0EDE8; --sidebar:#1C1917; --sidebar-hover:#292524;
+  --sidebar-active:#C45D3E; --card:#FFFFFF; --text:#1C1917; --text-sec:#78716C;
+  --accent:#C45D3E; --accent-hover:#A94B30; --accent-light:rgba(196,93,62,0.07);
+  --accent-glow:rgba(196,93,62,0.12); --border:#E7E5E4; --border-lt:#F5F3F0;
+  --success:#16A34A; --success-bg:rgba(22,163,74,0.06); --danger:#DC2626;
+  --info:#2563EB; --warn:#F59E0B;
+  --display:'Fraunces',Georgia,serif; --body:'Outfit',system-ui,sans-serif;
+  --radius:14px; --radius-sm:10px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 4px 16px rgba(0,0,0,0.06); --shadow-lg:0 8px 30px rgba(0,0,0,0.08);
+  --ease:0.2s cubic-bezier(0.4,0,0.2,1);
 }
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+.hidden{display:none!important}
+.app-layout{display:flex;min-height:100vh}
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { height:100%; }
-body { font-family:var(--body); background:var(--bg); color:var(--text); min-height:100vh; font-size:14px; line-height:1.5; }
-.hidden { display:none !important; }
+/* ══════ SIDEBAR ══════ */
+.sidebar{width:230px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;padding:28px 0 20px}
+.sidebar-brand{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sidebar-brand h1{font-family:var(--display);font-size:1.4rem;font-weight:700;letter-spacing:-0.02em}
+.sidebar-brand span{font-size:11px;color:rgba(255,255,255,0.35);font-weight:500;letter-spacing:0.06em;text-transform:uppercase;display:block;margin-top:3px}
+.sidebar-nav{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:2px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,0.5);font-weight:500;font-size:13.5px;cursor:pointer;border:none;background:none;width:100%;font-family:var(--body);text-align:left;transition:all var(--ease)}
+.nav-item:hover{color:rgba(255,255,255,0.8);background:var(--sidebar-hover)}
+.nav-item.active{color:#fff;background:var(--sidebar-active)}
+.nav-item .ni{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.sidebar-footer{padding:14px;border-top:1px solid rgba(255,255,255,0.08);margin:0 12px}
+.sidebar-user{display:flex;align-items:center;gap:10px}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:var(--sidebar-active);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.sb-email{font-size:12px;color:rgba(255,255,255,0.45);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px}
+.btn-logout{margin-top:10px;width:100%;padding:7px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:none;color:rgba(255,255,255,0.35);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--body);transition:all var(--ease)}
+.btn-logout:hover{color:#fff;border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.05)}
 
-/* ═══════════════════ LAYOUT ═══════════════════ */
-.app-layout { display:flex; min-height:100vh; }
+/* ══════ MAIN ══════ */
+.main-content{flex:1;margin-left:230px;min-height:100vh}
+.page-wrap{max-width:760px;margin:0 auto;padding:32px 28px 100px}
+.page-title{font-family:var(--display);font-size:1.75rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
+.page-desc{color:var(--text-sec);font-size:13.5px;margin-bottom:24px}
 
-/* Sidebar - Desktop */
-.sidebar {
-  width:220px; background:var(--sidebar); color:#fff; display:flex; flex-direction:column;
-  position:fixed; top:0; left:0; bottom:0; z-index:100;
-  padding:28px 0 20px;
+/* ══════ MOBILE ══════ */
+.mobile-head{display:none;position:sticky;top:0;z-index:90;background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px}
+.mobile-head-inner{display:flex;align-items:center;justify-content:space-between}
+.mobile-head h1{font-family:var(--display);font-size:1.15rem;font-weight:700}
+.m-avatar{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:4px 4px 8px;justify-content:space-around}
+.bnav{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 10px;border:none;background:none;color:var(--text-sec);font-size:10px;font-weight:600;font-family:var(--body);cursor:pointer;border-radius:8px;transition:all var(--ease)}
+.bnav .bi{font-size:20px}
+.bnav.active{color:var(--accent)}
+
+/* ══════ AUTH ══════ */
+.auth-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:var(--bg)}
+.auth-box{background:var(--card);border-radius:20px;padding:44px 38px;max-width:400px;width:100%;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+.auth-box .ab-logo{font-family:var(--display);font-size:1.5rem;font-weight:700;margin-bottom:2px}
+.auth-box .ab-sub{font-size:11px;color:var(--text-sec);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:24px}
+.auth-box .ab-desc{color:var(--text-sec);font-size:13.5px;margin-bottom:22px;line-height:1.6}
+.otp-container{display:flex;gap:5px;justify-content:center;margin:18px 0}
+.otp-input{width:38px;height:50px;text-align:center;font-size:20px;font-weight:700;font-family:var(--body);border:2px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);outline:none;transition:all var(--ease)}
+.otp-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);background:#fff}
+.otp-input.filled{border-color:var(--accent);background:var(--accent-light)}
+.step-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-sec);margin-bottom:12px}
+.step-badge b{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px}
+.email-tag{display:inline-flex;background:var(--accent-light);color:var(--accent);padding:4px 12px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:12px}
+.link-btn{background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;font-family:var(--body);cursor:pointer;text-decoration:underline;text-underline-offset:2px;padding:0;margin-top:12px}
+.countdown{font-size:12px;color:var(--text-sec);margin-top:8px}
+
+/* ══════ FORMS ══════ */
+input[type="text"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);font-size:14px;font-family:var(--body);color:var(--text);background:var(--bg);outline:none;transition:all var(--ease)}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);background:#fff}
+input::placeholder,textarea::placeholder{color:#A8A29E}
+textarea{resize:vertical;line-height:1.7}
+select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716C' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.input-group{display:flex;flex-direction:column;gap:12px}
+.input-row{display:flex;gap:10px}
+label.fl{font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.04em}
+
+/* ══════ BUTTONS ══════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;font-family:var(--body);cursor:pointer;border:none;transition:all var(--ease);white-space:nowrap}
+.btn-p{background:var(--accent);color:#fff}
+.btn-p:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,93,62,0.25)}
+.btn-p:disabled{background:#D4B8AD;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-full{width:100%}
+.btn-g{background:transparent;color:var(--text-sec);border:1.5px solid var(--border)}
+.btn-g:hover{border-color:#ccc;color:var(--text);background:var(--bg)}
+.btn-s{background:var(--success);color:#fff}
+.btn-s:hover{background:#15803D}
+.btn-d{background:var(--danger);color:#fff;font-size:12px;padding:5px 10px}
+.btn-d:hover{background:#B91C1C}
+.btn-i{background:var(--info);color:#fff}
+.btn-sm{padding:7px 14px;font-size:12.5px}
+.btn-xs{padding:4px 10px;font-size:11.5px;border-radius:7px}
+
+/* ══════ CARD ══════ */
+.card{background:var(--card);border-radius:var(--radius);padding:22px;border:1px solid var(--border);margin-bottom:14px;transition:box-shadow var(--ease)}
+.card:hover{box-shadow:var(--shadow-sm)}
+.card-title{font-family:var(--display);font-size:1.05rem;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+
+/* ══════ DASHBOARD ══════ */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border-radius:14px;padding:18px;border:1px solid var(--border);text-align:center;transition:all var(--ease)}
+.stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.stat-num{font-family:var(--display);font-size:2rem;font-weight:700;line-height:1}
+.stat-label{font-size:12px;color:var(--text-sec);margin-top:6px;font-weight:500}
+.stat-card.accent .stat-num{color:var(--accent)}
+.stat-card.green .stat-num{color:var(--success)}
+.stat-card.blue .stat-num{color:var(--info)}
+.stat-card.warm .stat-num{color:var(--warn)}
+
+.progress-ring-wrap{display:flex;align-items:center;gap:24px;padding:24px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:20px}
+.ring-svg{width:120px;height:120px;flex-shrink:0}
+.ring-bg{fill:none;stroke:var(--border);stroke-width:10}
+.ring-fg{fill:none;stroke:var(--success);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s ease;transform:rotate(-90deg);transform-origin:center}
+.ring-text{font-family:var(--display);font-size:1.6rem;font-weight:700;fill:var(--text)}
+.ring-sub{font-size:11px;fill:var(--text-sec)}
+.ring-info h3{font-family:var(--display);font-size:1.1rem;font-weight:600;margin-bottom:8px}
+.ring-info p{font-size:13px;color:var(--text-sec);line-height:1.6}
+
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:100px;padding:16px 0}
+.chart-bar{flex:1;border-radius:6px 6px 0 0;background:var(--accent-light);position:relative;min-width:20px;transition:all 0.6s ease}
+.chart-bar-inner{position:absolute;bottom:0;left:0;right:0;border-radius:6px 6px 0 0;background:var(--accent);transition:height 0.8s ease}
+.chart-bar-label{text-align:center;font-size:10px;color:var(--text-sec);margin-top:4px;font-weight:500}
+
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.qa-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all var(--ease);font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--text)}
+.qa-btn:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--accent)}
+.qa-btn .qa-icon{font-size:28px}
+
+/* ══════ FLIP CARD ══════ */
+.flip-container{perspective:1000px;margin:20px auto;max-width:500px}
+.flip-card{width:100%;min-height:280px;position:relative;transition:transform 0.6s;transform-style:preserve-3d;cursor:pointer}
+.flip-card.flipped{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;width:100%;min-height:280px;backface-visibility:hidden;border-radius:20px;padding:32px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:2px solid var(--border)}
+.flip-front{background:linear-gradient(145deg,#fff 0%,#FDF8F4 100%)}
+.flip-back{background:linear-gradient(145deg,#F0FAF4 0%,#fff 100%);transform:rotateY(180deg);border-color:rgba(22,163,74,0.2)}
+.flip-front h2{font-family:var(--display);font-size:1.6rem;font-weight:700;color:var(--accent)}
+.flip-front .flip-hint{font-size:12px;color:var(--text-sec);margin-top:12px}
+.flip-back h3{font-family:var(--display);font-size:1.2rem;font-weight:600;color:var(--success);margin-bottom:10px}
+.flip-back p{font-size:13.5px;color:var(--text-sec);line-height:1.6;margin:3px 0}
+.flip-back .fb-label{font-weight:600;color:var(--text)}
+.flip-progress{display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0;font-size:13px;color:var(--text-sec)}
+.flip-progress-bar{flex:1;max-width:300px;height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+.flip-progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width 0.4s ease}
+.flip-actions{display:flex;gap:12px;justify-content:center;margin-top:12px}
+.flip-btn{padding:12px 28px;border-radius:12px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:var(--body);transition:all var(--ease)}
+.flip-btn.know{background:var(--success);color:#fff}
+.flip-btn.know:hover{background:#15803D;transform:translateY(-1px)}
+.flip-btn.dunno{background:#FEE2E2;color:var(--danger)}
+.flip-btn.dunno:hover{background:#FECACA}
+.flip-btn.skip{background:var(--bg-deep);color:var(--text-sec)}
+.flip-empty{text-align:center;padding:60px 0;color:var(--text-sec)}
+.flip-empty .fe-icon{font-size:48px;margin-bottom:12px}
+
+/* ══════ PHRASE LIST ══════ */
+.controls-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.search-wrap{flex:1;min-width:180px;position:relative}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:#A8A29E;pointer-events:none}
+.search-wrap input{padding-left:36px}
+
+.phrase{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:8px;border:1px solid var(--border);transition:all var(--ease)}
+.phrase:hover{box-shadow:var(--shadow-md);border-color:#D6D3D1}
+.phrase.mastered{background:var(--success-bg);border-color:rgba(22,163,74,0.15)}
+.phrase-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
+.phrase h3{font-family:var(--display);font-size:1rem;font-weight:600;color:var(--accent);margin:0}
+.phrase .badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:3px 10px;border-radius:6px;background:var(--accent-light);color:var(--accent);flex-shrink:0}
+.phrase p{margin:2px 0;font-size:13px;color:var(--text-sec)}
+.phrase .lb{font-weight:600;color:var(--text)}
+.phrase-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-lt)}
+
+/* ══════ ARTICLE ══════ */
+.ar-section{margin-bottom:10px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card)}
+.ar-sh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none;transition:background var(--ease)}
+.ar-sh:hover{background:var(--bg)}
+.ar-sh .ar-sl{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.ar-sh .ar-cnt{font-size:11px;color:var(--text-sec);background:var(--accent-light);padding:2px 8px;border-radius:99px;font-weight:600}
+.ar-sh .ar-arr{transition:transform 0.25s;font-size:11px;color:var(--text-sec)}
+.ar-sh.open .ar-arr{transform:rotate(180deg)}
+.ar-sb{padding:4px 16px 16px}
+.ar-sb.collapsed{display:none}
+.ar-item{padding:12px 14px;margin-bottom:6px;border-radius:var(--radius-sm);border:1.5px solid var(--border-lt);background:#fff;transition:all var(--ease)}
+.ar-item:hover{border-color:var(--border)}
+.ar-item.added{border-color:rgba(22,163,74,0.2);background:var(--success-bg)}
+.ar-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:3px}
+.ar-item h4{font-family:var(--display);font-size:0.95rem;font-weight:600;color:var(--accent);margin:0}
+.ar-item.added h4{color:var(--success)}
+.ar-item p{font-size:13px;color:var(--text-sec);margin:2px 0}
+.ar-item .lbl{font-weight:600;color:var(--text)}
+.btn-add{background:var(--accent);color:#fff;padding:4px 11px;border-radius:7px;font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:var(--body);transition:all var(--ease);flex-shrink:0}
+.btn-add:hover{background:var(--accent-hover)}
+.btn-add.added{background:var(--success);cursor:default}
+.ar-trans-box{background:var(--bg);padding:14px 16px;border-radius:12px;border:1px solid var(--border-lt);font-size:14px;line-height:1.8;color:#57534E;white-space:pre-wrap;max-height:280px;overflow-y:auto}
+
+/* ══════ SETTINGS ══════ */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:18px}
+.platform-card{padding:14px 8px;border:2px solid var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--bg)}
+.platform-card:hover{border-color:#D6D3D1;background:#fff}
+.platform-card.selected{border-color:var(--accent);background:var(--accent-light)}
+.platform-card .p-icon{font-size:24px;margin-bottom:4px}
+.platform-card .p-name{font-size:12.5px;font-weight:600}
+.platform-card .p-model{font-size:10.5px;color:var(--text-sec);margin-top:2px}
+
+/* ══════ TOAST ══════ */
+.toast{position:fixed;top:20px;right:20px;padding:12px 20px;border-radius:12px;color:#fff;font-size:13px;font-weight:600;z-index:9999;animation:slideIn 0.3s ease;box-shadow:var(--shadow-lg)}
+.toast-success{background:var(--success)}.toast-error{background:var(--danger)}.toast-info{background:var(--info)}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+.loading-spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+input[type="file"]{font-family:var(--body);font-size:13px;color:var(--text-sec);padding:6px 0;border:none;background:none}
+input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:var(--text);cursor:pointer;margin-right:10px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main-content{margin-left:0}
+  .page-wrap{padding:16px 14px 100px}
+  .mobile-head{display:block}
+  .bottom-nav{display:flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .quick-actions{grid-template-columns:repeat(3,1fr)}
+  .input-row{flex-direction:column}
+  .platform-grid{grid-template-columns:repeat(3,1fr)}
+  .progress-ring-wrap{flex-direction:column;text-align:center}
+  .flip-front h2{font-size:1.3rem}
 }
-.sidebar-brand { padding:0 24px 28px; border-bottom:1px solid rgba(255,255,255,0.08); }
-.sidebar-brand h1 { font-family:var(--display); font-size:1.35rem; font-weight:700; color:#fff; letter-spacing:-0.02em; }
-.sidebar-brand span { font-size:11px; color:rgba(255,255,255,0.4); font-weight:500; letter-spacing:0.06em; text-transform:uppercase; display:block; margin-top:4px; }
-
-.sidebar-nav { flex:1; padding:16px 12px; display:flex; flex-direction:column; gap:2px; }
-.nav-item {
-  display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:10px;
-  color:rgba(255,255,255,0.55); font-weight:500; font-size:13.5px; cursor:pointer;
-  transition:all var(--transition); border:none; background:none; width:100%;
-  font-family:var(--body); text-align:left;
-}
-.nav-item:hover { color:rgba(255,255,255,0.85); background:var(--sidebar-hover); }
-.nav-item.active { color:#fff; background:var(--sidebar-active); }
-.nav-item .nav-icon { font-size:18px; width:22px; text-align:center; flex-shrink:0; }
-.nav-item .nav-label { white-space:nowrap; }
-
-.sidebar-footer { padding:16px 14px; border-top:1px solid rgba(255,255,255,0.08); margin:0 12px; }
-.sidebar-user { display:flex; align-items:center; gap:10px; }
-.sidebar-avatar {
-  width:34px; height:34px; border-radius:50%; background:var(--sidebar-active);
-  color:#fff; display:flex; align-items:center; justify-content:center;
-  font-weight:700; font-size:14px; flex-shrink:0;
-}
-.sidebar-email { font-size:12px; color:rgba(255,255,255,0.5); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:120px; }
-.btn-logout {
-  margin-top:12px; width:100%; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);
-  background:none; color:rgba(255,255,255,0.4); font-size:12px; font-weight:500;
-  cursor:pointer; font-family:var(--body); transition:all var(--transition);
-}
-.btn-logout:hover { color:#fff; border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.05); }
-
-/* Main content */
-.main-content { flex:1; margin-left:220px; min-height:100vh; }
-.page-container { max-width:720px; margin:0 auto; padding:36px 32px 80px; }
-
-/* Mobile bottom nav */
-.mobile-header { display:none; }
-.bottom-nav { display:none; }
-
-/* ═══════════════════ TYPOGRAPHY ═══════════════════ */
-.page-title {
-  font-family:var(--display); font-size:1.8rem; font-weight:700;
-  color:var(--text); letter-spacing:-0.02em; margin-bottom:6px;
-}
-.page-desc { color:var(--text-secondary); font-size:13.5px; margin-bottom:24px; }
-
-/* ═══════════════════ CARDS ═══════════════════ */
-.card {
-  background:var(--card); border-radius:var(--radius); padding:24px;
-  border:1px solid var(--border); margin-bottom:16px;
-  transition:box-shadow var(--transition);
-}
-.card:hover { box-shadow:var(--shadow-sm); }
-.card-title {
-  font-family:var(--display); font-size:1.1rem; font-weight:600;
-  margin-bottom:16px; display:flex; align-items:center; gap:8px;
-}
-
-/* ═══════════════════ AUTH ═══════════════════ */
-.auth-wrapper {
-  display:flex; align-items:center; justify-content:center;
-  min-height:100vh; padding:24px; background:var(--bg);
-}
-.auth-card {
-  background:var(--card); border-radius:20px; padding:48px 40px;
-  max-width:420px; width:100%; text-align:center;
-  box-shadow:var(--shadow-lg); border:1px solid var(--border);
-}
-.auth-card .auth-logo { font-family:var(--display); font-size:1.6rem; font-weight:700; margin-bottom:4px; }
-.auth-card .auth-sub { font-size:12px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:28px; }
-.auth-card .auth-desc { color:var(--text-secondary); font-size:13.5px; margin-bottom:24px; line-height:1.6; }
-
-.otp-container { display:flex; gap:6px; justify-content:center; margin:20px 0; }
-.otp-input {
-  width:40px; height:52px; text-align:center; font-size:20px; font-weight:700;
-  font-family:var(--body); border:2px solid var(--border); border-radius:10px;
-  background:var(--bg); color:var(--text); outline:none; transition:all var(--transition);
-}
-.otp-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); background:#fff; }
-.otp-input.filled { border-color:var(--accent); background:var(--accent-light); }
-
-.step-badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-secondary); margin-bottom:12px; }
-.step-badge .step-num { width:20px; height:20px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px; }
-.email-display { display:inline-flex; align-items:center; background:var(--accent-light); color:var(--accent); padding:5px 14px; border-radius:8px; font-size:13px; font-weight:600; margin-bottom:14px; }
-.link-btn { background:none; border:none; color:var(--accent); font-size:13px; font-weight:600; font-family:var(--body); cursor:pointer; text-decoration:underline; text-underline-offset:2px; padding:0; margin-top:12px; }
-.countdown { font-size:12px; color:var(--text-secondary); margin-top:8px; }
-
-/* ═══════════════════ INPUTS ═══════════════════ */
-input[type="text"],input[type="email"],input[type="password"],select,textarea {
-  width:100%; padding:11px 14px; border-radius:var(--radius-sm); border:1.5px solid var(--border);
-  font-size:14px; font-family:var(--body); color:var(--text); background:var(--bg);
-  outline:none; transition:all var(--transition);
-}
-input:focus,select:focus,textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); background:#fff; }
-input::placeholder,textarea::placeholder { color:#A8A29E; }
-textarea { resize:vertical; line-height:1.7; }
-select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
-.input-group { display:flex; flex-direction:column; gap:12px; }
-.input-row { display:flex; gap:10px; }
-label.field-label { font-size:12px; font-weight:600; color:var(--text-secondary); margin-bottom:3px; text-transform:uppercase; letter-spacing:0.04em; }
-
-/* ═══════════════════ BUTTONS ═══════════════════ */
-.btn {
-  display:inline-flex; align-items:center; justify-content:center; gap:6px;
-  padding:10px 18px; border-radius:var(--radius-sm); font-size:13.5px; font-weight:600;
-  font-family:var(--body); cursor:pointer; border:none; transition:all var(--transition); white-space:nowrap;
-}
-.btn-primary { background:var(--accent); color:#fff; }
-.btn-primary:hover { background:var(--accent-hover); transform:translateY(-1px); box-shadow:0 4px 12px rgba(196,93,62,0.25); }
-.btn-primary:disabled { background:#D4B8AD; cursor:not-allowed; transform:none; box-shadow:none; }
-.btn-full { width:100%; }
-.btn-ghost { background:transparent; color:var(--text-secondary); border:1.5px solid var(--border); }
-.btn-ghost:hover { border-color:#ccc; color:var(--text); background:var(--bg); }
-.btn-success { background:var(--success); color:#fff; }
-.btn-success:hover { background:#15803D; }
-.btn-danger { background:var(--danger); color:#fff; font-size:12px; padding:6px 12px; }
-.btn-danger:hover { background:#B91C1C; }
-.btn-info { background:var(--info); color:#fff; }
-.btn-sm { padding:7px 14px; font-size:12.5px; }
-.btn-xs { padding:5px 10px; font-size:11.5px; border-radius:7px; }
-
-/* ═══════════════════ REVIEW TAB ═══════════════════ */
-.controls-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:20px; }
-.search-wrap { flex:1; min-width:200px; position:relative; }
-.search-wrap svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; stroke:#A8A29E; pointer-events:none; }
-.search-wrap input { padding-left:36px; }
-
-/* Phrase cards */
-.phrase {
-  background:var(--card); border-radius:var(--radius); padding:20px;
-  margin-bottom:10px; border:1px solid var(--border);
-  transition:all var(--transition);
-}
-.phrase:hover { box-shadow:var(--shadow-md); border-color:#D6D3D1; }
-.phrase.mastered { background:var(--success-bg); border-color:rgba(22,163,74,0.15); }
-.phrase-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:8px; }
-.phrase h3 { font-family:var(--display); font-size:1.05rem; font-weight:600; color:var(--accent); margin:0; }
-.phrase .type-badge {
-  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;
-  padding:3px 10px; border-radius:6px; background:var(--accent-light); color:var(--accent); flex-shrink:0;
-}
-.phrase p { margin:3px 0; font-size:13px; color:var(--text-secondary); }
-.phrase .label { font-weight:600; color:var(--text); }
-.phrase-actions {
-  display:flex; gap:6px; margin-top:12px; padding-top:12px;
-  border-top:1px solid var(--border-light);
-}
-
-/* ═══════════════════ ARTICLE RESULTS ═══════════════════ */
-.ar-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
-.ar-title { font-family:var(--display); font-size:1.3rem; font-weight:700; color:var(--text); }
-.ar-summary { font-size:13.5px; color:var(--text-secondary); line-height:1.7; padding:16px; background:var(--bg); border-radius:12px; border:1px solid var(--border-light); margin-bottom:14px; }
-
-.ar-section { margin-bottom:10px; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; background:var(--card); }
-.ar-section-head { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; cursor:pointer; user-select:none; transition:background var(--transition); }
-.ar-section-head:hover { background:var(--bg); }
-.ar-section-head .ar-sec-left { display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; }
-.ar-section-head .ar-sec-count { font-size:11px; color:var(--text-secondary); background:var(--accent-light); padding:2px 8px; border-radius:99px; font-weight:600; }
-.ar-section-head .ar-sec-arrow { transition:transform 0.25s; font-size:11px; color:var(--text-secondary); }
-.ar-section-head.open .ar-sec-arrow { transform:rotate(180deg); }
-.ar-section-body { padding:4px 16px 16px; }
-.ar-section-body.collapsed { display:none; }
-
-.ar-item {
-  padding:14px 16px; margin-bottom:6px; border-radius:var(--radius-sm);
-  border:1.5px solid var(--border-light); background:#fff;
-  transition:all var(--transition);
-}
-.ar-item:last-child { margin-bottom:0; }
-.ar-item:hover { border-color:var(--border); }
-.ar-item.added { border-color:rgba(22,163,74,0.2); background:var(--success-bg); }
-.ar-item-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:4px; }
-.ar-item h4 { font-family:var(--display); font-size:0.95rem; font-weight:600; color:var(--accent); margin:0; }
-.ar-item.added h4 { color:var(--success); }
-.ar-item p { font-size:13px; line-height:1.5; color:var(--text-secondary); margin:2px 0; }
-.ar-item .lbl { font-weight:600; color:var(--text); }
-.btn-add {
-  background:var(--accent); color:#fff; padding:5px 12px; border-radius:7px;
-  font-size:11.5px; font-weight:600; border:none; cursor:pointer;
-  font-family:var(--body); transition:all var(--transition); flex-shrink:0;
-}
-.btn-add:hover { background:var(--accent-hover); }
-.btn-add.added { background:var(--success); cursor:default; }
-.btn-add.added::before { content:'✓ '; }
-
-.ar-trans-box { background:var(--bg); padding:16px 18px; border-radius:12px; border:1px solid var(--border-light); font-size:14px; line-height:1.8; color:#57534E; white-space:pre-wrap; max-height:300px; overflow-y:auto; }
-
-/* ═══════════════════ SETTINGS ═══════════════════ */
-.platform-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; margin-bottom:20px; }
-.platform-card {
-  padding:16px 10px; border:2px solid var(--border); border-radius:12px;
-  text-align:center; cursor:pointer; transition:all var(--transition); background:var(--bg);
-}
-.platform-card:hover { border-color:#D6D3D1; background:#fff; }
-.platform-card.selected { border-color:var(--accent); background:var(--accent-light); }
-.platform-card .p-icon { font-size:26px; margin-bottom:6px; }
-.platform-card .p-name { font-size:13px; font-weight:600; }
-.platform-card .p-model { font-size:11px; color:var(--text-secondary); margin-top:2px; }
-
-/* ═══════════════════ STATUS BAR ═══════════════════ */
-.status-strip {
-  position:fixed; bottom:0; left:220px; right:0; z-index:50;
-  background:rgba(255,255,255,0.85); backdrop-filter:blur(10px);
-  border-top:1px solid var(--border); padding:8px 24px;
-  display:flex; align-items:center; gap:8px;
-}
-.status-dot { width:6px; height:6px; border-radius:50%; background:var(--success); animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.status-strip span { font-size:12px; color:var(--text-secondary); }
-
-/* ═══════════════════ TOAST ═══════════════════ */
-.toast { position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:12px; color:#fff; font-size:13px; font-weight:600; z-index:9999; animation:slideIn 0.3s ease-out; box-shadow:var(--shadow-lg); }
-.toast-success { background:var(--success); }
-.toast-error { background:var(--danger); }
-.toast-info { background:var(--info); }
-@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
-
-.loading-spinner { display:inline-block; width:16px; height:16px; border:2.5px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; }
-@keyframes spin { to{transform:rotate(360deg)} }
-
-input[type="file"] { font-family:var(--body); font-size:13px; color:var(--text-secondary); padding:8px 0; border:none; background:none; }
-input[type="file"]::file-selector-button { font-family:var(--body); font-size:12px; font-weight:600; padding:8px 14px; border-radius:8px; border:1.5px solid var(--border); background:#fff; color:var(--text); cursor:pointer; margin-right:10px; transition:all var(--transition); }
-input[type="file"]::file-selector-button:hover { background:var(--bg); }
-
-@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
-
-/* ═══════════════════ RESPONSIVE ═══════════════════ */
-@media (max-width:768px) {
-  .sidebar { display:none; }
-  .main-content { margin-left:0; }
-  .page-container { padding:20px 16px 100px; }
-
-  .mobile-header {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 16px; background:var(--card); border-bottom:1px solid var(--border);
-    position:sticky; top:0; z-index:90;
-  }
-  .mobile-header h1 { font-family:var(--display); font-size:1.15rem; font-weight:700; }
-  .mobile-header .mobile-user { display:flex; align-items:center; gap:8px; }
-  .mobile-avatar { width:30px; height:30px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; }
-
-  .bottom-nav {
-    display:flex; position:fixed; bottom:0; left:0; right:0; z-index:100;
-    background:rgba(255,255,255,0.92); backdrop-filter:blur(12px);
-    border-top:1px solid var(--border); padding:6px 8px 10px;
-    justify-content:space-around;
-  }
-  .bottom-nav .bnav-item {
-    display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 12px;
-    border:none; background:none; color:var(--text-secondary); font-size:10px; font-weight:600;
-    font-family:var(--body); cursor:pointer; border-radius:8px; transition:all var(--transition);
-  }
-  .bottom-nav .bnav-item .bnav-icon { font-size:20px; }
-  .bottom-nav .bnav-item.active { color:var(--accent); }
-
-  .status-strip { left:0; display:none; }
-  .input-row { flex-direction:column; }
-  .platform-grid { grid-template-columns:repeat(3,1fr); }
-  .ar-header { flex-direction:column; align-items:flex-start; }
-}
-
-.footer-space { height:20px; }
 </style>
 </head>
 <body>
-
-<!-- ═══════════════════ SIDEBAR (Desktop) ═══════════════════ -->
 <div class="app-layout">
+  <!-- SIDEBAR -->
   <nav class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <h1>LinguaFlow</h1>
-      <span>英语复习助手</span>
-    </div>
+    <div class="sidebar-brand"><h1>LinguaFlow</h1><span>英语复习助手</span></div>
     <div class="sidebar-nav">
-      <button class="nav-item active" onclick="switchTab('review')" data-tab="review">
-        <span class="nav-icon">📚</span><span class="nav-label">复习卡片</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('add')" data-tab="add">
-        <span class="nav-icon">✏️</span><span class="nav-label">手动添加</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('article')" data-tab="article">
-        <span class="nav-icon">📖</span><span class="nav-label">文章分析</span>
-      </button>
-      <button class="nav-item" onclick="switchTab('settings')" data-tab="settings">
-        <span class="nav-icon">⚙️</span><span class="nav-label">AI 设置</span>
-      </button>
+      <button class="nav-item active" onclick="switchTab('dash')" data-tab="dash"><span class="ni">📊</span>学习仪表盘</button>
+      <button class="nav-item" onclick="switchTab('flip')" data-tab="flip"><span class="ni">🃏</span>翻卡复习</button>
+      <button class="nav-item" onclick="switchTab('list')" data-tab="list"><span class="ni">📚</span>卡片列表</button>
+      <button class="nav-item" onclick="switchTab('add')" data-tab="add"><span class="ni">✏️</span>手动添加</button>
+      <button class="nav-item" onclick="switchTab('article')" data-tab="article"><span class="ni">📖</span>文章分析</button>
+      <button class="nav-item" onclick="switchTab('settings')" data-tab="settings"><span class="ni">⚙️</span>AI 设置</button>
     </div>
-    <div class="sidebar-footer" id="sidebarFooter">
-      <div class="sidebar-user">
-        <div class="sidebar-avatar" id="userAvatar">U</div>
-        <div class="sidebar-email" id="userText"></div>
-      </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user"><div class="sb-avatar" id="userAvatar">U</div><div class="sb-email" id="userText"></div></div>
       <button class="btn-logout" onclick="logout()">退出登录</button>
     </div>
   </nav>
 
-  <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
   <div class="main-content">
-
     <!-- Mobile Header -->
-    <div class="mobile-header" id="mobileHeader" class="hidden">
-      <h1>LinguaFlow</h1>
-      <div class="mobile-user">
-        <div class="mobile-avatar" id="mobileAvatar">U</div>
-        <button class="btn btn-ghost btn-sm" onclick="logout()" style="padding:5px 10px;font-size:11px;">退出</button>
-      </div>
+    <div class="mobile-head" id="mobileHead">
+      <div class="mobile-head-inner"><h1>LinguaFlow</h1><div style="display:flex;align-items:center;gap:8px"><div class="m-avatar" id="mAvatar">U</div><button class="btn btn-g btn-xs" onclick="logout()">退出</button></div></div>
     </div>
 
-    <!-- ═══════════ AUTH STEP 1 ═══════════ -->
-    <div id="authStep1" class="auth-wrapper hidden">
-      <div class="auth-card">
-        <div class="auth-logo">LinguaFlow</div>
-        <div class="auth-sub">英语复习助手</div>
-        <p class="auth-desc">输入邮箱，我们会发送一封包含 8 位验证码的邮件。</p>
-        <div class="step-badge"><span class="step-num">1</span> 输入邮箱</div>
-        <input id="emailInput" type="email" placeholder="your@email.com" style="margin-bottom:14px;" />
-        <button id="sendOtpBtn" class="btn btn-primary btn-full" onclick="sendOtp()">发送验证码</button>
+    <!-- AUTH 1 -->
+    <div id="authStep1" class="auth-wrap hidden">
+      <div class="auth-box"><div class="ab-logo">LinguaFlow</div><div class="ab-sub">英语复习助手</div>
+        <p class="ab-desc">输入邮箱，发送 8 位验证码登录。</p>
+        <div class="step-badge"><b>1</b> 输入邮箱</div>
+        <input id="emailInput" type="email" placeholder="your@email.com" style="margin-bottom:14px"/>
+        <button id="sendOtpBtn" class="btn btn-p btn-full" onclick="sendOtp()">发送验证码</button>
       </div>
     </div>
-
-    <!-- ═══════════ AUTH STEP 2 ═══════════ -->
-    <div id="authStep2" class="auth-wrapper hidden">
-      <div class="auth-card">
-        <div class="auth-logo">🔐</div>
-        <p class="auth-desc">验证码已发送至</p>
-        <div class="email-display" id="otpEmailDisplay"></div>
-        <div class="step-badge"><span class="step-num">2</span> 输入 8 位验证码</div>
-        <div class="otp-container" id="otpContainer">
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-          <input type="text" class="otp-input" maxlength="1" inputmode="numeric"/>
-        </div>
-        <button id="verifyBtn" class="btn btn-primary btn-full" onclick="verifyOtp()" disabled>验证并登录</button>
+    <!-- AUTH 2 -->
+    <div id="authStep2" class="auth-wrap hidden">
+      <div class="auth-box"><div class="ab-logo">🔐</div>
+        <p class="ab-desc">验证码已发送至</p><div class="email-tag" id="otpEmailDisplay"></div>
+        <div class="step-badge"><b>2</b> 输入 8 位验证码</div>
+        <div class="otp-container" id="otpContainer"><input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/><input type="text" class="otp-input" maxlength="1" inputmode="numeric"/></div>
+        <button id="verifyBtn" class="btn btn-p btn-full" onclick="verifyOtp()" disabled>验证并登录</button>
         <div class="countdown" id="countdownText"></div>
-        <button class="link-btn" id="resendBtn" onclick="resendOtp()">重新发送验证码</button>
-        <br/><button class="link-btn" onclick="backToEmail()" style="margin-top:6px;">← 更换邮箱</button>
+        <button class="link-btn" id="resendBtn" onclick="resendOtp()">重新发送</button><br/><button class="link-btn" onclick="backToEmail()" style="margin-top:6px">← 更换邮箱</button>
       </div>
     </div>
 
-    <!-- ═══════════ APP ═══════════ -->
-    <div id="appBox" class="hidden">
-      <div class="page-container">
+    <!-- APP -->
+    <div id="appBox" class="hidden"><div class="page-wrap">
 
-        <!-- Tab: Review -->
-        <div id="tab-review">
-          <div class="page-title">复习卡片</div>
-          <div class="page-desc">在这里复习你保存的短语和语法知识点。</div>
-          <div class="controls-bar">
-            <div class="search-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="searchInput" placeholder="搜索短语或语法..." oninput="updateDisplay()">
-            </div>
-            <select id="categorySelect" onchange="updateDisplay()"><option value="全部">全部</option><option value="短语">短语</option><option value="语法">语法</option></select>
-            <button class="btn btn-ghost btn-sm" onclick="randomPhrase()">🎲 随机</button>
-            <button class="btn btn-ghost btn-sm" onclick="clearMastered()">✨ 清除标记</button>
-          </div>
-          <div id="phraseCount" style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;"></div>
-          <div id="results"></div>
+      <!-- TAB: Dashboard -->
+      <div id="tab-dash">
+        <div class="page-title">学习仪表盘</div>
+        <div class="page-desc">你的英语学习概览。</div>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="progress-ring-wrap" id="progressRing"></div>
+        <div class="card">
+          <div class="card-title">📊 分类掌握度</div>
+          <div id="chartArea"></div>
         </div>
-
-        <!-- Tab: Add -->
-        <div id="tab-add" class="hidden">
-          <div class="page-title">手动添加</div>
-          <div class="page-desc">添加你遇到的短语或语法知识点。</div>
-          <div class="card">
-            <div class="input-group">
-              <select id="newType"><option value="短语">短语</option><option value="语法">语法</option></select>
-              <div class="input-row">
-                <input type="text" id="newEnglish" placeholder="英文短语 / 语法">
-                <input type="text" id="newChinese" placeholder="中文释义">
-              </div>
-              <textarea id="newExample" placeholder="输入例句（可选）" rows="2"></textarea>
-              <div><button class="btn btn-primary" onclick="addPhrase()">添加到复习</button></div>
-            </div>
-          </div>
+        <div class="quick-actions">
+          <button class="qa-btn" onclick="switchTab('flip')"><span class="qa-icon">🃏</span>翻卡复习</button>
+          <button class="qa-btn" onclick="switchTab('article')"><span class="qa-icon">📖</span>文章分析</button>
+          <button class="qa-btn" onclick="switchTab('add')"><span class="qa-icon">✏️</span>手动添加</button>
         </div>
-
-        <!-- Tab: Article -->
-        <div id="tab-article" class="hidden">
-          <div class="page-title">文章分析</div>
-          <div class="page-desc">粘贴英文文章或上传 PDF，AI 自动翻译并提取短语、语法。</div>
-          <div class="card">
-            <div class="input-group">
-              <textarea id="articleInput" rows="5" placeholder="粘贴英文文章到这里..."></textarea>
-              <input type="file" id="pdfInput" accept="application/pdf" />
-              <div><button class="btn btn-success btn-full" id="analyzeBtn" onclick="processArticle()">🚀 生成翻译 & 短语/语法</button></div>
-            </div>
-          </div>
-          <div id="articleResults"></div>
-        </div>
-
-        <!-- Tab: Settings -->
-        <div id="tab-settings" class="hidden">
-          <div class="page-title">AI 设置</div>
-          <div class="page-desc">选择大模型平台并配置 API Key，数据只对你可见。</div>
-          <div class="card">
-            <div class="card-title">选择平台</div>
-            <div class="platform-grid" id="platformGrid">
-              <div class="platform-card" data-platform="deepseek" onclick="selectPlatform('deepseek')"><div class="p-icon">🔮</div><div class="p-name">DeepSeek</div><div class="p-model">deepseek-chat</div></div>
-              <div class="platform-card" data-platform="qianwen" onclick="selectPlatform('qianwen')"><div class="p-icon">☁️</div><div class="p-name">通义千问</div><div class="p-model">qwen-plus</div></div>
-              <div class="platform-card" data-platform="openai" onclick="selectPlatform('openai')"><div class="p-icon">🤖</div><div class="p-name">OpenAI</div><div class="p-model">gpt-4o-mini</div></div>
-              <div class="platform-card" data-platform="claude" onclick="selectPlatform('claude')"><div class="p-icon">🧠</div><div class="p-name">Claude</div><div class="p-model">claude-sonnet</div></div>
-              <div class="platform-card" data-platform="gemini" onclick="selectPlatform('gemini')"><div class="p-icon">💎</div><div class="p-name">Gemini</div><div class="p-model">gemini-2.0-flash</div></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">API 配置</div>
-            <div class="input-group">
-              <div><label class="field-label">API Key</label><input type="password" id="settingsApiKey" placeholder="输入你的 API Key"></div>
-              <div><label class="field-label">模型名称（可选）</label><input type="text" id="settingsModel" placeholder="留空使用默认模型"></div>
-              <div class="input-row">
-                <button class="btn btn-info btn-sm" onclick="testKey()">🔑 测试连接</button>
-                <button class="btn btn-primary btn-sm" onclick="saveAISettings()">💾 保存设置</button>
-              </div>
-              <div id="settingsMsg" style="font-size:13px;margin-top:4px;"></div>
-            </div>
-          </div>
-          <div class="card" style="background:var(--bg);">
-            <p style="font-size:12px;color:var(--text-secondary);line-height:1.7;">
-              <strong>如何获取 API Key：</strong><br>
-              • DeepSeek → <a href="https://platform.deepseek.com/api_keys" target="_blank" style="color:var(--accent)">platform.deepseek.com</a><br>
-              • 通义千问 → <a href="https://dashscope.console.aliyun.com/apiKey" target="_blank" style="color:var(--accent)">dashscope.console.aliyun.com</a><br>
-              • OpenAI → <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--accent)">platform.openai.com</a><br>
-              • Claude → <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--accent)">console.anthropic.com</a><br>
-              • Gemini → <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="footer-space"></div>
       </div>
-    </div>
+
+      <!-- TAB: Flip Review -->
+      <div id="tab-flip" class="hidden">
+        <div class="page-title">翻卡复习</div>
+        <div class="page-desc">点击卡片翻转，标记你的掌握情况。</div>
+        <div class="flip-progress" id="flipProgress"></div>
+        <div class="flip-container"><div class="flip-card" id="flipCard" onclick="flipCardToggle()"><div class="flip-front" id="flipFront"></div><div class="flip-back" id="flipBack"></div></div></div>
+        <div class="flip-actions" id="flipActions"></div>
+      </div>
+
+      <!-- TAB: List -->
+      <div id="tab-list" class="hidden">
+        <div class="page-title">卡片列表</div>
+        <div class="page-desc">管理你所有的短语和语法卡片。</div>
+        <div class="controls-bar">
+          <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchInput" placeholder="搜索..." oninput="updateDisplay()"></div>
+          <select id="categorySelect" onchange="updateDisplay()"><option value="全部">全部</option><option value="短语">短语</option><option value="语法">语法</option></select>
+          <button class="btn btn-g btn-sm" onclick="randomPhrase()">🎲</button>
+          <button class="btn btn-g btn-sm" onclick="clearMastered()">✨ 清除标记</button>
+        </div>
+        <div id="phraseCount" style="font-size:12px;color:var(--text-sec);margin-bottom:10px"></div>
+        <div id="results"></div>
+      </div>
+
+      <!-- TAB: Add -->
+      <div id="tab-add" class="hidden">
+        <div class="page-title">手动添加</div>
+        <div class="page-desc">添加你遇到的短语或语法知识点。</div>
+        <div class="card"><div class="input-group">
+          <select id="newType"><option value="短语">短语</option><option value="语法">语法</option></select>
+          <div class="input-row"><input type="text" id="newEnglish" placeholder="英文短语 / 语法"><input type="text" id="newChinese" placeholder="中文释义"></div>
+          <textarea id="newExample" placeholder="输入例句（可选）" rows="2"></textarea>
+          <div><button class="btn btn-p" onclick="addPhrase()">添加到复习</button></div>
+        </div></div>
+      </div>
+
+      <!-- TAB: Article -->
+      <div id="tab-article" class="hidden">
+        <div class="page-title">文章分析</div>
+        <div class="page-desc">粘贴英文文章或上传 PDF，AI 自动翻译并提取短语、语法。</div>
+        <div class="card"><div class="input-group">
+          <textarea id="articleInput" rows="5" placeholder="粘贴英文文章到这里..."></textarea>
+          <input type="file" id="pdfInput" accept="application/pdf"/>
+          <div><button class="btn btn-s btn-full" id="analyzeBtn" onclick="processArticle()">🚀 生成翻译 & 短语/语法</button></div>
+        </div></div>
+        <div id="articleResults"></div>
+      </div>
+
+      <!-- TAB: Settings -->
+      <div id="tab-settings" class="hidden">
+        <div class="page-title">AI 设置</div>
+        <div class="page-desc">选择大模型平台并配置 API Key。</div>
+        <div class="card"><div class="card-title">选择平台</div>
+          <div class="platform-grid">
+            <div class="platform-card" data-platform="deepseek" onclick="selectPlatform('deepseek')"><div class="p-icon">🔮</div><div class="p-name">DeepSeek</div><div class="p-model">deepseek-chat</div></div>
+            <div class="platform-card" data-platform="qianwen" onclick="selectPlatform('qianwen')"><div class="p-icon">☁️</div><div class="p-name">通义千问</div><div class="p-model">qwen-plus</div></div>
+            <div class="platform-card" data-platform="openai" onclick="selectPlatform('openai')"><div class="p-icon">🤖</div><div class="p-name">OpenAI</div><div class="p-model">gpt-4o-mini</div></div>
+            <div class="platform-card" data-platform="claude" onclick="selectPlatform('claude')"><div class="p-icon">🧠</div><div class="p-name">Claude</div><div class="p-model">claude-sonnet</div></div>
+            <div class="platform-card" data-platform="gemini" onclick="selectPlatform('gemini')"><div class="p-icon">💎</div><div class="p-name">Gemini</div><div class="p-model">gemini-2.0-flash</div></div>
+          </div>
+        </div>
+        <div class="card"><div class="card-title">API 配置</div><div class="input-group">
+          <div><label class="fl">API Key</label><input type="password" id="settingsApiKey" placeholder="输入你的 API Key"></div>
+          <div><label class="fl">模型名称（可选）</label><input type="text" id="settingsModel" placeholder="留空使用默认模型"></div>
+          <div class="input-row"><button class="btn btn-i btn-sm" onclick="testKey()">🔑 测试</button><button class="btn btn-p btn-sm" onclick="saveAISettings()">💾 保存</button></div>
+          <div id="settingsMsg" style="font-size:13px;margin-top:4px"></div>
+        </div></div>
+        <div class="card" style="background:var(--bg)"><p style="font-size:12px;color:var(--text-sec);line-height:1.7">
+          <strong>如何获取 API Key：</strong><br>
+          • DeepSeek → <a href="https://platform.deepseek.com/api_keys" target="_blank" style="color:var(--accent)">platform.deepseek.com</a><br>
+          • 通义千问 → <a href="https://dashscope.console.aliyun.com/apiKey" target="_blank" style="color:var(--accent)">dashscope.console.aliyun.com</a><br>
+          • OpenAI → <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--accent)">platform.openai.com</a><br>
+          • Claude → <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--accent)">console.anthropic.com</a><br>
+          • Gemini → <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com</a></p>
+        </div>
+      </div>
+
+    </div></div>
   </div>
 </div>
 
-<!-- Bottom Nav (Mobile) -->
+<!-- Bottom Nav -->
 <div class="bottom-nav" id="bottomNav">
-  <button class="bnav-item active" onclick="switchTab('review')" data-tab="review"><span class="bnav-icon">📚</span>复习</button>
-  <button class="bnav-item" onclick="switchTab('add')" data-tab="add"><span class="bnav-icon">✏️</span>添加</button>
-  <button class="bnav-item" onclick="switchTab('article')" data-tab="article"><span class="bnav-icon">📖</span>分析</button>
-  <button class="bnav-item" onclick="switchTab('settings')" data-tab="settings"><span class="bnav-icon">⚙️</span>设置</button>
-</div>
-
-<!-- Status strip -->
-<div class="status-strip">
-  <div class="status-dot"></div>
-  <span id="statusText">初始化中...</span>
+  <button class="bnav active" onclick="switchTab('dash')" data-tab="dash"><span class="bi">📊</span>仪表盘</button>
+  <button class="bnav" onclick="switchTab('flip')" data-tab="flip"><span class="bi">🃏</span>翻卡</button>
+  <button class="bnav" onclick="switchTab('list')" data-tab="list"><span class="bi">📚</span>列表</button>
+  <button class="bnav" onclick="switchTab('article')" data-tab="article"><span class="bi">📖</span>分析</button>
+  <button class="bnav" onclick="switchTab('settings')" data-tab="settings"><span class="bi">⚙️</span>设置</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
 <script>
-const SUPABASE_URL="https://zvlgxvpcoghtmyoppfyv.supabase.co";
-const SUPABASE_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
-const WORKER_URL="https://english-ai-api.wgh052098.workers.dev";
-const STORAGE_KEY='sb-zvlgxvpcoghtmyoppfyv-auth-token';
+const SUPABASE_URL="https://zvlgxvpcoghtmyoppfyv.supabase.co",SUPABASE_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY",WORKER_URL="https://english-ai-api.wgh052098.workers.dev",STORAGE_KEY='sb-zvlgxvpcoghtmyoppfyv-auth-token';
+const client=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:STORAGE_KEY,flowType:'implicit'}});
 
-const client=supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{
-  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:STORAGE_KEY,flowType:'implicit'}
-});
+let phrases=[],currentUser=null,otpEmail='',countdownTimer=null,selectedPlatform='',lastArticleItems=[],flipIdx=0,flipQueue=[];
 
-let phrases=[],currentUser=null,otpEmail='',countdownTimer=null,selectedPlatform='';
-let lastArticleItems=[];
-
-function setStatus(msg){document.getElementById("statusText").textContent=msg;}
-
-function showStep(step){
-  document.getElementById("authStep1").classList.toggle("hidden",step!==1);
-  document.getElementById("authStep2").classList.toggle("hidden",step!==2);
-  document.getElementById("appBox").classList.toggle("hidden",step!==3);
-  // Show/hide sidebar & bottom nav based on auth
-  const authed = step===3;
-  document.getElementById("sidebar").style.display=authed?'':'none';
-  document.getElementById("bottomNav").style.display='';
-  if(document.getElementById("mobileHeader")) document.getElementById("mobileHeader").style.display=authed?'':'none';
-}
-
-function toast(msg,type='info'){const el=document.createElement('div');el.className=`toast toast-${type}`;el.textContent=msg;document.body.appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity 0.3s';},2500);setTimeout(()=>el.remove(),3000);}
-function escHtml(s){if(s===null||s===undefined)return'';if(typeof s!=='string')s=JSON.stringify(s);return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function escAttr(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
-
-function getToken(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return'';return JSON.parse(r)?.access_token||'';}catch(e){return'';}}
-function getLocalUser(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return null;return JSON.parse(r)?.user||null;}catch(e){return null;}}
-
-async function apiCall(path,options={}){
-  const token=getToken();
-  const res=await fetch(WORKER_URL+path,{...options,headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`,...(options.headers||{})}});
-  const data=await res.json();
-  if(!res.ok||data.error)throw new Error(data.error||'API 请求失败');
-  return data;
-}
+function setStatus(m){document.title='LinguaFlow — '+m}
+function showStep(s){document.getElementById("authStep1").classList.toggle("hidden",s!==1);document.getElementById("authStep2").classList.toggle("hidden",s!==2);document.getElementById("appBox").classList.toggle("hidden",s!==3);document.getElementById("sidebar").style.display=s===3?'':'none';document.getElementById("mobileHead").style.display=s===3?'':'none'}
+function toast(m,t='info'){const e=document.createElement('div');e.className=`toast toast-${t}`;e.textContent=m;document.body.appendChild(e);setTimeout(()=>{e.style.opacity='0';e.style.transition='opacity 0.3s'},2500);setTimeout(()=>e.remove(),3000)}
+function escHtml(s){if(s==null)return'';if(typeof s!=='string')s=JSON.stringify(s);return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function escAttr(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}
+function getToken(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))?.access_token||''}catch(e){return''}}
+function getLocalUser(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))?.user||null}catch(e){return null}}
+async function apiCall(p,o={}){const t=getToken();const r=await fetch(WORKER_URL+p,{...o,headers:{'Content-Type':'application/json','Authorization':`Bearer ${t}`,...(o.headers||{})}});const d=await r.json();if(!r.ok||d.error)throw new Error(d.error||'API error');return d}
 
 function switchTab(tab){
-  ['review','add','article','settings'].forEach(t=>{const el=document.getElementById('tab-'+t);if(el)el.classList.toggle('hidden',t!==tab);});
-  // Sidebar nav
-  document.querySelectorAll('.nav-item').forEach(btn=>btn.classList.toggle('active',btn.dataset.tab===tab));
-  // Bottom nav
-  document.querySelectorAll('.bnav-item').forEach(btn=>btn.classList.toggle('active',btn.dataset.tab===tab));
+  ['dash','flip','list','add','article','settings'].forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.classList.toggle('hidden',t!==tab)});
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.querySelectorAll('.bnav').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  if(tab==='dash')renderDashboard();
+  if(tab==='flip')initFlipReview();
 }
 
-// OTP
-function setupOtpInputs(){const inputs=document.querySelectorAll('.otp-input');inputs.forEach(input=>{input.value='';input.classList.remove('filled');const n=input.cloneNode(true);input.parentNode.replaceChild(n,input);});const fresh=document.querySelectorAll('.otp-input');fresh.forEach((input,i)=>{input.addEventListener('input',e=>{const v=e.target.value.replace(/\D/g,'');e.target.value=v;v?(e.target.classList.add('filled'),i<fresh.length-1&&fresh[i+1].focus()):e.target.classList.remove('filled');checkOtpComplete();});input.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!e.target.value&&i>0){fresh[i-1].focus();fresh[i-1].value='';fresh[i-1].classList.remove('filled');checkOtpComplete();}if(e.key==='Enter'&&getOtpCode().length===8)verifyOtp();});input.addEventListener('paste',e=>{e.preventDefault();const p=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);if(p.length===8){fresh.forEach((inp,j)=>{inp.value=p[j];inp.classList.add('filled');});fresh[7].focus();checkOtpComplete();}});});}
-function getOtpCode(){return Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value).join('');}
-function checkOtpComplete(){document.getElementById("verifyBtn").disabled=getOtpCode().length!==8;}
-function startCountdown(s){const el=document.getElementById("countdownText"),rb=document.getElementById("resendBtn");rb.style.display='none';let r=s;el.textContent=`${r} 秒后可重新发送`;clearInterval(countdownTimer);countdownTimer=setInterval(()=>{r--;if(r<=0){clearInterval(countdownTimer);el.textContent='';rb.style.display='inline';}else el.textContent=`${r} 秒后可重新发送`;},1000);}
+// ══════ OTP ══════
+function setupOtpInputs(){const inputs=document.querySelectorAll('.otp-input');inputs.forEach(i=>{i.value='';i.classList.remove('filled');const n=i.cloneNode(true);i.parentNode.replaceChild(n,i)});const f=document.querySelectorAll('.otp-input');f.forEach((inp,i)=>{inp.addEventListener('input',e=>{const v=e.target.value.replace(/\D/g,'');e.target.value=v;v?(e.target.classList.add('filled'),i<f.length-1&&f[i+1].focus()):e.target.classList.remove('filled');checkOtp()});inp.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!e.target.value&&i>0){f[i-1].focus();f[i-1].value='';f[i-1].classList.remove('filled');checkOtp()}if(e.key==='Enter'&&getOtp().length===8)verifyOtp()});inp.addEventListener('paste',e=>{e.preventDefault();const p=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);if(p.length===8){f.forEach((x,j)=>{x.value=p[j];x.classList.add('filled')});f[7].focus();checkOtp()}})})}
+function getOtp(){return Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value).join('')}
+function checkOtp(){document.getElementById("verifyBtn").disabled=getOtp().length!==8}
+function startCD(s){const el=document.getElementById("countdownText"),rb=document.getElementById("resendBtn");rb.style.display='none';let r=s;el.textContent=`${r}s`;clearInterval(countdownTimer);countdownTimer=setInterval(()=>{r--;if(r<=0){clearInterval(countdownTimer);el.textContent='';rb.style.display='inline'}else el.textContent=`${r}s`},1000)}
+async function sendOtp(){const email=document.getElementById("emailInput").value.trim();if(!email)return alert("请输入邮箱");otpEmail=email;const btn=document.getElementById("sendOtpBtn");btn.disabled=true;try{const{error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:true}});if(error)throw error;document.getElementById("otpEmailDisplay").textContent=email;showStep(2);setupOtpInputs();document.querySelector('.otp-input').focus();startCD(60)}catch(e){alert("发送失败: "+e.message)}finally{btn.disabled=false}}
+async function resendOtp(){if(!otpEmail)return;try{const{error}=await client.auth.signInWithOtp({email:otpEmail,options:{shouldCreateUser:true}});if(error)throw error;setupOtpInputs();document.querySelector('.otp-input').focus();startCD(60)}catch(e){alert("发送失败: "+e.message)}}
+async function verifyOtp(){const code=getOtp();if(code.length!==8)return;document.getElementById("verifyBtn").disabled=true;try{const{error}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'email'});if(error){const{error:e2}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'magiclink'});if(e2)throw e2}setTimeout(async()=>{if(!currentUser){const u=getLocalUser();if(u){currentUser=u;await onLogin()}}},2000)}catch(e){const c=document.getElementById("otpContainer");c.style.animation='shake 0.4s ease';setTimeout(()=>c.style.animation='',400);alert("验证码错误");setupOtpInputs();document.querySelector('.otp-input').focus()}finally{document.getElementById("verifyBtn").disabled=false}}
+function backToEmail(){clearInterval(countdownTimer);showStep(1)}
+async function logout(){await client.auth.signOut();currentUser=null;phrases=[];showStep(1);updateDisplay()}
 
-async function sendOtp(){const email=document.getElementById("emailInput").value.trim();if(!email)return alert("请输入邮箱");otpEmail=email;setStatus("发送验证码中...");const btn=document.getElementById("sendOtpBtn");btn.disabled=true;try{const{error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:true}});if(error)throw error;document.getElementById("otpEmailDisplay").textContent=email;showStep(2);setupOtpInputs();document.querySelector('.otp-input').focus();startCountdown(60);setStatus("验证码已发送");}catch(e){alert("发送失败: "+e.message);setStatus("发送失败");}finally{btn.disabled=false;}}
-async function resendOtp(){if(!otpEmail)return;setStatus("重新发送中...");try{const{error}=await client.auth.signInWithOtp({email:otpEmail,options:{shouldCreateUser:true}});if(error)throw error;setupOtpInputs();document.querySelector('.otp-input').focus();startCountdown(60);setStatus("已重新发送");}catch(e){alert("发送失败: "+e.message);}}
-async function verifyOtp(){const code=getOtpCode();if(code.length!==8)return;setStatus("验证中...");document.getElementById("verifyBtn").disabled=true;try{const{error}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'email'});if(error){const{error:e2}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'magiclink'});if(e2)throw e2;}setStatus("登录成功！");setTimeout(async()=>{if(!currentUser){const u=getLocalUser();if(u){currentUser=u;await onLogin();}}},2000);}catch(e){const c=document.getElementById("otpContainer");c.style.animation='shake 0.4s ease';setTimeout(()=>c.style.animation='',400);alert("验证码错误");setupOtpInputs();document.querySelector('.otp-input').focus();setStatus("验证失败");}finally{document.getElementById("verifyBtn").disabled=false;}}
-function backToEmail(){clearInterval(countdownTimer);showStep(1);}
-async function logout(){await client.auth.signOut();currentUser=null;phrases=[];showStep(1);updateDisplay();setStatus("已退出");}
+// ══════ DATA ══════
+async function loadData(){try{const{data,error}=await client.from('phrases').select('*').order('created_at',{ascending:false});if(error)throw error;phrases=data||[];updateDisplay()}catch(e){console.error('loadData:',e)}}
 
-async function loadData(){try{const{data,error}=await client.from('phrases').select('*').order('created_at',{ascending:false});if(error)throw error;phrases=data||[];updateDisplay();}catch(e){console.error('loadData:',e);}}
+// ══════ DASHBOARD ══════
+function renderDashboard(){
+  const total=phrases.length,mastered=phrases.filter(p=>p.mastered).length,unmastered=total-mastered;
+  const phr=phrases.filter(p=>p.type==='短语'),gram=phrases.filter(p=>p.type==='语法');
+  const pct=total?Math.round(mastered/total*100):0;
 
-async function addPhrase(){const type=document.getElementById('newType').value;const english=document.getElementById('newEnglish').value.trim();const chinese=document.getElementById('newChinese').value.trim();const example=document.getElementById('newExample').value.trim();if(!english)return toast('请输入英文内容','error');try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type,english,chinese,example,mastered:false}]);if(error)throw error;document.getElementById('newEnglish').value='';document.getElementById('newChinese').value='';document.getElementById('newExample').value='';toast('添加成功！','success');await loadData();switchTab('review');}catch(e){toast('添加失败: '+e.message,'error');}}
+  document.getElementById('statsGrid').innerHTML=`
+    <div class="stat-card accent"><div class="stat-num">${total}</div><div class="stat-label">总卡片数</div></div>
+    <div class="stat-card green"><div class="stat-num">${mastered}</div><div class="stat-label">已掌握</div></div>
+    <div class="stat-card warm"><div class="stat-num">${unmastered}</div><div class="stat-label">待复习</div></div>
+    <div class="stat-card blue"><div class="stat-num">${pct}%</div><div class="stat-label">掌握率</div></div>`;
 
-async function addItemToReview(idx){
-  const item=lastArticleItems[idx];if(!item||!currentUser)return;
-  const type=item.item_type==='难句'?'语法':item.item_type;
-  try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type,english:item.english||'',chinese:item.chinese||'',example:item.example||'',explanation:item.explanation||'',source_sentence:item.source_sentence||'',mastered:false}]);if(error)throw error;
-  const btn=document.getElementById('add-btn-'+idx);if(btn){btn.classList.add('added');btn.textContent='已添加';btn.disabled=true;}
-  const card=document.getElementById('ar-item-'+idx);if(card)card.classList.add('added');
-  toast('已添加到复习','success');await loadData();}catch(e){toast('添加失败: '+e.message,'error');}
+  const circ=2*Math.PI*45;const offset=circ-(pct/100)*circ;
+  document.getElementById('progressRing').innerHTML=`
+    <svg class="ring-svg" viewBox="0 0 100 100">
+      <circle class="ring-bg" cx="50" cy="50" r="45"/>
+      <circle class="ring-fg" cx="50" cy="50" r="45" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/>
+      <text class="ring-text" x="50" y="48" text-anchor="middle">${pct}%</text>
+      <text class="ring-sub" x="50" y="62" text-anchor="middle">掌握率</text>
+    </svg>
+    <div class="ring-info"><h3>学习进度</h3><p>你已掌握 <strong>${mastered}</strong> 张卡片，还有 <strong>${unmastered}</strong> 张待复习。${unmastered>0?'点击「翻卡复习」开始今天的学习吧！':'太棒了，你已经掌握了全部内容！'}</p></div>`;
+
+  const phrM=phr.filter(p=>p.mastered).length,gramM=gram.filter(p=>p.mastered).length;
+  const phrPct=phr.length?Math.round(phrM/phr.length*100):0;
+  const gramPct=gram.length?Math.round(gramM/gram.length*100):0;
+  document.getElementById('chartArea').innerHTML=`
+    <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:150px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>短语 (${phr.length})</span><span style="color:var(--success)">${phrPct}%</span></div>
+        <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:${phrPct}%;background:var(--accent);border-radius:99px;transition:width 0.8s ease"></div></div>
+      </div>
+      <div style="flex:1;min-width:150px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>语法 (${gram.length})</span><span style="color:var(--success)">${gramPct}%</span></div>
+        <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;width:${gramPct}%;background:var(--info);border-radius:99px;transition:width 0.8s ease"></div></div>
+      </div>
+    </div>`;
 }
 
-async function addAllOfType(itemType){
-  const items=lastArticleItems.filter(x=>x.item_type===itemType);if(!items.length)return;
-  const rows=items.map(item=>({user_id:currentUser.id,type:item.item_type==='难句'?'语法':item.item_type,english:item.english||'',chinese:item.chinese||'',example:item.example||'',explanation:item.explanation||'',source_sentence:item.source_sentence||'',mastered:false}));
-  try{const{error}=await client.from('phrases').insert(rows);if(error)throw error;
-  lastArticleItems.forEach((item,idx)=>{if(item.item_type===itemType){const btn=document.getElementById('add-btn-'+idx);if(btn){btn.classList.add('added');btn.textContent='已添加';btn.disabled=true;}const card=document.getElementById('ar-item-'+idx);if(card)card.classList.add('added');}});
-  toast(`已添加 ${items.length} 条到复习`,'success');await loadData();}catch(e){toast('批量添加失败: '+e.message,'error');}
+// ══════ FLIP CARD REVIEW ══════
+function initFlipReview(){
+  flipQueue=phrases.filter(p=>!p.mastered);flipIdx=0;
+  if(!flipQueue.length){
+    document.getElementById('flipProgress').innerHTML='';
+    document.getElementById('flipCard').style.display='none';
+    document.getElementById('flipActions').innerHTML='<div class="flip-empty"><div class="fe-icon">🎉</div><p>所有卡片已掌握！</p><button class="btn btn-p btn-sm" onclick="switchTab(\'article\')" style="margin-top:12px">去分析文章获取新内容</button></div>';
+    return;
+  }
+  document.getElementById('flipCard').style.display='';
+  showFlipCard();
+}
+function showFlipCard(){
+  if(flipIdx>=flipQueue.length){
+    document.getElementById('flipCard').style.display='none';
+    document.getElementById('flipActions').innerHTML='<div class="flip-empty"><div class="fe-icon">✅</div><p>本轮复习完成！</p><button class="btn btn-p btn-sm" onclick="initFlipReview()" style="margin-top:12px">再来一轮</button></div>';
+    document.getElementById('flipProgress').innerHTML='';
+    return;
+  }
+  const p=flipQueue[flipIdx],tot=flipQueue.length,pct=Math.round(flipIdx/tot*100);
+  document.getElementById('flipCard').classList.remove('flipped');
+  document.getElementById('flipFront').innerHTML=`<div style="font-size:12px;color:var(--text-sec);margin-bottom:8px">${p.type}</div><h2>${escHtml(p.english)}</h2><div class="flip-hint">点击卡片查看答案 →</div>`;
+  document.getElementById('flipBack').innerHTML=`<h3>${escHtml(p.chinese)}</h3>${p.example?`<p><span class="fb-label">例句：</span>${escHtml(p.example)}</p>`:''}${p.explanation?`<p><span class="fb-label">解释：</span>${escHtml(p.explanation)}</p>`:''}`;
+  document.getElementById('flipProgress').innerHTML=`<span>${flipIdx+1} / ${tot}</span><div class="flip-progress-bar"><div class="flip-progress-fill" style="width:${pct}%"></div></div><span>${pct}%</span>`;
+  document.getElementById('flipActions').innerHTML=`
+    <button class="flip-btn dunno" onclick="flipNext(false)">😕 不认识</button>
+    <button class="flip-btn skip" onclick="flipNext(null)">⏭ 跳过</button>
+    <button class="flip-btn know" onclick="flipNext(true)">😊 认识</button>`;
+}
+function flipCardToggle(){document.getElementById('flipCard').classList.toggle('flipped')}
+async function flipNext(know){
+  if(know===true){
+    const p=flipQueue[flipIdx];
+    try{await client.from('phrases').update({mastered:true}).eq('id',p.id);const x=phrases.find(q=>q.id===p.id);if(x)x.mastered=true}catch(e){}
+  }
+  flipIdx++;showFlipCard();
 }
 
-async function addAllItems(){
-  if(!lastArticleItems.length)return;
-  const rows=lastArticleItems.map(item=>({user_id:currentUser.id,type:item.item_type==='难句'?'语法':item.item_type,english:item.english||'',chinese:item.chinese||'',example:item.example||'',explanation:item.explanation||'',source_sentence:item.source_sentence||'',mastered:false}));
-  try{const{error}=await client.from('phrases').insert(rows);if(error)throw error;
-  document.querySelectorAll('.btn-add').forEach(btn=>{btn.classList.add('added');btn.textContent='已添加';btn.disabled=true;});
-  document.querySelectorAll('.ar-item').forEach(card=>card.classList.add('added'));
-  toast(`已全部添加 ${rows.length} 条到复习`,'success');await loadData();}catch(e){toast('批量添加失败: '+e.message,'error');}
-}
-
+// ══════ PHRASE LIST ══════
 function updateDisplay(){
   const search=(document.getElementById('searchInput')?.value||'').toLowerCase();
   const cat=document.getElementById('categorySelect')?.value||'全部';
-  const container=document.getElementById('results');
-  const countEl=document.getElementById('phraseCount');
-  if(!container)return;
-  const filtered=phrases.filter(p=>{if(cat!=='全部'&&p.type!==cat)return false;if(search&&!(p.english||'').toLowerCase().includes(search)&&!(p.chinese||'').toLowerCase().includes(search))return false;return true;});
-  if(countEl)countEl.textContent=`共 ${filtered.length} 条`;
-  if(!filtered.length){container.innerHTML='<div style="text-align:center;color:var(--text-secondary);padding:60px 0;"><div style="font-size:40px;margin-bottom:12px;">📭</div><p>暂无数据</p><p style="font-size:12px;margin-top:4px;">去「手动添加」或「文章分析」中创建吧</p></div>';return;}
-  container.innerHTML=filtered.map(p=>`
-    <div class="phrase ${p.mastered?'mastered':''}" id="p-${p.id}">
-      <div class="phrase-header"><h3>${escHtml(p.english)}</h3><span class="type-badge">${p.type}</span></div>
-      <p><span class="label">释义：</span>${escHtml(p.chinese)}</p>
-      ${p.example?`<p><span class="label">例句：</span>${escHtml(p.example)}</p>`:''}
-      ${p.explanation?`<p><span class="label">解释：</span>${escHtml(p.explanation)}</p>`:''}
-      <div class="phrase-actions">
-        <button class="btn btn-sm ${p.mastered?'btn-ghost':'btn-success'}" onclick="toggleMastered('${p.id}',${!p.mastered})">${p.mastered?'取消掌握':'✓ 已掌握'}</button>
-        <button class="btn btn-ghost btn-sm" onclick="speakText('${escAttr(p.english)}')">🔊</button>
-        <button class="btn btn-danger" onclick="deletePhrase('${p.id}')">删除</button>
-      </div>
-    </div>`).join('');
-}
+  const c=document.getElementById('results'),cnt=document.getElementById('phraseCount');
+  if(!c)return;
+  const f=phrases.filter(p=>{if(cat!=='全部'&&p.type!==cat)return false;if(search&&!(p.english||'').toLowerCase().includes(search)&&!(p.chinese||'').toLowerCase().includes(search))return false;return true});
+  if(cnt)cnt.textContent=`共 ${f.length} 条`;
+  if(!f.length){c.innerHTML='<div style="text-align:center;color:var(--text-sec);padding:50px 0"><div style="font-size:40px;margin-bottom:10px">📭</div><p>暂无数据</p></div>';return}
+  c.innerHTML=f.map(p=>`<div class="phrase ${p.mastered?'mastered':''}" id="p-${p.id}"><div class="phrase-header"><h3>${escHtml(p.english)}</h3><span class="badge">${p.type}</span></div><p><span class="lb">释义：</span>${escHtml(p.chinese)}</p>${p.example?`<p><span class="lb">例句：</span>${escHtml(p.example)}</p>`:''}${p.explanation?`<p><span class="lb">解释：</span>${escHtml(p.explanation)}</p>`:''}<div class="phrase-actions"><button class="btn btn-sm ${p.mastered?'btn-g':'btn-s'}" onclick="toggleMastered('${p.id}',${!p.mastered})">${p.mastered?'取消掌握':'✓ 已掌握'}</button><button class="btn btn-g btn-sm" onclick="speakText('${escAttr(p.english)}')">🔊</button><button class="btn btn-d" onclick="deletePhrase('${p.id}')">删除</button></div></div>`).join('')}
 
-async function toggleMastered(id,val){try{await client.from('phrases').update({mastered:val}).eq('id',id);const p=phrases.find(x=>x.id===id);if(p)p.mastered=val;updateDisplay();toast(val?'已标记为掌握':'已取消掌握','success');}catch(e){toast('操作失败','error');}}
-async function deletePhrase(id){if(!confirm('确定删除？'))return;try{await client.from('phrases').delete().eq('id',id);phrases=phrases.filter(x=>x.id!==id);updateDisplay();toast('已删除','info');}catch(e){toast('删除失败','error');}}
-function speakText(text){const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u);}
-function randomPhrase(){const f=phrases.filter(p=>!p.mastered);if(!f.length)return toast('没有未掌握的内容了！','info');const p=f[Math.floor(Math.random()*f.length)];document.getElementById('searchInput').value=p.english;updateDisplay();setTimeout(()=>document.getElementById('p-'+p.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100);}
-async function clearMastered(){if(!confirm('确定清除所有「已掌握」标记？'))return;try{await client.from('phrases').update({mastered:false}).eq('user_id',currentUser.id).eq('mastered',true);phrases.forEach(p=>p.mastered=false);updateDisplay();toast('已清除所有标记','success');}catch(e){toast('操作失败','error');}}
+async function toggleMastered(id,val){try{await client.from('phrases').update({mastered:val}).eq('id',id);const p=phrases.find(x=>x.id===id);if(p)p.mastered=val;updateDisplay();toast(val?'已掌握':'已取消','success')}catch(e){toast('失败','error')}}
+async function deletePhrase(id){if(!confirm('确定删除？'))return;try{await client.from('phrases').delete().eq('id',id);phrases=phrases.filter(x=>x.id!==id);updateDisplay();toast('已删除','info')}catch(e){toast('失败','error')}}
+function speakText(t){const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.9;speechSynthesis.speak(u)}
+function randomPhrase(){const f=phrases.filter(p=>!p.mastered);if(!f.length)return toast('全部已掌握！','info');const p=f[Math.floor(Math.random()*f.length)];document.getElementById('searchInput').value=p.english;updateDisplay();setTimeout(()=>document.getElementById('p-'+p.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100)}
+async function clearMastered(){if(!confirm('清除所有标记？'))return;try{await client.from('phrases').update({mastered:false}).eq('user_id',currentUser.id).eq('mastered',true);phrases.forEach(p=>p.mastered=false);updateDisplay();toast('已清除','success')}catch(e){toast('失败','error')}}
 
-function selectPlatform(p){selectedPlatform=p;document.querySelectorAll('.platform-card').forEach(el=>el.classList.toggle('selected',el.dataset.platform===p));}
-async function loadAISettings(){try{const data=await apiCall('/api/settings');if(data.ai_platform){selectedPlatform=data.ai_platform;selectPlatform(data.ai_platform);}if(data.api_key)document.getElementById('settingsApiKey').value=data.api_key;if(data.model_name)document.getElementById('settingsModel').value=data.model_name;}catch(e){console.log('No settings:',e.message);}}
-async function saveAISettings(){if(!selectedPlatform)return toast('请选择一个 AI 平台','error');const apiKey=document.getElementById('settingsApiKey').value.trim();if(!apiKey)return toast('请输入 API Key','error');const model=document.getElementById('settingsModel').value.trim();try{await apiCall('/api/settings',{method:'POST',body:JSON.stringify({ai_platform:selectedPlatform,api_key:apiKey,model_name:model})});toast('设置已保存 ✓','success');document.getElementById('settingsMsg').innerHTML='<span style="color:var(--success)">✓ 设置已保存</span>';}catch(e){toast('保存失败: '+e.message,'error');}}
-async function testKey(){if(!selectedPlatform)return toast('请先选择平台','error');const apiKey=document.getElementById('settingsApiKey').value.trim();if(!apiKey)return toast('请输入 API Key','error');const model=document.getElementById('settingsModel').value.trim();const msgEl=document.getElementById('settingsMsg');msgEl.innerHTML='<span style="color:var(--info)">测试中...</span>';try{const data=await apiCall('/api/test-key',{method:'POST',body:JSON.stringify({platform:selectedPlatform,api_key:apiKey,model_name:model})});if(data.ok){msgEl.innerHTML='<span style="color:var(--success)">✓ '+data.message+'</span>';toast('API Key 有效！','success');}else{msgEl.innerHTML='<span style="color:var(--danger)">✗ '+data.error+'</span>';toast(data.error,'error');}}catch(e){msgEl.innerHTML='<span style="color:var(--danger)">✗ '+e.message+'</span>';toast('测试失败','error');}}
+// ══════ ADD ══════
+async function addPhrase(){const type=document.getElementById('newType').value,eng=document.getElementById('newEnglish').value.trim(),chn=document.getElementById('newChinese').value.trim(),ex=document.getElementById('newExample').value.trim();if(!eng)return toast('请输入英文','error');try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type,english:eng,chinese:chn,example:ex,mastered:false}]);if(error)throw error;document.getElementById('newEnglish').value='';document.getElementById('newChinese').value='';document.getElementById('newExample').value='';toast('添加成功！','success');await loadData();switchTab('list')}catch(e){toast('失败: '+e.message,'error')}}
 
-// ═══════════════════ 文章分析（带进度） ═══════════════════
+// ══════ ARTICLE ADD ITEMS ══════
+async function addItemToReview(idx){const item=lastArticleItems[idx];if(!item||!currentUser)return;try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type:item.item_type==='难句'?'语法':item.item_type,english:item.english||'',chinese:item.chinese||'',example:item.example||'',explanation:item.explanation||'',source_sentence:item.source_sentence||'',mastered:false}]);if(error)throw error;const b=document.getElementById('ab-'+idx);if(b){b.classList.add('added');b.textContent='已添加';b.disabled=true}const c=document.getElementById('ai-'+idx);if(c)c.classList.add('added');toast('已添加','success');await loadData()}catch(e){toast('失败','error')}}
+async function addAllOfType(t){const items=lastArticleItems.filter(x=>x.item_type===t);if(!items.length)return;try{const{error}=await client.from('phrases').insert(items.map(i=>({user_id:currentUser.id,type:i.item_type==='难句'?'语法':i.item_type,english:i.english||'',chinese:i.chinese||'',example:i.example||'',explanation:i.explanation||'',source_sentence:i.source_sentence||'',mastered:false})));if(error)throw error;lastArticleItems.forEach((i,idx)=>{if(i.item_type===t){const b=document.getElementById('ab-'+idx);if(b){b.classList.add('added');b.textContent='已添加';b.disabled=true}const c=document.getElementById('ai-'+idx);if(c)c.classList.add('added')}});toast(`已添加 ${items.length} 条`,'success');await loadData()}catch(e){toast('失败','error')}}
+async function addAllItems(){if(!lastArticleItems.length)return;try{const{error}=await client.from('phrases').insert(lastArticleItems.map(i=>({user_id:currentUser.id,type:i.item_type==='难句'?'语法':i.item_type,english:i.english||'',chinese:i.chinese||'',example:i.example||'',explanation:i.explanation||'',source_sentence:i.source_sentence||'',mastered:false})));if(error)throw error;document.querySelectorAll('.btn-add').forEach(b=>{b.classList.add('added');b.textContent='已添加';b.disabled=true});document.querySelectorAll('.ar-item').forEach(c=>c.classList.add('added'));toast(`已全部添加`,'success');await loadData()}catch(e){toast('失败','error')}}
+
+// ══════ SETTINGS ══════
+function selectPlatform(p){selectedPlatform=p;document.querySelectorAll('.platform-card').forEach(e=>e.classList.toggle('selected',e.dataset.platform===p))}
+async function loadAISettings(){try{const d=await apiCall('/api/settings');if(d.ai_platform){selectedPlatform=d.ai_platform;selectPlatform(d.ai_platform)}if(d.api_key)document.getElementById('settingsApiKey').value=d.api_key;if(d.model_name)document.getElementById('settingsModel').value=d.model_name}catch(e){}}
+async function saveAISettings(){if(!selectedPlatform)return toast('请选择平台','error');const k=document.getElementById('settingsApiKey').value.trim();if(!k)return toast('请输入 Key','error');const m=document.getElementById('settingsModel').value.trim();try{await apiCall('/api/settings',{method:'POST',body:JSON.stringify({ai_platform:selectedPlatform,api_key:k,model_name:m})});toast('已保存 ✓','success');document.getElementById('settingsMsg').innerHTML='<span style="color:var(--success)">✓ 已保存</span>'}catch(e){toast('失败','error')}}
+async function testKey(){if(!selectedPlatform)return toast('请选择平台','error');const k=document.getElementById('settingsApiKey').value.trim();if(!k)return toast('请输入 Key','error');const m=document.getElementById('settingsModel').value.trim(),el=document.getElementById('settingsMsg');el.innerHTML='<span style="color:var(--info)">测试中...</span>';try{const d=await apiCall('/api/test-key',{method:'POST',body:JSON.stringify({platform:selectedPlatform,api_key:k,model_name:m})});el.innerHTML=d.ok?`<span style="color:var(--success)">✓ ${d.message}</span>`:`<span style="color:var(--danger)">✗ ${d.error}</span>`}catch(e){el.innerHTML=`<span style="color:var(--danger)">✗ ${e.message}</span>`}}
+
+// ══════ ARTICLE ANALYSIS ══════
 async function processArticle(){
-  let text=document.getElementById('articleInput').value.trim();
-  const pdfFile=document.getElementById('pdfInput').files[0];
-  if(!text&&pdfFile){setStatus("读取 PDF 中...");try{text=await extractPdfText(pdfFile);}catch(e){toast('PDF 读取失败: '+e.message,'error');setStatus("PDF 读取失败");return;}}
+  let text=document.getElementById('articleInput').value.trim();const pf=document.getElementById('pdfInput').files[0];
+  if(!text&&pf){try{text=await extractPdfText(pf)}catch(e){toast('PDF 失败','error');return}}
   if(!text)return toast('请输入文章或上传 PDF','error');
+  const btn=document.getElementById('analyzeBtn'),old=btn.innerHTML;btn.disabled=true;document.getElementById('articleResults').innerHTML='';
+  const steps=[{t:'📡 连接 AI...',d:0},{t:'📖 阅读文章...',d:2000},{t:'📝 翻译中...',d:5000},{t:'🔤 提取短语...',d:10000},{t:'📐 分析语法...',d:16000},{t:'💡 解析难句...',d:22000},{t:'📦 整理结果...',d:28000}];
+  const timers=steps.map(s=>setTimeout(()=>{btn.innerHTML=`<span class="loading-spinner"></span> ${s.t}`},s.d));
+  try{const data=await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text})});timers.forEach(clearTimeout);lastArticleItems=data.items||[];btn.innerHTML='✅ 完成！';renderArticleResults(data);toast('分析完成！','success');setTimeout(()=>{btn.innerHTML=old},2000)}catch(e){timers.forEach(clearTimeout);toast('失败: '+e.message,'error');document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px">❌ ${escHtml(e.message)}</p>`;btn.innerHTML=old}finally{btn.disabled=false}}
 
-  const btn=document.getElementById('analyzeBtn');const oldBtnText=btn.innerHTML;
-  btn.disabled=true;document.getElementById('articleResults').innerHTML='';
+async function extractPdfText(f){const ab=await f.arrayBuffer();pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';const pdf=await pdfjsLib.getDocument({data:ab}).promise;let t='';for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const c=await pg.getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n'}if(!t.trim())throw new Error('无文字');return t.trim()}
 
-  const steps=[
-    {text:'📡 连接 AI 服务...', time:0},
-    {text:'📖 阅读文章中...', time:2000},
-    {text:'📝 翻译全文中...', time:5000},
-    {text:'🔤 提取短语中...', time:10000},
-    {text:'📐 分析语法中...', time:16000},
-    {text:'💡 解析难句中...', time:22000},
-    {text:'📦 整理结果中...', time:28000},
-  ];
-  const timers=[];
-  steps.forEach(step=>{timers.push(setTimeout(()=>{btn.innerHTML=`<span class="loading-spinner"></span> ${step.text}`;setStatus(step.text);},step.time));});
-
-  try{
-    const data=await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text})});
-    timers.forEach(t=>clearTimeout(t));
-    lastArticleItems=data.items||[];
-    btn.innerHTML='✅ 分析完成！';setStatus("分析完成");
-    renderArticleResults(data);toast('分析完成！','success');
-    setTimeout(()=>{btn.innerHTML=oldBtnText;},2000);
-  }catch(e){
-    timers.forEach(t=>clearTimeout(t));
-    toast('分析失败: '+e.message,'error');
-    document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px;">❌ ${escHtml(e.message)}</p>`;
-    setStatus("分析失败");btn.innerHTML=oldBtnText;
-  }finally{btn.disabled=false;}
-}
-
-async function extractPdfText(file){const ab=await file.arrayBuffer();pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';const pdf=await pdfjsLib.getDocument({data:ab}).promise;let text='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const c=await page.getTextContent();text+=c.items.map(x=>x.str).join(' ')+'\n';setStatus(`读取 PDF (${i}/${pdf.numPages})`);}if(!text.trim())throw new Error('PDF 中没有可提取的文字');return text.trim();}
-
-function toggleSection(id){const body=document.getElementById('sec-body-'+id);const head=document.getElementById('sec-head-'+id);if(!body||!head)return;body.classList.toggle('collapsed');head.classList.toggle('open');}
+function toggleSection(id){const b=document.getElementById('sb-'+id),h=document.getElementById('sh-'+id);if(b&&h){b.classList.toggle('collapsed');h.classList.toggle('open')}}
 
 function renderArticleResults(data){
-  const el=document.getElementById('articleResults');
-  const items=data.items||[];
-  const types={'短语':{icon:'🔤',items:[]},'语法':{icon:'📐',items:[]},'难句':{icon:'💡',items:[]}};
-  items.forEach((item,idx)=>{item._idx=idx;if(types[item.item_type])types[item.item_type].items.push(item);});
-  let html='';
-  if(data.title){
-    html+=`<div class="card" style="margin-top:16px;">
-      <div class="ar-header"><div class="ar-title">📌 ${escHtml(data.title)}</div>
-      <button class="btn btn-primary btn-sm" onclick="addAllItems()">📥 全部添加</button></div>
-      ${data.summary?`<div class="ar-summary">${escHtml(data.summary)}</div>`:''}
-    </div>`;
-  }
-  if(data.translated_text){
-    html+=`<div class="ar-section"><div class="ar-section-head" id="sec-head-trans" onclick="toggleSection('trans')"><div class="ar-sec-left">📝 全文翻译</div><span class="ar-sec-arrow">▼</span></div><div class="ar-section-body collapsed" id="sec-body-trans"><div class="ar-trans-box">${escHtml(data.translated_text)}</div></div></div>`;
-  }
-  Object.keys(types).forEach(type=>{
-    const group=types[type];if(!group.items.length)return;
-    html+=`<div class="ar-section"><div class="ar-section-head open" id="sec-head-${type}" onclick="toggleSection('${type}')"><div class="ar-sec-left">${group.icon} ${type} <span class="ar-sec-count">${group.items.length}</span></div><div style="display:flex;align-items:center;gap:8px;"><button class="btn btn-xs btn-primary" onclick="event.stopPropagation();addAllOfType('${type}')">全部添加</button><span class="ar-sec-arrow" style="transform:rotate(180deg)">▼</span></div></div><div class="ar-section-body" id="sec-body-${type}">`;
-    group.items.forEach(item=>{const idx=item._idx;
-      html+=`<div class="ar-item" id="ar-item-${idx}"><div class="ar-item-top"><h4>${escHtml(item.english)}</h4><button class="btn-add" id="add-btn-${idx}" onclick="addItemToReview(${idx})">+ 添加</button></div><p><span class="lbl">释义：</span>${escHtml(item.chinese)}</p>${item.explanation?`<p><span class="lbl">解释：</span>${escHtml(item.explanation)}</p>`:''}${item.example?`<p><span class="lbl">例句：</span>${escHtml(item.example)}</p>`:''}${item.source_sentence?`<p style="color:#A8A29E;font-size:12px;margin-top:4px;"><span class="lbl">原文：</span>${escHtml(item.source_sentence)}</p>`:''}</div>`;
-    });
-    html+='</div></div>';
-  });
-  el.innerHTML=html;
-}
+  const el=document.getElementById('articleResults'),items=data.items||[];
+  const types={'短语':{i:'🔤',items:[]},'语法':{i:'📐',items:[]},'难句':{i:'💡',items:[]}};
+  items.forEach((item,idx)=>{item._idx=idx;if(types[item.item_type])types[item.item_type].items.push(item)});
+  let h='';
+  if(data.title)h+=`<div class="card" style="margin-top:14px"><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px"><div style="font-family:var(--display);font-size:1.2rem;font-weight:700">📌 ${escHtml(data.title)}</div><button class="btn btn-p btn-sm" onclick="addAllItems()">📥 全部添加</button></div>${data.summary?`<div style="font-size:13.5px;color:var(--text-sec);line-height:1.7;padding:14px;background:var(--bg);border-radius:12px">${escHtml(data.summary)}</div>`:''}</div>`;
+  if(data.translated_text)h+=`<div class="ar-section"><div class="ar-sh" id="sh-trans" onclick="toggleSection('trans')"><div class="ar-sl">📝 全文翻译</div><span class="ar-arr">▼</span></div><div class="ar-sb collapsed" id="sb-trans"><div class="ar-trans-box">${escHtml(data.translated_text)}</div></div></div>`;
+  Object.keys(types).forEach(type=>{const g=types[type];if(!g.items.length)return;
+    h+=`<div class="ar-section"><div class="ar-sh open" id="sh-${type}" onclick="toggleSection('${type}')"><div class="ar-sl">${g.i} ${type} <span class="ar-cnt">${g.items.length}</span></div><div style="display:flex;align-items:center;gap:8px"><button class="btn btn-xs btn-p" onclick="event.stopPropagation();addAllOfType('${type}')">全部添加</button><span class="ar-arr" style="transform:rotate(180deg)">▼</span></div></div><div class="ar-sb" id="sb-${type}">`;
+    g.items.forEach(item=>{const idx=item._idx;h+=`<div class="ar-item" id="ai-${idx}"><div class="ar-item-top"><h4>${escHtml(item.english)}</h4><button class="btn-add" id="ab-${idx}" onclick="addItemToReview(${idx})">+ 添加</button></div><p><span class="lbl">释义：</span>${escHtml(item.chinese)}</p>${item.explanation?`<p><span class="lbl">解释：</span>${escHtml(item.explanation)}</p>`:''}${item.example?`<p><span class="lbl">例句：</span>${escHtml(item.example)}</p>`:''}${item.source_sentence?`<p style="color:#A8A29E;font-size:12px;margin-top:3px"><span class="lbl">原文：</span>${escHtml(item.source_sentence)}</p>`:''}</div>`});
+    h+='</div></div>'});
+  el.innerHTML=h}
 
-// ═══════════════════ 初始化 ═══════════════════
+// ══════ INIT ══════
 async function init(){
-  setStatus("初始化...");
-  showStep(0); // hide all
-  document.getElementById("authStep1").classList.add("hidden");
-  document.getElementById("authStep2").classList.add("hidden");
-  document.getElementById("appBox").classList.add("hidden");
-  document.getElementById("sidebar").style.display='none';
-
-  client.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_IN'){const u=session?.user;if(u&&(!currentUser||u.id!==currentUser.id)){currentUser=u;await onLogin();}}
-    else if(event==='SIGNED_OUT'){currentUser=null;phrases=[];showStep(1);updateDisplay();setStatus("已退出");}
-  });
-
-  const localUser=getLocalUser();
-  const localToken=getToken();
-  if(localUser&&localToken){currentUser=localUser;await onLogin();}
-  else{showStep(1);setStatus("请登录");}
+  showStep(0);document.getElementById("authStep1").classList.add("hidden");document.getElementById("authStep2").classList.add("hidden");document.getElementById("appBox").classList.add("hidden");document.getElementById("sidebar").style.display='none';
+  client.auth.onAuthStateChange(async(ev,session)=>{if(ev==='SIGNED_IN'){const u=session?.user;if(u&&(!currentUser||u.id!==currentUser.id)){currentUser=u;await onLogin()}}else if(ev==='SIGNED_OUT'){currentUser=null;phrases=[];showStep(1);updateDisplay()}});
+  const u=getLocalUser(),t=getToken();
+  if(u&&t){currentUser=u;await onLogin()}else{showStep(1)}
 }
-
 async function onLogin(){
-  showStep(3);
-  const email=currentUser.email||currentUser.id;
-  const initial=email.charAt(0).toUpperCase();
-  document.getElementById("userText").textContent=email;
-  document.getElementById("userAvatar").textContent=initial;
-  if(document.getElementById("mobileAvatar"))document.getElementById("mobileAvatar").textContent=initial;
-  switchTab('review');
-  await loadData();
-  await loadAISettings();
-  setStatus("已登录");
+  showStep(3);const email=currentUser.email||currentUser.id,ini=email.charAt(0).toUpperCase();
+  document.getElementById("userText").textContent=email;document.getElementById("userAvatar").textContent=ini;
+  if(document.getElementById("mAvatar"))document.getElementById("mAvatar").textContent=ini;
+  switchTab('dash');await loadData();await loadAISettings();setStatus("已登录")
 }
-
 init();
 </script>
 </body>
