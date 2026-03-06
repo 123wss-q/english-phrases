@@ -56,27 +56,22 @@ body::after {
 .hidden { display: none !important; }
 .container { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-/* Header */
 .site-header { text-align: center; padding: 48px 0 16px; }
 .site-header h1 { font-family: var(--serif); font-size: 2.6rem; font-weight: 400; animation: fadeUp 0.6s ease-out; }
 .site-header .subtitle { color: var(--muted); font-size: 0.9rem; margin-top: 6px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; animation: fadeUp 0.6s ease-out 0.1s both; }
 
-/* Status bar */
 .status-bar { display: flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 16px; border: 1px solid var(--border); animation: fadeUp 0.6s ease-out 0.15s both; }
 .chip { display: inline-flex; align-items: center; gap: 4px; background: var(--accent-light); color: var(--accent); border-radius: 999px; padding: 4px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
 .chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
 .status-text { color: var(--muted); font-size: 13px; margin-left: auto; font-weight: 500; }
 
-/* Card */
 .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-md); padding: 24px; margin-bottom: 16px; border: 1px solid var(--border); animation: fadeUp 0.5s ease-out both; }
 .card-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; gap: 10px; }
 
-/* Auth */
 .auth-card { max-width: 460px; margin: 40px auto; text-align: center; padding: 40px 32px; }
 .auth-card .card-title { justify-content: center; font-size: 1.5rem; margin-bottom: 8px; }
 .auth-card .auth-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 24px; line-height: 1.6; }
 
-/* OTP */
 .otp-container { display: flex; gap: 6px; justify-content: center; margin: 20px 0; }
 .otp-input { width: 40px; height: 50px; text-align: center; font-size: 20px; font-weight: 700; font-family: var(--sans); border: 2px solid var(--border); border-radius: 10px; background: #faf9f7; color: var(--text); outline: none; transition: all 0.25s; }
 .otp-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); background: #fff; }
@@ -87,7 +82,6 @@ body::after {
 .link-btn { background: none; border: none; color: var(--accent); font-size: 13px; font-weight: 600; font-family: var(--sans); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; margin-top: 12px; }
 .countdown { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
-/* Inputs */
 input[type="text"], input[type="email"], input[type="password"], select, textarea {
   width: 100%; padding: 11px 14px; margin: 0; border-radius: 10px; border: 1.5px solid var(--border);
   font-size: 14px; font-family: var(--sans); color: var(--text); background: #faf9f7; outline: none;
@@ -101,7 +95,6 @@ select { cursor: pointer; appearance: none; background-image: url("data:image/sv
 .input-row { display: flex; gap: 10px; }
 label.field-label { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 2px; }
 
-/* Buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; border: none; transition: all 0.25s; white-space: nowrap; }
 .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(196,93,62,0.25); }
 .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
@@ -117,25 +110,21 @@ label.field-label { font-size: 13px; font-weight: 600; color: var(--muted); marg
 .btn-info:hover { background: #1f5a8f; }
 .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 8px; }
 
-/* User bar */
 .user-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 16px; border: 1px solid var(--border); }
 .user-info { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); font-weight: 500; }
 .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
 .user-actions { display: flex; gap: 8px; }
 
-/* Tabs */
 .tab-bar { display: flex; gap: 4px; margin-bottom: 16px; background: var(--card); border-radius: 12px; padding: 4px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
 .tab-btn { flex: 1; padding: 10px 8px; border: none; background: transparent; border-radius: 8px; font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.2s; }
 .tab-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 6px rgba(196,93,62,0.3); }
 
-/* Controls */
 .controls-bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
 .controls-bar .search-wrap { flex: 1; min-width: 200px; position: relative; }
 .controls-bar .search-wrap::before { content: '🔍'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; opacity: 0.5; }
 .controls-bar .search-wrap input { padding-left: 38px; }
 .controls-bar select { flex: 0 0 120px; }
 
-/* Phrase card */
 .phrase { background: var(--card); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: all 0.25s; }
 .phrase:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .phrase.mastered { background: var(--success-light); border-color: rgba(58,125,92,0.2); }
@@ -146,7 +135,6 @@ label.field-label { font-size: 13px; font-weight: 600; color: var(--muted); marg
 .phrase .label { font-weight: 600; color: var(--text); }
 .phrase-actions { display: flex; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 
-/* Settings: platform cards */
 .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 16px; }
 .platform-card { padding: 14px 10px; border: 2px solid var(--border); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.2s; background: #faf9f7; }
 .platform-card:hover { border-color: #ccc; background: #fff; }
@@ -155,30 +143,31 @@ label.field-label { font-size: 13px; font-weight: 600; color: var(--muted); marg
 .platform-card .p-name { font-size: 13px; font-weight: 600; color: var(--text); }
 .platform-card .p-model { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-/* Toast */
 .toast { position: fixed; top: 20px; right: 20px; padding: 14px 20px; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 600; z-index: 9999; animation: fadeUp 0.3s ease-out; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
 .toast-success { background: var(--success); }
 .toast-error { background: var(--danger); }
 .toast-info { background: var(--info); }
 
-/* Loading spinner */
 .loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Article result */
 .article-result { margin-top: 16px; }
 .article-result .section-title { font-family: var(--serif); font-size: 1.1rem; margin: 16px 0 8px; color: var(--text); }
 .article-result .translated { background: #faf9f7; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--border); font-size: 14px; line-height: 1.8; color: #444; white-space: pre-wrap; }
 
-/* File input */
 input[type="file"] { font-family: var(--sans); font-size: 13px; color: var(--muted); padding: 8px 0; border: none; background: none; }
 input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--border); background: #fff; color: var(--text); cursor: pointer; margin-right: 10px; }
 
-/* Animations */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
 
-/* Responsive */
+/* Debug panel */
+.debug-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; color: #0f0; font-family: monospace; font-size: 11px; padding: 8px 12px; max-height: 150px; overflow-y: auto; z-index: 10000; border-top: 2px solid #c45d3e; }
+.debug-panel .debug-line { margin: 2px 0; white-space: pre-wrap; word-break: break-all; }
+.debug-panel .debug-warn { color: #ffa500; }
+.debug-panel .debug-err { color: #ff4444; }
+.debug-toggle { position: fixed; bottom: 8px; right: 8px; z-index: 10001; background: #1a1a2e; color: #0f0; border: 1px solid #333; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-family: monospace; cursor: pointer; }
+
 @media (max-width: 600px) {
   .site-header h1 { font-size: 2rem; }
   .card { padding: 18px; }
@@ -243,7 +232,6 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
 
   <!-- App -->
   <div id="appBox" class="hidden">
-
     <div class="user-bar">
       <div class="user-info">
         <div class="user-avatar" id="userAvatar">U</div>
@@ -255,7 +243,6 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
       </div>
     </div>
 
-    <!-- Tab bar -->
     <div class="tab-bar">
       <button class="tab-btn active" onclick="switchTab('review')" data-tab="review">📚 复习</button>
       <button class="tab-btn" onclick="switchTab('add')" data-tab="add">✏️ 添加</button>
@@ -315,35 +302,23 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
       <div class="card">
         <div class="card-title">⚙️ AI 平台设置</div>
         <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">选择你想使用的大模型平台，并填入你的 API Key。配置只对你可见。</p>
-
         <div class="platform-grid" id="platformGrid">
           <div class="platform-card" data-platform="deepseek" onclick="selectPlatform('deepseek')">
-            <div class="p-icon">🔮</div>
-            <div class="p-name">DeepSeek</div>
-            <div class="p-model">deepseek-chat</div>
+            <div class="p-icon">🔮</div><div class="p-name">DeepSeek</div><div class="p-model">deepseek-chat</div>
           </div>
           <div class="platform-card" data-platform="qianwen" onclick="selectPlatform('qianwen')">
-            <div class="p-icon">☁️</div>
-            <div class="p-name">通义千问</div>
-            <div class="p-model">qwen-plus</div>
+            <div class="p-icon">☁️</div><div class="p-name">通义千问</div><div class="p-model">qwen-plus</div>
           </div>
           <div class="platform-card" data-platform="openai" onclick="selectPlatform('openai')">
-            <div class="p-icon">🤖</div>
-            <div class="p-name">OpenAI</div>
-            <div class="p-model">gpt-4o-mini</div>
+            <div class="p-icon">🤖</div><div class="p-name">OpenAI</div><div class="p-model">gpt-4o-mini</div>
           </div>
           <div class="platform-card" data-platform="claude" onclick="selectPlatform('claude')">
-            <div class="p-icon">🧠</div>
-            <div class="p-name">Claude</div>
-            <div class="p-model">claude-sonnet</div>
+            <div class="p-icon">🧠</div><div class="p-name">Claude</div><div class="p-model">claude-sonnet</div>
           </div>
           <div class="platform-card" data-platform="gemini" onclick="selectPlatform('gemini')">
-            <div class="p-icon">💎</div>
-            <div class="p-name">Gemini</div>
-            <div class="p-model">gemini-2.0-flash</div>
+            <div class="p-icon">💎</div><div class="p-name">Gemini</div><div class="p-model">gemini-2.0-flash</div>
           </div>
         </div>
-
         <div class="input-group">
           <div>
             <label class="field-label">API Key</label>
@@ -359,7 +334,6 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
           </div>
           <div id="settingsMsg" style="font-size:13px;margin-top:4px;"></div>
         </div>
-
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
           <p style="font-size:12px;color:var(--muted);line-height:1.6;">
             <strong>如何获取 API Key：</strong><br>
@@ -377,16 +351,57 @@ input[type="file"]::file-selector-button { font-family: var(--sans); font-size: 
   </div>
 </div>
 
+<!-- Debug toggle (上线稳定后删除这两行) -->
+<button class="debug-toggle" onclick="toggleDebug()">🐛</button>
+<div class="debug-panel hidden" id="debugPanel"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.min.js"></script>
 <script>
 // ============================================================
+// Debug 工具（上线稳定后可整段删除）
+// ============================================================
+const debugLogs = [];
+function dbg(msg, level = 'info') {
+  const ts = new Date().toLocaleTimeString();
+  debugLogs.push({ ts, msg, level });
+  console[level === 'err' ? 'error' : level === 'warn' ? 'warn' : 'log'](`[${ts}] ${msg}`);
+  renderDebug();
+}
+function renderDebug() {
+  const panel = document.getElementById('debugPanel');
+  if (!panel || panel.classList.contains('hidden')) return;
+  panel.innerHTML = debugLogs.slice(-40).map(e => {
+    const cls = e.level === 'err' ? 'debug-err' : e.level === 'warn' ? 'debug-warn' : '';
+    return `<div class="debug-line ${cls}">[${e.ts}] ${e.msg}</div>`;
+  }).join('');
+  panel.scrollTop = panel.scrollHeight;
+}
+function toggleDebug() {
+  const panel = document.getElementById('debugPanel');
+  panel.classList.toggle('hidden');
+  if (!panel.classList.contains('hidden')) renderDebug();
+}
+
+// ============================================================
 // 配置
 // ============================================================
-const SUPABASE_URL = "https://zvlgxvpcoghtmyoppfyv.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
-const WORKER_URL = "https://english-ai-api.wgh052098.workers.dev";
-const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const SUPABASE_URL  = "https://zvlgxvpcoghtmyoppfyv.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2bGd4dnBjb2dodG15b3BwZnl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NjM1MjUsImV4cCI6MjA4ODMzOTUyNX0.iAJeNlhuZ5tRtFOuFg2dG9tIeR8eagYon9o3uEXmdeY";
+const WORKER_URL    = "https://english-ai-api.wgh052098.workers.dev";
+const STORAGE_KEY   = 'sb-zvlgxvpcoghtmyoppfyv-auth-token';
+
+// 显式指定所有 auth 配置
+const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: window.localStorage,
+    storageKey: STORAGE_KEY,
+    flowType: 'implicit',
+  }
+});
 
 let phrases = [], currentUser = null, otpEmail = '', countdownTimer = null;
 let selectedPlatform = '';
@@ -423,11 +438,7 @@ async function apiCall(path, options = {}) {
   const token = await getToken();
   const res = await fetch(WORKER_URL + path, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-      ...(options.headers || {})
-    }
+    headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${token}`, ...(options.headers||{}) }
   });
   const data = await res.json();
   if (!res.ok || data.error) throw new Error(data.error || 'API 请求失败');
@@ -438,13 +449,11 @@ async function apiCall(path, options = {}) {
 // Tab 切换
 // ============================================================
 function switchTab(tab) {
-  ['review', 'add', 'article', 'settings'].forEach(t => {
-    const el = document.getElementById('tab-' + t);
+  ['review','add','article','settings'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
     if (el) el.classList.toggle('hidden', t !== tab);
   });
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.tab === tab);
-  });
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
 }
 
 // ============================================================
@@ -452,32 +461,27 @@ function switchTab(tab) {
 // ============================================================
 function setupOtpInputs() {
   const inputs = document.querySelectorAll('.otp-input');
-  inputs.forEach((input) => {
+  inputs.forEach(input => {
     input.value = ''; input.classList.remove('filled');
-    const newInput = input.cloneNode(true);
-    input.parentNode.replaceChild(newInput, input);
+    const n = input.cloneNode(true);
+    input.parentNode.replaceChild(n, input);
   });
-  const freshInputs = document.querySelectorAll('.otp-input');
-  freshInputs.forEach((input, i) => {
+  const fresh = document.querySelectorAll('.otp-input');
+  fresh.forEach((input, i) => {
     input.addEventListener('input', e => {
-      const val = e.target.value.replace(/\D/g, '');
-      e.target.value = val;
-      val ? (e.target.classList.add('filled'), i < freshInputs.length - 1 && freshInputs[i+1].focus()) : e.target.classList.remove('filled');
+      const v = e.target.value.replace(/\D/g,'');
+      e.target.value = v;
+      v ? (e.target.classList.add('filled'), i < fresh.length-1 && fresh[i+1].focus()) : e.target.classList.remove('filled');
       checkOtpComplete();
     });
     input.addEventListener('keydown', e => {
-      if (e.key === 'Backspace' && !e.target.value && i > 0) {
-        freshInputs[i-1].focus(); freshInputs[i-1].value=''; freshInputs[i-1].classList.remove('filled'); checkOtpComplete();
-      }
-      if (e.key === 'Enter' && getOtpCode().length === 8) verifyOtp();
+      if (e.key==='Backspace' && !e.target.value && i>0) { fresh[i-1].focus(); fresh[i-1].value=''; fresh[i-1].classList.remove('filled'); checkOtpComplete(); }
+      if (e.key==='Enter' && getOtpCode().length===8) verifyOtp();
     });
     input.addEventListener('paste', e => {
       e.preventDefault();
-      const paste = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);
-      if (paste.length === 8) {
-        freshInputs.forEach((inp,j) => { inp.value=paste[j]; inp.classList.add('filled'); });
-        freshInputs[7].focus(); checkOtpComplete();
-      }
+      const p = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);
+      if (p.length===8) { fresh.forEach((inp,j) => { inp.value=p[j]; inp.classList.add('filled'); }); fresh[7].focus(); checkOtpComplete(); }
     });
   });
 }
@@ -492,7 +496,7 @@ function startCountdown(s) {
   clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
     r--;
-    if (r <= 0) { clearInterval(countdownTimer); el.textContent=''; rb.style.display='inline'; }
+    if (r<=0) { clearInterval(countdownTimer); el.textContent=''; rb.style.display='inline'; }
     else el.textContent = `${r} 秒后可重新发送`;
   }, 1000);
 }
@@ -533,13 +537,26 @@ async function verifyOtp() {
   if (code.length !== 8) return;
   setStatus("验证中..."); document.getElementById("verifyBtn").disabled = true;
   try {
-    const {error} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'email' });
+    const {data, error} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'email' });
     if (error) {
-      const {error: e2} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'magiclink' });
+      const {data:d2, error:e2} = await client.auth.verifyOtp({ email: otpEmail, token: code, type: 'magiclink' });
       if (e2) throw e2;
     }
+    dbg('verifyOtp 成功');
+    // 验证成功后手动检查 localStorage 是否写入
+    setTimeout(() => {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      dbg('验证后 localStorage: ' + (raw ? '有数据 ✓' : '空！！'), raw ? 'info' : 'err');
+    }, 500);
     setStatus("登录成功！");
-    // onAuthStateChange 的 SIGNED_IN 事件会自动触发 onLogin
+    // onAuthStateChange SIGNED_IN 会触发，但加一个保底
+    setTimeout(async () => {
+      if (!currentUser) {
+        dbg('onAuthStateChange 未触发，保底恢复', 'warn');
+        const {data} = await client.auth.getSession();
+        if (data?.session?.user) { currentUser = data.session.user; await onLogin(); }
+      }
+    }, 2000);
   } catch(e) {
     const {data} = await client.auth.getUser();
     if (data?.user) { setStatus("登录成功！"); return; }
@@ -554,7 +571,9 @@ function backToEmail() { clearInterval(countdownTimer); showStep(1); }
 
 async function logout() {
   await client.auth.signOut();
-  // SIGNED_OUT 事件会自动触发
+  currentUser = null; phrases = [];
+  showStep(1); updateDisplay(); setStatus("已退出");
+  dbg('已退出登录');
 }
 
 // ============================================================
@@ -562,11 +581,12 @@ async function logout() {
 // ============================================================
 async function loadData() {
   try {
-    const { data, error } = await client.from('phrases').select('*').order('created_at', { ascending: false });
+    const {data,error} = await client.from('phrases').select('*').order('created_at',{ascending:false});
     if (error) throw error;
     phrases = data || [];
     updateDisplay();
-  } catch(e) { console.error('loadData error:', e); }
+    dbg(`加载 ${phrases.length} 条短语`);
+  } catch(e) { dbg('loadData 失败: '+e.message,'err'); }
 }
 
 // ============================================================
@@ -577,54 +597,50 @@ async function addPhrase() {
   const english = document.getElementById('newEnglish').value.trim();
   const chinese = document.getElementById('newChinese').value.trim();
   const example = document.getElementById('newExample').value.trim();
-  if (!english) return toast('请输入英文内容', 'error');
-
+  if (!english) return toast('请输入英文内容','error');
   try {
-    const { error } = await client.from('phrases').insert([{
-      user_id: currentUser.id, type, english, chinese, example, mastered: false
-    }]);
+    const {error} = await client.from('phrases').insert([{ user_id:currentUser.id, type, english, chinese, example, mastered:false }]);
     if (error) throw error;
-    document.getElementById('newEnglish').value = '';
-    document.getElementById('newChinese').value = '';
-    document.getElementById('newExample').value = '';
-    toast('添加成功！', 'success');
-    await loadData();
-    switchTab('review');
-  } catch(e) { toast('添加失败: ' + e.message, 'error'); }
+    document.getElementById('newEnglish').value='';
+    document.getElementById('newChinese').value='';
+    document.getElementById('newExample').value='';
+    toast('添加成功！','success');
+    await loadData(); switchTab('review');
+  } catch(e) { toast('添加失败: '+e.message,'error'); }
 }
 
 // ============================================================
 // 显示短语列表
 // ============================================================
 function updateDisplay() {
-  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
-  const cat = document.getElementById('categorySelect')?.value || '全部';
+  const search = (document.getElementById('searchInput')?.value||'').toLowerCase();
+  const cat = document.getElementById('categorySelect')?.value||'全部';
   const container = document.getElementById('results');
   const countEl = document.getElementById('phraseCount');
   if (!container) return;
 
   const filtered = phrases.filter(p => {
-    if (cat !== '全部' && p.type !== cat) return false;
+    if (cat!=='全部' && p.type!==cat) return false;
     if (search && !(p.english||'').toLowerCase().includes(search) && !(p.chinese||'').toLowerCase().includes(search)) return false;
     return true;
   });
 
   if (countEl) countEl.textContent = `共 ${filtered.length} 条记录`;
 
-  if (filtered.length === 0) {
+  if (!filtered.length) {
     container.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 0;">暂无数据，去「添加」或「文章分析」中创建吧</p>';
     return;
   }
 
   container.innerHTML = filtered.map(p => `
-    <div class="phrase ${p.mastered ? 'mastered' : ''}" id="p-${p.id}">
+    <div class="phrase ${p.mastered?'mastered':''}" id="p-${p.id}">
       <div class="phrase-header">
         <h3>${escHtml(p.english)}</h3>
         <span class="type-badge">${p.type}</span>
       </div>
       <p><span class="label">释义：</span>${escHtml(p.chinese)}</p>
-      ${p.example ? `<p><span class="label">例句：</span>${escHtml(p.example)}</p>` : ''}
-      ${p.explanation ? `<p><span class="label">解释：</span>${escHtml(p.explanation)}</p>` : ''}
+      ${p.example?`<p><span class="label">例句：</span>${escHtml(p.example)}</p>`:''}
+      ${p.explanation?`<p><span class="label">解释：</span>${escHtml(p.explanation)}</p>`:''}
       <div class="phrase-actions">
         <button class="btn btn-sm ${p.mastered?'btn-ghost':'btn-success'}" onclick="toggleMastered('${p.id}',${!p.mastered})">${p.mastered?'取消掌握':'✓ 已掌握'}</button>
         <button class="btn btn-sm btn-ghost" onclick="speakText('${escAttr(p.english)}')">🔊 发音</button>
@@ -636,47 +652,45 @@ function updateDisplay() {
 
 async function toggleMastered(id, val) {
   try {
-    await client.from('phrases').update({ mastered: val }).eq('id', id);
-    const p = phrases.find(x => x.id === id);
-    if (p) p.mastered = val;
+    await client.from('phrases').update({mastered:val}).eq('id',id);
+    const p = phrases.find(x=>x.id===id);
+    if (p) p.mastered=val;
     updateDisplay();
-    toast(val ? '已标记为掌握' : '已取消掌握', 'success');
-  } catch(e) { toast('操作失败', 'error'); }
+    toast(val?'已标记为掌握':'已取消掌握','success');
+  } catch(e) { toast('操作失败','error'); }
 }
 
 async function deletePhrase(id) {
   if (!confirm('确定删除？')) return;
   try {
-    await client.from('phrases').delete().eq('id', id);
-    phrases = phrases.filter(x => x.id !== id);
-    updateDisplay();
-    toast('已删除', 'info');
-  } catch(e) { toast('删除失败', 'error'); }
+    await client.from('phrases').delete().eq('id',id);
+    phrases = phrases.filter(x=>x.id!==id);
+    updateDisplay(); toast('已删除','info');
+  } catch(e) { toast('删除失败','error'); }
 }
 
 function speakText(text) {
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = 0.9;
+  u.lang='en-US'; u.rate=0.9;
   speechSynthesis.speak(u);
 }
 
 function randomPhrase() {
-  const filtered = phrases.filter(p => !p.mastered);
-  if (!filtered.length) return toast('没有未掌握的内容了！', 'info');
-  const p = filtered[Math.floor(Math.random() * filtered.length)];
+  const f = phrases.filter(p=>!p.mastered);
+  if (!f.length) return toast('没有未掌握的内容了！','info');
+  const p = f[Math.floor(Math.random()*f.length)];
   document.getElementById('searchInput').value = p.english;
   updateDisplay();
-  setTimeout(() => document.getElementById('p-'+p.id)?.scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+  setTimeout(()=>document.getElementById('p-'+p.id)?.scrollIntoView({behavior:'smooth',block:'center'}),100);
 }
 
 async function clearMastered() {
   if (!confirm('确定清除所有「已掌握」标记？')) return;
   try {
-    await client.from('phrases').update({ mastered: false }).eq('user_id', currentUser.id).eq('mastered', true);
-    phrases.forEach(p => p.mastered = false);
-    updateDisplay();
-    toast('已清除所有标记', 'success');
-  } catch(e) { toast('操作失败', 'error'); }
+    await client.from('phrases').update({mastered:false}).eq('user_id',currentUser.id).eq('mastered',true);
+    phrases.forEach(p=>p.mastered=false);
+    updateDisplay(); toast('已清除所有标记','success');
+  } catch(e) { toast('操作失败','error'); }
 }
 
 // ============================================================
@@ -684,58 +698,42 @@ async function clearMastered() {
 // ============================================================
 function selectPlatform(platform) {
   selectedPlatform = platform;
-  document.querySelectorAll('.platform-card').forEach(el => {
-    el.classList.toggle('selected', el.dataset.platform === platform);
-  });
+  document.querySelectorAll('.platform-card').forEach(el => el.classList.toggle('selected', el.dataset.platform===platform));
 }
 
 async function loadAISettings() {
   try {
     const data = await apiCall('/api/settings');
-    if (data.ai_platform) { selectedPlatform = data.ai_platform; selectPlatform(data.ai_platform); }
+    if (data.ai_platform) { selectedPlatform=data.ai_platform; selectPlatform(data.ai_platform); }
     if (data.api_key) document.getElementById('settingsApiKey').value = data.api_key;
     if (data.model_name) document.getElementById('settingsModel').value = data.model_name;
   } catch(e) { console.log('No settings yet'); }
 }
 
 async function saveAISettings() {
-  if (!selectedPlatform) return toast('请选择一个 AI 平台', 'error');
+  if (!selectedPlatform) return toast('请选择一个 AI 平台','error');
   const apiKey = document.getElementById('settingsApiKey').value.trim();
-  if (!apiKey) return toast('请输入 API Key', 'error');
+  if (!apiKey) return toast('请输入 API Key','error');
   const model = document.getElementById('settingsModel').value.trim();
   try {
-    await apiCall('/api/settings', {
-      method: 'POST',
-      body: JSON.stringify({ ai_platform: selectedPlatform, api_key: apiKey, model_name: model })
-    });
-    toast('设置已保存 ✓', 'success');
-    document.getElementById('settingsMsg').innerHTML = '<span style="color:var(--success)">✓ 设置已保存</span>';
-  } catch(e) { toast('保存失败: ' + e.message, 'error'); }
+    await apiCall('/api/settings',{method:'POST',body:JSON.stringify({ai_platform:selectedPlatform,api_key:apiKey,model_name:model})});
+    toast('设置已保存 ✓','success');
+    document.getElementById('settingsMsg').innerHTML='<span style="color:var(--success)">✓ 设置已保存</span>';
+  } catch(e) { toast('保存失败: '+e.message,'error'); }
 }
 
 async function testKey() {
-  if (!selectedPlatform) return toast('请先选择平台', 'error');
+  if (!selectedPlatform) return toast('请先选择平台','error');
   const apiKey = document.getElementById('settingsApiKey').value.trim();
-  if (!apiKey) return toast('请输入 API Key', 'error');
+  if (!apiKey) return toast('请输入 API Key','error');
   const model = document.getElementById('settingsModel').value.trim();
   const msgEl = document.getElementById('settingsMsg');
-  msgEl.innerHTML = '<span style="color:var(--info)">测试中...</span>';
+  msgEl.innerHTML='<span style="color:var(--info)">测试中...</span>';
   try {
-    const data = await apiCall('/api/test-key', {
-      method: 'POST',
-      body: JSON.stringify({ platform: selectedPlatform, api_key: apiKey, model_name: model })
-    });
-    if (data.ok) {
-      msgEl.innerHTML = '<span style="color:var(--success)">✓ ' + data.message + '</span>';
-      toast('API Key 有效！', 'success');
-    } else {
-      msgEl.innerHTML = '<span style="color:var(--danger)">✗ ' + data.error + '</span>';
-      toast(data.error, 'error');
-    }
-  } catch(e) {
-    msgEl.innerHTML = '<span style="color:var(--danger)">✗ ' + e.message + '</span>';
-    toast('测试失败', 'error');
-  }
+    const data = await apiCall('/api/test-key',{method:'POST',body:JSON.stringify({platform:selectedPlatform,api_key:apiKey,model_name:model})});
+    if (data.ok) { msgEl.innerHTML='<span style="color:var(--success)">✓ '+data.message+'</span>'; toast('API Key 有效！','success'); }
+    else { msgEl.innerHTML='<span style="color:var(--danger)">✗ '+data.error+'</span>'; toast(data.error,'error'); }
+  } catch(e) { msgEl.innerHTML='<span style="color:var(--danger)">✗ '+e.message+'</span>'; toast('测试失败','error'); }
 }
 
 // ============================================================
@@ -744,54 +742,39 @@ async function testKey() {
 async function processArticle() {
   let text = document.getElementById('articleInput').value.trim();
   const pdfFile = document.getElementById('pdfInput').files[0];
-
   if (!text && pdfFile) {
     setStatus("读取 PDF 中...");
-    try {
-      text = await extractPdfText(pdfFile);
-    } catch(e) {
-      toast('PDF 读取失败: ' + e.message, 'error');
-      setStatus("PDF 读取失败");
-      return;
-    }
+    try { text = await extractPdfText(pdfFile); }
+    catch(e) { toast('PDF 读取失败: '+e.message,'error'); setStatus("PDF 读取失败"); return; }
   }
-  if (!text) return toast('请输入文章或上传 PDF', 'error');
+  if (!text) return toast('请输入文章或上传 PDF','error');
 
   const btn = document.getElementById('analyzeBtn');
-  const oldText = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span> 分析中...';
+  const old = btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="loading-spinner"></span> 分析中...';
   setStatus("AI 分析中，请稍候...");
-  document.getElementById('articleResults').innerHTML = '';
+  document.getElementById('articleResults').innerHTML='';
 
   try {
-    const data = await apiCall('/api/analyze-text', {
-      method: 'POST',
-      body: JSON.stringify({ text })
-    });
+    const data = await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text})});
     renderArticleResults(data);
-    await loadData();
-    toast('分析完成！', 'success');
-    setStatus("分析完成");
+    await loadData(); toast('分析完成！','success'); setStatus("分析完成");
   } catch(e) {
-    toast('分析失败: ' + e.message, 'error');
-    document.getElementById('articleResults').innerHTML = `<p style="color:var(--danger);margin-top:12px;">❌ ${escHtml(e.message)}</p>`;
+    toast('分析失败: '+e.message,'error');
+    document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px;">❌ ${escHtml(e.message)}</p>`;
     setStatus("分析失败");
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = oldText;
-  }
+  } finally { btn.disabled=false; btn.innerHTML=old; }
 }
 
 async function extractPdfText(file) {
-  const arrayBuffer = await file.arrayBuffer();
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  let text = '';
-  for (let i = 1; i <= pdf.numPages; i++) {
+  const ab = await file.arrayBuffer();
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';
+  const pdf = await pdfjsLib.getDocument({data:ab}).promise;
+  let text='';
+  for (let i=1; i<=pdf.numPages; i++) {
     const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    text += content.items.map(x => x.str).join(' ') + '\n';
+    const c = await page.getTextContent();
+    text += c.items.map(x=>x.str).join(' ')+'\n';
     setStatus(`读取 PDF 中... (${i}/${pdf.numPages})`);
   }
   if (!text.trim()) throw new Error('PDF 中没有可提取的文字');
@@ -801,113 +784,182 @@ async function extractPdfText(file) {
 function renderArticleResults(data) {
   const el = document.getElementById('articleResults');
   let html = '<div class="article-result">';
-
   if (data.title) html += `<div class="section-title">📌 ${escHtml(data.title)}</div>`;
   if (data.summary) html += `<p style="font-size:14px;color:#555;margin-bottom:12px;">${escHtml(data.summary)}</p>`;
   if (data.translated_text) {
     html += `<div class="section-title">📝 全文翻译</div>`;
     html += `<div class="translated">${escHtml(data.translated_text)}</div>`;
   }
-
   if (data.items && data.items.length) {
-    const types = { '短语': '🔤', '语法': '📐', '难句': '💡' };
+    const types = {'短语':'🔤','语法':'📐','难句':'💡'};
     Object.keys(types).forEach(type => {
-      const items = data.items.filter(x => x.item_type === type);
+      const items = data.items.filter(x=>x.item_type===type);
       if (items.length) {
         html += `<div class="section-title">${types[type]} ${type}（${items.length}条）</div>`;
         items.forEach(item => {
           html += `<div class="phrase">
             <div class="phrase-header"><h3>${escHtml(item.english)}</h3><span class="type-badge">${type}</span></div>
             <p><span class="label">释义：</span>${escHtml(item.chinese)}</p>
-            ${item.explanation ? `<p><span class="label">解释：</span>${escHtml(item.explanation)}</p>` : ''}
-            ${item.example ? `<p><span class="label">例句：</span>${escHtml(item.example)}</p>` : ''}
-            ${item.source_sentence ? `<p><span class="label">原文：</span>${escHtml(item.source_sentence)}</p>` : ''}
+            ${item.explanation?`<p><span class="label">解释：</span>${escHtml(item.explanation)}</p>`:''}
+            ${item.example?`<p><span class="label">例句：</span>${escHtml(item.example)}</p>`:''}
+            ${item.source_sentence?`<p><span class="label">原文：</span>${escHtml(item.source_sentence)}</p>`:''}
           </div>`;
         });
       }
     });
   }
-
   html += '</div>';
   el.innerHTML = html;
 }
 
 // ============================================================
-// 初始化 —— 修复刷新后跳转登录界面的问题
+// 核心：初始化 —— 4 层恢复策略 + 完整调试日志
 // ============================================================
 async function init() {
   setStatus("初始化...");
+  dbg('===== init() 开始 =====');
 
-  // 初始全部隐藏
+  // 隐藏所有面板
   document.getElementById("authStep1").classList.add("hidden");
   document.getElementById("authStep2").classList.add("hidden");
   document.getElementById("appBox").classList.add("hidden");
 
-  // 防止 onLogin 被多次调用的标志
-  let initialSessionHandled = false;
+  // ── 第 0 步：诊断 localStorage ──
+  try {
+    // 测试 localStorage 是否可用
+    localStorage.setItem('__test__', '1');
+    localStorage.removeItem('__test__');
+    dbg('localStorage 可用 ✓');
+  } catch(e) {
+    dbg('localStorage 不可用！这就是问题根源', 'err');
+    dbg('原因: ' + e.message, 'err');
+    showStep(1); setStatus("存储不可用，无法保持登录");
+    return;
+  }
 
-  // 注册 auth 事件监听（处理后续的登录、登出、token 刷新）
-  client.auth.onAuthStateChange(async (event, session) => {
-    console.log('[Auth event]', event, session?.user?.email || 'no user');
-
-    if (event === 'INITIAL_SESSION') {
-      // 标记：INITIAL_SESSION 已到达
-      // 如果 getSession() 已经先完成并处理了，就跳过
-      if (initialSessionHandled) {
-        console.log('[Auth] INITIAL_SESSION skipped, already handled by getSession');
-        return;
-      }
-      // 如果 getSession() 还没完成（理论上不会，因为是 await），也由 getSession 处理
-      return;
+  // 检查 Supabase token 是否存在
+  const rawToken = localStorage.getItem(STORAGE_KEY);
+  if (rawToken) {
+    try {
+      const parsed = JSON.parse(rawToken);
+      const now = Math.floor(Date.now() / 1000);
+      dbg(`localStorage 找到 token: email=${parsed?.user?.email || '?'}`);
+      dbg(`  access_token: ${parsed?.access_token ? '有 (前20字=' + parsed.access_token.substring(0,20) + '...)' : '无!'}`);
+      dbg(`  refresh_token: ${parsed?.refresh_token ? '有' : '无!'}`);
+      dbg(`  expires_at: ${parsed?.expires_at || 'N/A'} (${parsed?.expires_at ? (parsed.expires_at > now ? '未过期 ✓' : '已过期 ✗') : '?'})`);
+    } catch(e) {
+      dbg('localStorage token 解析失败: ' + e.message, 'err');
     }
+  } else {
+    dbg('localStorage 没有 Supabase token', 'warn');
+    // 扫描看是否存在其他格式的 key
+    const sbKeys = Object.keys(localStorage).filter(k => k.includes('sb-') || k.includes('supabase'));
+    if (sbKeys.length) dbg('发现其他 sb keys: ' + sbKeys.join(', '), 'warn');
+    else dbg('localStorage 中完全没有 Supabase 相关数据', 'warn');
+  }
+
+  // ── 第 1 步：注册 auth 事件监听 ──
+  client.auth.onAuthStateChange(async (event, session) => {
+    dbg(`[onAuthStateChange] event=${event}, user=${session?.user?.email || 'null'}`);
 
     if (event === 'SIGNED_IN') {
-      const newUser = session?.user || null;
-      if (newUser && newUser.id !== currentUser?.id) {
-        currentUser = newUser;
+      const u = session?.user;
+      if (u && (!currentUser || u.id !== currentUser.id)) {
+        dbg('SIGNED_IN → onLogin');
+        currentUser = u;
         await onLogin();
       }
     } else if (event === 'TOKEN_REFRESHED') {
-      // token 自动刷新，不需要重载界面
-      console.log('[Auth] token refreshed');
+      dbg('Token 已自动刷新 ✓');
     } else if (event === 'SIGNED_OUT') {
-      currentUser = null;
-      phrases = [];
-      showStep(1);
-      updateDisplay();
-      setStatus("已退出");
+      dbg('SIGNED_OUT 触发');
+      currentUser = null; phrases = [];
+      showStep(1); updateDisplay(); setStatus("已退出");
     }
+    // INITIAL_SESSION: 不依赖，由下方手动处理
   });
 
-  // 主动调用 getSession() 恢复会话 —— 这是修复的关键
-  // 不依赖 INITIAL_SESSION 事件，而是显式检查 localStorage 中的 session
+  // ── 第 2 步：多层恢复会话 ──
+  let user = null;
+
+  // 策略 A: getSession
+  dbg('策略 A: getSession()...');
   try {
     const { data, error } = await client.auth.getSession();
-    initialSessionHandled = true;
-
-    if (error) {
-      console.error('[Init] getSession error:', error);
-      showStep(1);
-      setStatus("未登录");
-      return;
-    }
-
-    if (data?.session?.user) {
-      // 已有有效 session，直接进入应用
-      currentUser = data.session.user;
-      console.log('[Init] Session restored for:', currentUser.email);
-      await onLogin();
+    if (error) dbg('  A 错误: ' + error.message, 'warn');
+    else if (data?.session?.user) {
+      user = data.session.user;
+      dbg(`  A 成功 ✓ email=${user.email}`);
     } else {
-      // 没有 session，显示登录界面
-      showStep(1);
-      setStatus("未登录");
+      dbg('  A 返回空 session', 'warn');
     }
-  } catch(e) {
-    console.error('[Init] Unexpected error:', e);
-    initialSessionHandled = true;
+  } catch(e) { dbg('  A 异常: ' + e.message, 'err'); }
+
+  // 策略 B: refreshSession
+  if (!user) {
+    dbg('策略 B: refreshSession()...');
+    try {
+      const { data, error } = await client.auth.refreshSession();
+      if (error) dbg('  B 错误: ' + error.message, 'warn');
+      else if (data?.session?.user) {
+        user = data.session.user;
+        dbg(`  B 成功 ✓ email=${user.email}`);
+      } else {
+        dbg('  B 返回空', 'warn');
+      }
+    } catch(e) { dbg('  B 异常: ' + e.message, 'err'); }
+  }
+
+  // 策略 C: 手动从 localStorage 取 token 再 setSession
+  if (!user && rawToken) {
+    dbg('策略 C: 手动 setSession()...');
+    try {
+      const parsed = JSON.parse(rawToken);
+      if (parsed?.access_token && parsed?.refresh_token) {
+        const { data, error } = await client.auth.setSession({
+          access_token: parsed.access_token,
+          refresh_token: parsed.refresh_token,
+        });
+        if (error) dbg('  C 错误: ' + error.message, 'warn');
+        else if (data?.session?.user) {
+          user = data.session.user;
+          dbg(`  C 成功 ✓ email=${user.email}`);
+        } else {
+          dbg('  C 返回空', 'warn');
+        }
+      } else {
+        dbg('  C 跳过: token 不完整', 'warn');
+      }
+    } catch(e) { dbg('  C 异常: ' + e.message, 'err'); }
+  }
+
+  // 策略 D: getUser (网络请求)
+  if (!user) {
+    dbg('策略 D: getUser()...');
+    try {
+      const { data, error } = await client.auth.getUser();
+      if (error) dbg('  D 错误: ' + error.message, 'warn');
+      else if (data?.user) {
+        user = data.user;
+        dbg(`  D 成功 ✓ email=${user.email}`);
+      } else {
+        dbg('  D 返回空', 'warn');
+      }
+    } catch(e) { dbg('  D 异常: ' + e.message, 'err'); }
+  }
+
+  // ── 第 3 步：决定界面 ──
+  if (user) {
+    dbg(`会话恢复成功 → ${user.email}`);
+    currentUser = user;
+    await onLogin();
+  } else {
+    dbg('所有恢复策略失败 → 显示登录', 'warn');
     showStep(1);
     setStatus("未登录");
   }
+
+  dbg('===== init() 完成 =====');
 }
 
 async function onLogin() {
