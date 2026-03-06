@@ -110,7 +110,6 @@ label.field-label { font-size:13px; font-weight:600; color:var(--muted); margin-
 .phrase .label { font-weight:600; color:var(--text); }
 .phrase-actions { display:flex; gap:6px; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
 
-/* Article result redesign */
 .ar-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
 .ar-title { font-family:var(--serif); font-size:1.4rem; color:var(--text); }
 .ar-summary { font-size:14px; color:#555; line-height:1.7; margin-bottom:16px; padding:14px 18px; background:#faf9f7; border-radius:12px; border:1px solid var(--border); }
@@ -125,7 +124,6 @@ label.field-label { font-size:13px; font-weight:600; color:var(--muted); margin-
 .ar-section-body { padding:0 18px 14px; }
 .ar-section-body.collapsed { display:none; }
 
-/* Article item card (inside results) */
 .ar-item { padding:14px 16px; margin-bottom:8px; border-radius:10px; border:1.5px solid var(--border); background:#fff; transition:all 0.2s; position:relative; }
 .ar-item:last-child { margin-bottom:0; }
 .ar-item:hover { border-color:#d0ccc5; }
@@ -142,8 +140,6 @@ label.field-label { font-size:13px; font-weight:600; color:var(--muted); margin-
 .btn-add.added::before { content:'✓ '; }
 
 .ar-batch-bar { display:flex; gap:8px; align-items:center; padding:10px 0; flex-wrap:wrap; }
-
-/* Translation toggle */
 .ar-trans-box { background:#faf9f7; padding:16px 18px; border-radius:12px; border:1px solid var(--border); font-size:14px; line-height:1.8; color:#444; white-space:pre-wrap; max-height:300px; overflow-y:auto; }
 
 .platform-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); gap:8px; margin-bottom:16px; }
@@ -329,7 +325,7 @@ const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
 });
 
 let phrases=[], currentUser=null, otpEmail='', countdownTimer=null, selectedPlatform='';
-let lastArticleItems = []; // 存储最新分析结果
+let lastArticleItems = [];
 
 function setStatus(msg){ document.getElementById("statusText").textContent=msg; }
 function showStep(step){ document.getElementById("authStep1").classList.toggle("hidden",step!==1); document.getElementById("authStep2").classList.toggle("hidden",step!==2); document.getElementById("appBox").classList.toggle("hidden",step!==3); }
@@ -350,7 +346,6 @@ async function apiCall(path, options={}){
 
 function switchTab(tab){ ['review','add','article','settings'].forEach(t=>{const el=document.getElementById('tab-'+t);if(el)el.classList.toggle('hidden',t!==tab);}); document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.tab===tab)); }
 
-// OTP
 function setupOtpInputs(){ const inputs=document.querySelectorAll('.otp-input'); inputs.forEach(input=>{input.value='';input.classList.remove('filled');const n=input.cloneNode(true);input.parentNode.replaceChild(n,input);}); const fresh=document.querySelectorAll('.otp-input'); fresh.forEach((input,i)=>{input.addEventListener('input',e=>{const v=e.target.value.replace(/\D/g,'');e.target.value=v;v?(e.target.classList.add('filled'),i<fresh.length-1&&fresh[i+1].focus()):e.target.classList.remove('filled');checkOtpComplete();});input.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!e.target.value&&i>0){fresh[i-1].focus();fresh[i-1].value='';fresh[i-1].classList.remove('filled');checkOtpComplete();}if(e.key==='Enter'&&getOtpCode().length===8)verifyOtp();});input.addEventListener('paste',e=>{e.preventDefault();const p=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,8);if(p.length===8){fresh.forEach((inp,j)=>{inp.value=p[j];inp.classList.add('filled');});fresh[7].focus();checkOtpComplete();}});}); }
 function getOtpCode(){ return Array.from(document.querySelectorAll('.otp-input')).map(i=>i.value).join(''); }
 function checkOtpComplete(){ document.getElementById("verifyBtn").disabled=getOtpCode().length!==8; }
@@ -366,53 +361,45 @@ async function loadData(){ try{const{data,error}=await client.from('phrases').se
 
 async function addPhrase(){ const type=document.getElementById('newType').value; const english=document.getElementById('newEnglish').value.trim(); const chinese=document.getElementById('newChinese').value.trim(); const example=document.getElementById('newExample').value.trim(); if(!english)return toast('请输入英文内容','error'); try{const{error}=await client.from('phrases').insert([{user_id:currentUser.id,type,english,chinese,example,mastered:false}]); if(error)throw error; document.getElementById('newEnglish').value='';document.getElementById('newChinese').value='';document.getElementById('newExample').value=''; toast('添加成功！','success'); await loadData();switchTab('review');}catch(e){toast('添加失败: '+e.message,'error');} }
 
-// 从文章分析结果中添加单条到复习
 async function addItemToReview(idx){
   const item = lastArticleItems[idx];
   if(!item || !currentUser) return;
   const type = item.item_type === '难句' ? '语法' : item.item_type;
   try{
     const{error}=await client.from('phrases').insert([{
-      user_id: currentUser.id,
-      type,
-      english: item.english||'',
-      chinese: item.chinese||'',
-      example: item.example||'',
-      explanation: item.explanation||'',
-      source_sentence: item.source_sentence||'',
-      mastered: false
+      user_id: currentUser.id, type,
+      english: item.english||'', chinese: item.chinese||'',
+      example: item.example||'', explanation: item.explanation||'',
+      source_sentence: item.source_sentence||'', mastered: false
     }]);
     if(error) throw error;
-    // 标记已添加
     const btn = document.getElementById('add-btn-'+idx);
     if(btn){ btn.classList.add('added'); btn.textContent='已添加'; btn.disabled=true; }
+    const card = document.getElementById('ar-item-'+idx);
+    if(card) card.classList.add('added');
     toast('已添加到复习','success');
     await loadData();
   }catch(e){ toast('添加失败: '+e.message,'error'); }
 }
 
-// 一键添加某类所有
 async function addAllOfType(itemType){
   const items = lastArticleItems.filter(x=>x.item_type===itemType);
   if(!items.length) return;
   const rows = items.map(item=>({
-    user_id: currentUser.id,
-    type: item.item_type==='难句'?'语法':item.item_type,
-    english: item.english||'',
-    chinese: item.chinese||'',
-    example: item.example||'',
-    explanation: item.explanation||'',
-    source_sentence: item.source_sentence||'',
-    mastered: false
+    user_id: currentUser.id, type: item.item_type==='难句'?'语法':item.item_type,
+    english: item.english||'', chinese: item.chinese||'',
+    example: item.example||'', explanation: item.explanation||'',
+    source_sentence: item.source_sentence||'', mastered: false
   }));
   try{
     const{error}=await client.from('phrases').insert(rows);
     if(error) throw error;
-    // 标记所有已添加
     lastArticleItems.forEach((item,idx)=>{
       if(item.item_type===itemType){
         const btn=document.getElementById('add-btn-'+idx);
         if(btn){btn.classList.add('added');btn.textContent='已添加';btn.disabled=true;}
+        const card=document.getElementById('ar-item-'+idx);
+        if(card)card.classList.add('added');
       }
     });
     toast(`已添加 ${items.length} 条到复习`,'success');
@@ -420,23 +407,19 @@ async function addAllOfType(itemType){
   }catch(e){ toast('批量添加失败: '+e.message,'error'); }
 }
 
-// 一键全部添加
 async function addAllItems(){
   if(!lastArticleItems.length) return;
   const rows = lastArticleItems.map(item=>({
-    user_id: currentUser.id,
-    type: item.item_type==='难句'?'语法':item.item_type,
-    english: item.english||'',
-    chinese: item.chinese||'',
-    example: item.example||'',
-    explanation: item.explanation||'',
-    source_sentence: item.source_sentence||'',
-    mastered: false
+    user_id: currentUser.id, type: item.item_type==='难句'?'语法':item.item_type,
+    english: item.english||'', chinese: item.chinese||'',
+    example: item.example||'', explanation: item.explanation||'',
+    source_sentence: item.source_sentence||'', mastered: false
   }));
   try{
     const{error}=await client.from('phrases').insert(rows);
     if(error) throw error;
     document.querySelectorAll('.btn-add').forEach(btn=>{btn.classList.add('added');btn.textContent='已添加';btn.disabled=true;});
+    document.querySelectorAll('.ar-item').forEach(card=>card.classList.add('added'));
     toast(`已全部添加 ${rows.length} 条到复习`,'success');
     await loadData();
   }catch(e){ toast('批量添加失败: '+e.message,'error'); }
@@ -477,25 +460,74 @@ async function saveAISettings(){if(!selectedPlatform)return toast('请选择一�
 async function testKey(){if(!selectedPlatform)return toast('请先选择平台','error');const apiKey=document.getElementById('settingsApiKey').value.trim();if(!apiKey)return toast('请输入 API Key','error');const model=document.getElementById('settingsModel').value.trim();const msgEl=document.getElementById('settingsMsg');msgEl.innerHTML='<span style="color:var(--info)">测试中...</span>';try{const data=await apiCall('/api/test-key',{method:'POST',body:JSON.stringify({platform:selectedPlatform,api_key:apiKey,model_name:model})});if(data.ok){msgEl.innerHTML='<span style="color:var(--success)">✓ '+data.message+'</span>';toast('API Key 有效！','success');}else{msgEl.innerHTML='<span style="color:var(--danger)">✗ '+data.error+'</span>';toast(data.error,'error');}}catch(e){msgEl.innerHTML='<span style="color:var(--danger)">✗ '+e.message+'</span>';toast('测试失败','error');}}
 
 // ============================================================
-// 文章分析 & 结果渲染（重新设计）
+// 文章分析（带分步进度提示）
 // ============================================================
 async function processArticle(){
   let text=document.getElementById('articleInput').value.trim();
   const pdfFile=document.getElementById('pdfInput').files[0];
-  if(!text&&pdfFile){setStatus("读取 PDF 中...");try{text=await extractPdfText(pdfFile);}catch(e){toast('PDF 读取失败: '+e.message,'error');setStatus("PDF 读取失败");return;}}
-  if(!text)return toast('请输入文章或上传 PDF','error');
-  const btn=document.getElementById('analyzeBtn');const old=btn.innerHTML;btn.disabled=true;btn.innerHTML='<span class="loading-spinner"></span> 分析中...';
-  setStatus("AI 分析中，请稍候...");document.getElementById('articleResults').innerHTML='';
+  if(!text&&pdfFile){
+    setStatus("读取 PDF 中...");
+    try{ text=await extractPdfText(pdfFile); }
+    catch(e){ toast('PDF 读取失败: '+e.message,'error'); setStatus("PDF 读取失败"); return; }
+  }
+  if(!text) return toast('请输入文章或上传 PDF','error');
+
+  const btn=document.getElementById('analyzeBtn');
+  const oldBtnText=btn.innerHTML;
+  btn.disabled=true;
+  document.getElementById('articleResults').innerHTML='';
+
+  // 分步进度提示
+  const steps=[
+    {text:'📡 正在连接 AI 服务...', time:0},
+    {text:'📖 正在阅读文章...', time:2000},
+    {text:'📝 正在翻译全文...', time:5000},
+    {text:'🔤 正在提取短语...', time:10000},
+    {text:'📐 正在分析语法...', time:16000},
+    {text:'💡 正在解析难句...', time:22000},
+    {text:'📦 正在整理结果...', time:28000},
+  ];
+  const timers=[];
+  steps.forEach(step=>{
+    const t=setTimeout(()=>{
+      btn.innerHTML=`<span class="loading-spinner"></span> ${step.text}`;
+      setStatus(step.text);
+    }, step.time);
+    timers.push(t);
+  });
+
   try{
     const data=await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text})});
+    timers.forEach(t=>clearTimeout(t));
     lastArticleItems = data.items || [];
+    btn.innerHTML='✅ 分析完成！';
+    setStatus("分析完成");
     renderArticleResults(data);
-    toast('分析完成！','success');setStatus("分析完成");
-  }catch(e){toast('分析失败: '+e.message,'error');document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px;">❌ ${escHtml(e.message)}</p>`;setStatus("分析失败");}
-  finally{btn.disabled=false;btn.innerHTML=old;}
+    toast('分析完成！','success');
+    setTimeout(()=>{ btn.innerHTML=oldBtnText; },2000);
+  }catch(e){
+    timers.forEach(t=>clearTimeout(t));
+    toast('分析失败: '+e.message,'error');
+    document.getElementById('articleResults').innerHTML=`<p style="color:var(--danger);margin-top:12px;">❌ ${escHtml(e.message)}</p>`;
+    setStatus("分析失败");
+    btn.innerHTML=oldBtnText;
+  }finally{ btn.disabled=false; }
 }
 
-async function extractPdfText(file){const ab=await file.arrayBuffer();pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';const pdf=await pdfjsLib.getDocument({data:ab}).promise;let text='';for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const c=await page.getTextContent();text+=c.items.map(x=>x.str).join(' ')+'\n';setStatus(`读取 PDF 中... (${i}/${pdf.numPages})`);}if(!text.trim())throw new Error('PDF 中没有可提取的文字');return text.trim();}
+async function extractPdfText(file){
+  const ab=await file.arrayBuffer();
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.207/pdf.worker.min.js';
+  const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+  let text='';
+  for(let i=1;i<=pdf.numPages;i++){
+    const page=await pdf.getPage(i);
+    const c=await page.getTextContent();
+    text+=c.items.map(x=>x.str).join(' ')+'\n';
+    setStatus(`读取 PDF 中... (${i}/${pdf.numPages})`);
+  }
+  if(!text.trim()) throw new Error('PDF 中没有可提取的文字');
+  return text.trim();
+}
 
 function toggleSection(id){
   const body=document.getElementById('sec-body-'+id);
@@ -509,12 +541,10 @@ function renderArticleResults(data){
   const el=document.getElementById('articleResults');
   const items = data.items || [];
   const types = {'短语':{icon:'🔤',items:[]},'语法':{icon:'📐',items:[]},'难句':{icon:'💡',items:[]}};
-
   items.forEach((item,idx)=>{ item._idx=idx; if(types[item.item_type]) types[item.item_type].items.push(item); });
 
   let html = '';
 
-  // 标题 & 摘要
   if(data.title){
     html += `<div class="card" style="margin-top:12px;">
       <div class="ar-header">
@@ -525,7 +555,6 @@ function renderArticleResults(data){
     </div>`;
   }
 
-  // 全文翻译（可折叠）
   if(data.translated_text){
     html += `<div class="ar-section">
       <div class="ar-section-head" id="sec-head-trans" onclick="toggleSection('trans')">
@@ -538,11 +567,9 @@ function renderArticleResults(data){
     </div>`;
   }
 
-  // 各类提取项
   Object.keys(types).forEach(type=>{
     const group = types[type];
     if(!group.items.length) return;
-
     html += `<div class="ar-section">
       <div class="ar-section-head open" id="sec-head-${type}" onclick="toggleSection('${type}')">
         <div class="ar-sec-left">${group.icon} ${type} <span class="ar-sec-count">${group.items.length}</span></div>
@@ -552,7 +579,6 @@ function renderArticleResults(data){
         </div>
       </div>
       <div class="ar-section-body" id="sec-body-${type}">`;
-
     group.items.forEach(item=>{
       const idx = item._idx;
       html += `<div class="ar-item" id="ar-item-${idx}">
@@ -566,7 +592,6 @@ function renderArticleResults(data){
         ${item.source_sentence?`<p style="color:#888;font-size:12px;margin-top:4px;"><span class="lbl">原文：</span>${escHtml(item.source_sentence)}</p>`:''}
       </div>`;
     });
-
     html += '</div></div>';
   });
 
@@ -608,4 +633,3 @@ init();
 </script>
 </body>
 </html>
-
