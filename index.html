@@ -830,36 +830,34 @@ function renderArticleResults(data) {
 async function init() {
   setStatus("初始化...");
 
-  // 初始全部隐藏，等待 session 检查完成再决定显示哪个界面
+  // 初始全部隐藏
   document.getElementById("authStep1").classList.add("hidden");
   document.getElementById("authStep2").classList.add("hidden");
   document.getElementById("appBox").classList.add("hidden");
 
-  // 先检查本地存储的 session
-  const { data: { session } } = await client.auth.getSession();
-  if (session?.user) {
-    currentUser = session.user;
-    await onLogin();
-  } else {
-    showStep(1);
-    setStatus("未登录");
-  }
-
-  // 监听后续的 auth 状态变化（token 刷新、退出、新登录等）
-  client.auth.onAuthStateChange(async (_event, session) => {
-    const newUser = session?.user || null;
-
-    if (newUser && newUser.id !== currentUser?.id) {
-      // 新用户登录（或首次登录）
-      currentUser = newUser;
-      await onLogin();
-    } else if (!newUser && currentUser) {
-      // 用户已退出
+  // 先用 onAuthStateChange 统一处理所有状态
+  // 它会在注册时立刻触发一次 INITIAL_SESSION，所以不需要再单独调用 getSession()
+  client.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'TOKEN_REFRESHED') {
+      const newUser = session?.user || null;
+      if (newUser) {
+        if (newUser.id !== currentUser?.id) {
+          // 新用户或刷新页面恢复 session
+          currentUser = newUser;
+          await onLogin();
+        }
+        // 同一用户的 TOKEN_REFRESHED 等事件，忽略
+      } else {
+        // INITIAL_SESSION 但 session 为空 → 未登录
+        showStep(1);
+        setStatus("未登录");
+      }
+    } else if (event === 'SIGNED_OUT') {
       currentUser = null;
       phrases = [];
       showStep(1);
       updateDisplay();
-      setStatus("未登录");
+      setStatus("已退出");
     }
   });
 }
@@ -879,3 +877,4 @@ init();
 </script>
 </body>
 </html>
+
