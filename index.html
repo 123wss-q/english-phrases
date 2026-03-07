@@ -354,6 +354,67 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .gc-empty{text-align:center;padding:50px 0;color:var(--text-sec)}
 .gc-empty .gc-em{font-size:48px;margin-bottom:12px}
 
+/* ═══ AI CHAT ═══ */
+.chat-scene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:20px 0}
+.chat-scene{padding:18px 12px;border:2px solid var(--border);border-radius:14px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--card)}
+.chat-scene:hover{border-color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.chat-scene .cs-icon{font-size:32px;margin-bottom:6px}
+.chat-scene .cs-name{font-size:13px;font-weight:700}
+.chat-scene .cs-role{font-size:11px;color:var(--text-sec);margin-top:2px}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;margin-top:12px}
+.chat-header .ch-info{display:flex;align-items:center;gap:10px}
+.chat-header .ch-icon{width:36px;height:36px;border-radius:12px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:20px}
+.chat-header .ch-name{font-weight:600;font-size:14px}
+.chat-header .ch-scene{font-size:11px;color:var(--text-sec)}
+.chat-body{background:var(--bg-deep);border-left:1px solid var(--border);border-right:1px solid var(--border);padding:20px 16px;min-height:300px;max-height:460px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.chat-msg{max-width:82%;animation:fadeUp 0.3s ease}
+.chat-msg.ai{align-self:flex-start}
+.chat-msg.user{align-self:flex-end}
+.chat-bubble{padding:12px 16px;border-radius:16px;font-size:13.5px;line-height:1.7;word-break:break-word}
+.chat-msg.ai .chat-bubble{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text)}
+.chat-msg.user .chat-bubble{background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.chat-feedback{margin-top:6px;padding:10px 14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15);border-radius:12px;font-size:12px;color:#92400E;line-height:1.6}
+.chat-feedback strong{color:var(--warn)}
+.chat-input-bar{display:flex;gap:8px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:0 0 var(--radius) var(--radius);border-top:none}
+.chat-input-bar input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;font-family:var(--body);outline:none;transition:all var(--ease)}
+.chat-input-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.chat-typing{display:flex;gap:4px;padding:8px 16px;align-self:flex-start}
+.chat-typing span{width:8px;height:8px;background:var(--text-sec);border-radius:50%;animation:chatDot 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:0.2s}
+.chat-typing span:nth-child(3){animation-delay:0.4s}
+@keyframes chatDot{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
+
+/* ═══ PRONUNCIATION ═══ */
+.pron-card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;max-width:500px;margin:20px auto;transition:all var(--ease)}
+.pron-card.recording{border-color:var(--accent);box-shadow:0 0 0 6px var(--accent-glow)}
+.pron-phrase{font-family:var(--display);font-size:1.5rem;font-weight:700;color:var(--accent);line-height:1.5;margin-bottom:6px}
+.pron-chinese{font-size:13px;color:var(--text-sec);margin-bottom:20px}
+.pron-btns{display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.pron-btn{width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:all var(--ease);font-family:var(--body)}
+.pron-btn.play{background:var(--info);color:#fff}
+.pron-btn.play:hover{background:#1D4ED8;transform:scale(1.08)}
+.pron-btn.mic{background:var(--accent);color:#fff}
+.pron-btn.mic:hover{background:var(--accent-hover);transform:scale(1.08)}
+.pron-btn.mic.active{background:var(--danger);animation:pulse 1s infinite}
+.pron-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.4)}50%{box-shadow:0 0 0 12px rgba(220,38,38,0)}}
+.pron-wave{height:40px;display:flex;align-items:center;justify-content:center;gap:3px;margin:12px 0}
+.pron-wave span{width:4px;border-radius:99px;background:var(--accent);animation:wave 0.8s infinite ease-in-out}
+.pron-wave span:nth-child(1){height:12px;animation-delay:0s}
+.pron-wave span:nth-child(2){height:24px;animation-delay:0.1s}
+.pron-wave span:nth-child(3){height:36px;animation-delay:0.2s}
+.pron-wave span:nth-child(4){height:28px;animation-delay:0.3s}
+.pron-wave span:nth-child(5){height:16px;animation-delay:0.4s}
+@keyframes wave{0%,100%{transform:scaleY(0.5)}50%{transform:scaleY(1)}}
+.pron-result{margin-top:16px;padding:16px;background:var(--bg);border-radius:14px;border:1px solid var(--border);animation:fadeUp 0.3s ease}
+.pron-score{font-family:var(--display);font-size:2.5rem;font-weight:700;line-height:1}
+.pron-score-label{font-size:13px;color:var(--text-sec);margin:4px 0 10px}
+.pron-diff{font-size:13px;line-height:1.6;text-align:left;margin-top:10px;padding:10px 14px;background:var(--card);border-radius:10px}
+.pron-diff .pd-target{color:var(--text);font-weight:600}
+.pron-diff .pd-user{color:var(--info)}
+.pron-nav{display:flex;gap:10px;justify-content:center;margin-top:16px}
+.pron-unsupported{text-align:center;padding:40px;color:var(--text-sec)}
+
 @media(max-width:768px){
   .sidebar{display:none}.main-content{margin-left:0}.page-wrap{padding:16px 14px 100px}
   .mobile-head{display:block}.bottom-nav{display:flex}
@@ -363,6 +424,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .xp-banner{flex-direction:column;text-align:center}.ach-grid{grid-template-columns:repeat(3,1fr)}
   .quiz-mode-grid{grid-template-columns:1fr}.flip-actions{gap:6px}.flip-btn{padding:8px 12px;font-size:12px;min-width:60px}
   .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.hm-day-label{height:12px;line-height:12px}
+  .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.chat-body{max-height:350px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
 }
 </style>
 </head>
@@ -379,6 +441,8 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <button class="nav-item" onclick="switchTab('add')" data-tab="add"><span class="ni">✏️</span>手动添加</button>
       <button class="nav-item" onclick="switchTab('article')" data-tab="article"><span class="ni">📖</span>文章分析</button>
       <button class="nav-item" onclick="switchTab('grammar')" data-tab="grammar"><span class="ni">✍️</span>写作批改</button>
+      <button class="nav-item" onclick="switchTab('chat')" data-tab="chat"><span class="ni">💬</span>AI 对话</button>
+      <button class="nav-item" onclick="switchTab('pron')" data-tab="pron"><span class="ni">🎤</span>发音跟读</button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="switchTab('settings')" data-tab="settings"><span class="ni">⚙️</span>AI 设置</button>
     </div>
@@ -500,6 +564,18 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         <div id="gcResults"></div>
       </div>
 
+      <!-- AI Chat -->
+      <div id="tab-chat" class="hidden">
+        <div class="page-title">AI 英文对话</div><div class="page-desc">选择场景或自由聊天，练习英文表达。AI 会纠正你的语法错误。</div>
+        <div id="chatArea"></div>
+      </div>
+
+      <!-- Pronunciation -->
+      <div id="tab-pron" class="hidden">
+        <div class="page-title">发音跟读</div><div class="page-desc">听标准发音，跟读并获得评分。</div>
+        <div id="pronArea"></div>
+      </div>
+
       <!-- Settings -->
       <div id="tab-settings" class="hidden">
         <div class="page-title">AI 设置</div><div class="page-desc">选择大模型平台并配置 API Key。</div>
@@ -540,6 +616,8 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav" onclick="switchTab('list')" data-tab="list"><span class="bi">📚</span>列表</button>
   <button class="bnav" onclick="switchTab('article')" data-tab="article"><span class="bi">📖</span>分析</button>
   <button class="bnav" onclick="switchTab('grammar')" data-tab="grammar"><span class="bi">✍️</span>批改</button>
+  <button class="bnav" onclick="switchTab('chat')" data-tab="chat"><span class="bi">💬</span>对话</button>
+  <button class="bnav" onclick="switchTab('pron')" data-tab="pron"><span class="bi">🎤</span>跟读</button>
   <button class="bnav" onclick="switchTab('settings')" data-tab="settings"><span class="bi">⚙️</span>设置</button>
 </div>
 
@@ -592,7 +670,7 @@ function getLevelInfo(xp){let cur=LEVELS[0];for(const l of LEVELS){if(xp>=l.xp)c
 function todayStr(){return new Date().toISOString().split('T')[0]}
 
 function switchTab(tab){
-  const tabs=['dash','flip','quiz','list','add','article','grammar','settings'];
+  const tabs=['dash','flip','quiz','list','add','article','grammar','chat','pron','settings'];
   tabs.forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.classList.toggle('hidden',t!==tab)});
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   document.querySelectorAll('.bnav').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
@@ -601,6 +679,8 @@ function switchTab(tab){
   if(tab==='quiz')showQuizSetup();
   if(tab==='list')updateDisplay();
   if(tab==='grammar')initGrammarTab();
+  if(tab==='chat')initChatTab();
+  if(tab==='pron')initPronTab();
 }
 
 // ═══════════════════════════════════════════════
@@ -1327,6 +1407,252 @@ function renderGrammarResults(data){
 
   el.innerHTML=html;
 }
+
+// ═══════════════════════════════════════════════
+// AI CHAT
+// ═══════════════════════════════════════════════
+const CHAT_SCENES=[
+  {id:'coffee',icon:'☕',name:'咖啡厅点餐',role:'咖啡店店员',prompt:'You are a barista at a coffee shop. Greet the customer and take their order.'},
+  {id:'airport',icon:'✈️',name:'机场问路',role:'机场工作人员',prompt:'You work at an airport information desk. Help the traveler find their gate or service.'},
+  {id:'interview',icon:'💼',name:'求职面试',role:'面试官',prompt:'You are an interviewer for a tech company. Conduct a friendly job interview.'},
+  {id:'hotel',icon:'🏨',name:'酒店入住',role:'前台接待',prompt:'You are a hotel front desk receptionist. Help the guest check in.'},
+  {id:'restaurant',icon:'🍽️',name:'餐厅用餐',role:'餐厅服务员',prompt:'You are a waiter at a restaurant. Help the customer with the menu and take their order.'},
+  {id:'doctor',icon:'🏥',name:'看医生',role:'医生',prompt:'You are a doctor. Ask the patient about their symptoms and give advice.'},
+  {id:'shopping',icon:'🛍️',name:'商场购物',role:'店员',prompt:'You are a shop assistant in a clothing store. Help the customer find what they need.'},
+  {id:'free',icon:'💬',name:'自由聊天',role:'英语伙伴',prompt:'You are a friendly English conversation partner. Chat naturally about any topic.'}
+];
+let chatMessages=[],chatSessionId=null,chatScene=null,chatSending=false;
+
+function initChatTab(){
+  if(chatScene&&chatMessages.length>0){renderChatUI();return}
+  showChatSceneSelect();
+}
+
+function showChatSceneSelect(){
+  chatMessages=[];chatSessionId=null;chatScene=null;
+  const area=document.getElementById('chatArea');
+  area.innerHTML=`
+    <div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px">💬</div><h3 style="font-family:var(--display);font-size:1.1rem">选择对话场景</h3><p style="font-size:12.5px;color:var(--text-sec);margin-top:4px">AI 将扮演对应角色与你英文对话</p></div>
+    <div class="chat-scene-grid">${CHAT_SCENES.map(s=>`<div class="chat-scene" onclick="startChat('${s.id}')"><div class="cs-icon">${s.icon}</div><div class="cs-name">${s.name}</div><div class="cs-role">扮演：${s.role}</div></div>`).join('')}</div>`;
+}
+
+async function startChat(sceneId){
+  chatScene=CHAT_SCENES.find(s=>s.id===sceneId);if(!chatScene)return;
+  chatMessages=[];chatSending=false;
+  renderChatUI();
+  // Send initial AI greeting
+  await sendChatToAI(null);
+}
+
+function renderChatUI(){
+  const area=document.getElementById('chatArea');
+  let msgHtml=chatMessages.map(m=>{
+    if(m.role==='ai'){
+      let h=`<div class="chat-msg ai"><div class="chat-bubble">${escHtml(m.text)}</div>`;
+      if(m.feedback)h+=`<div class="chat-feedback">📝 <strong>语法提示：</strong>${escHtml(m.feedback)}</div>`;
+      return h+'</div>';
+    }else{
+      return`<div class="chat-msg user"><div class="chat-bubble">${escHtml(m.text)}</div></div>`;
+    }
+  }).join('');
+
+  area.innerHTML=`
+    <div class="chat-header"><div class="ch-info"><div class="ch-icon">${chatScene.icon}</div><div><div class="ch-name">${chatScene.name}</div><div class="ch-scene">AI 扮演：${chatScene.role} · 第 ${Math.ceil(chatMessages.filter(m=>m.role==='user').length+1)} 轮</div></div></div><button class="btn btn-g btn-xs" onclick="showChatSceneSelect()">换场景</button></div>
+    <div class="chat-body" id="chatBody">${msgHtml}<div id="chatTyping"></div></div>
+    <div class="chat-input-bar"><input type="text" id="chatInput" placeholder="输入英文消息..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendChatMsg()"/><button class="btn btn-p btn-sm" onclick="sendChatMsg()" id="chatSendBtn">发送</button></div>`;
+
+  const body=document.getElementById('chatBody');
+  if(body)body.scrollTop=body.scrollHeight;
+}
+
+async function sendChatMsg(){
+  if(chatSending)return;
+  const inp=document.getElementById('chatInput');
+  const text=(inp?.value||'').trim();
+  if(!text)return;
+  inp.value='';
+  chatMessages.push({role:'user',text});
+  renderChatUI();
+  await sendChatToAI(text);
+}
+
+async function sendChatToAI(userMsg){
+  chatSending=true;
+  const typing=document.getElementById('chatTyping');
+  if(typing)typing.innerHTML='<div class="chat-typing"><span></span><span></span><span></span></div>';
+  const body=document.getElementById('chatBody');
+  if(body)body.scrollTop=body.scrollHeight;
+  const sendBtn=document.getElementById('chatSendBtn');
+  if(sendBtn)sendBtn.disabled=true;
+
+  try{
+    const history=chatMessages.map(m=>({role:m.role==='ai'?'assistant':'user',content:m.text}));
+    const data=await apiCall('/api/chat',{method:'POST',body:JSON.stringify({
+      scene_id:chatScene.id,scene_prompt:chatScene.prompt,scene_role:chatScene.role,
+      user_message:userMsg,history
+    })});
+    chatMessages.push({role:'ai',text:data.reply||'...',feedback:data.feedback||''});
+  }catch(e){
+    chatMessages.push({role:'ai',text:'Sorry, something went wrong. Please try again.',feedback:''});
+    toast('对话失败: '+e.message,'error');
+  }finally{
+    chatSending=false;
+    renderChatUI();
+  }
+}
+
+// ═══════════════════════════════════════════════
+// PRONUNCIATION
+// ═══════════════════════════════════════════════
+let pronIdx=0,pronPool=[],pronRecognition=null,pronIsRecording=false;
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+function initPronTab(){
+  const area=document.getElementById('pronArea');
+  if(!SpeechRecognition){
+    area.innerHTML='<div class="pron-unsupported"><div style="font-size:48px;margin-bottom:12px">🎤</div><h3 style="font-family:var(--display);margin-bottom:8px">浏览器不支持语音识别</h3><p style="font-size:13px;color:var(--text-sec)">请使用 Chrome / Edge 浏览器，并确保在 HTTPS 环境下访问。<br>iOS Safari 的支持有限。</p></div>';
+    return;
+  }
+  if(phrases.length===0){
+    area.innerHTML='<div class="flip-empty"><div class="fe-icon">📭</div><p>暂无卡片，请先添加卡片</p></div>';
+    return;
+  }
+  pronPool=phrases.filter(p=>p.english&&p.english.trim().length>0);
+  if(!pronPool.length){area.innerHTML='<div class="flip-empty"><div class="fe-icon">📭</div><p>暂无可用卡片</p></div>';return}
+  if(pronIdx>=pronPool.length)pronIdx=0;
+  showPronCard();
+}
+
+function showPronCard(){
+  const area=document.getElementById('pronArea');
+  const card=pronPool[pronIdx];
+  area.innerHTML=`
+    <div style="text-align:center;font-size:13px;color:var(--text-sec);margin-bottom:8px">${pronIdx+1} / ${pronPool.length}</div>
+    <div class="pron-card" id="pronCard">
+      <div style="font-size:12px;color:var(--text-sec);margin-bottom:8px">${card.type||''}</div>
+      <div class="pron-phrase">${escHtml(card.english)}</div>
+      <div class="pron-chinese">${escHtml(card.chinese||'')}</div>
+      <div class="pron-btns">
+        <button class="pron-btn play" onclick="pronPlay()" title="播放标准发音">🔊</button>
+        <button class="pron-btn mic" id="pronMicBtn" onclick="pronToggleRecord()" title="点击开始跟读">🎤</button>
+      </div>
+      <div id="pronWave"></div>
+      <div id="pronResult"></div>
+    </div>
+    <div class="pron-nav">
+      <button class="btn btn-g btn-sm" onclick="pronPrev()">← 上一个</button>
+      <button class="btn btn-g btn-sm" onclick="pronRandom()">🎲 随机</button>
+      <button class="btn btn-p btn-sm" onclick="pronNext()">下一个 →</button>
+    </div>`;
+}
+
+function pronPlay(){
+  const card=pronPool[pronIdx];if(!card)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(card.english);
+  u.lang='en-US';u.rate=0.85;
+  speechSynthesis.speak(u);
+}
+
+function pronToggleRecord(){
+  if(pronIsRecording){pronStopRecord();return}
+  pronStartRecord();
+}
+
+function pronStartRecord(){
+  if(!SpeechRecognition)return;
+  pronIsRecording=true;
+  const micBtn=document.getElementById('pronMicBtn');
+  if(micBtn)micBtn.classList.add('active');
+  const wave=document.getElementById('pronWave');
+  if(wave)wave.innerHTML='<div class="pron-wave"><span></span><span></span><span></span><span></span><span></span></div>';
+  const pronCard=document.getElementById('pronCard');
+  if(pronCard)pronCard.classList.add('recording');
+  document.getElementById('pronResult').innerHTML='';
+
+  pronRecognition=new SpeechRecognition();
+  pronRecognition.lang='en-US';
+  pronRecognition.interimResults=false;
+  pronRecognition.maxAlternatives=1;
+
+  pronRecognition.onresult=(event)=>{
+    const userSaid=event.results[0][0].transcript;
+    const confidence=event.results[0][0].confidence;
+    pronShowResult(userSaid,confidence);
+  };
+  pronRecognition.onerror=(e)=>{
+    pronStopRecordUI();
+    if(e.error==='no-speech'){toast('没有检测到语音，请再试一次','info')}
+    else if(e.error==='not-allowed'){toast('请允许麦克风权限','error')}
+    else{toast('语音识别出错: '+e.error,'error')}
+  };
+  pronRecognition.onend=()=>{pronStopRecordUI()};
+
+  try{pronRecognition.start()}catch(e){pronStopRecordUI();toast('无法启动语音识别','error')}
+}
+
+function pronStopRecord(){
+  if(pronRecognition){try{pronRecognition.stop()}catch(e){}}
+  pronStopRecordUI();
+}
+
+function pronStopRecordUI(){
+  pronIsRecording=false;
+  const micBtn=document.getElementById('pronMicBtn');
+  if(micBtn)micBtn.classList.remove('active');
+  const wave=document.getElementById('pronWave');
+  if(wave)wave.innerHTML='';
+  const pronCard=document.getElementById('pronCard');
+  if(pronCard)pronCard.classList.remove('recording');
+}
+
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  const dp=Array.from({length:m+1},()=>Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  }
+  return dp[m][n];
+}
+
+function calcSimilarity(a,b){
+  if(!a||!b)return 0;
+  const la=a.toLowerCase().trim(),lb=b.toLowerCase().trim();
+  if(la===lb)return 100;
+  const dist=levenshtein(la,lb);
+  const maxLen=Math.max(la.length,lb.length);
+  return Math.max(0,Math.round((1-dist/maxLen)*100));
+}
+
+function pronShowResult(userSaid,confidence){
+  const card=pronPool[pronIdx];
+  const target=card.english;
+  const similarity=calcSimilarity(target,userSaid);
+  const score=Math.round(similarity*0.6+confidence*100*0.4);
+
+  let emoji='🔄',msg='再试一次',color='var(--danger)';
+  if(score>=90){emoji='🌟';msg='完美发音！';color='var(--success)'}
+  else if(score>=70){emoji='👍';msg='发音不错！';color='var(--info)'}
+  else if(score>=50){emoji='💪';msg='继续加油！';color='var(--warn)'}
+
+  const el=document.getElementById('pronResult');
+  el.innerHTML=`<div class="pron-result">
+    <div style="font-size:36px;margin-bottom:4px">${emoji}</div>
+    <div class="pron-score" style="color:${color}">${score}</div>
+    <div class="pron-score-label">${msg}</div>
+    <div class="pron-diff">
+      <div><span class="pd-target">🎯 标准：</span>${escHtml(target)}</div>
+      <div style="margin-top:4px"><span class="pd-user">🗣️ 你说：</span>${escHtml(userSaid)}</div>
+      <div style="margin-top:6px;font-size:11px;color:var(--text-sec)">文本匹配 ${similarity}% · 语音置信度 ${Math.round(confidence*100)}%</div>
+    </div>
+  </div>`;
+}
+
+function pronPrev(){pronIdx=Math.max(0,pronIdx-1);showPronCard()}
+function pronNext(){pronIdx=Math.min(pronPool.length-1,pronIdx+1);showPronCard()}
+function pronRandom(){pronIdx=Math.floor(Math.random()*pronPool.length);showPronCard()}
 
 // ═══════════════════════════════════════════════
 // SETTINGS
