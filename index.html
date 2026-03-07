@@ -839,16 +839,55 @@ function showQuizSetup(){
       </div>
       <div class="quiz-config">
         <label class="fl">题目数量</label>
-        <select id="quizCount"><option value="5">5 题（快速）</option><option value="10" selected>10 题（标准）</option><option value="20">20 题（挑战）</option></select>
+        <select id="quizCount" onchange="updateQuizHint()"><option value="5">5 题（快速）</option><option value="10" selected>10 题（标准）</option><option value="20">20 题（挑战）</option></select>
+        <div id="quizHint" style="font-size:12px;color:var(--text-sec);margin-top:6px;min-height:18px"></div>
       </div>
     </div>`;
+  updateQuizHint();
+}
+
+function updateQuizHint(){
+  const sel=document.getElementById('quizCount');
+  const hint=document.getElementById('quizHint');
+  if(!sel||!hint)return;
+  const v=sel.value;
+  if(v==='20'){
+    const weakCount=phrases.filter(p=>!p.mastered&&(p.ease_factor||2.5)<2.5).length;
+    hint.innerHTML=`🔥 <span style="color:var(--accent);font-weight:600">挑战模式</span> — 优先出掌握度低 / 容易出错的卡片${weakCount>0?`（薄弱卡片 ${weakCount} 张）`:''}`;
+  }else if(v==='5'){
+    hint.textContent='⚡ 随机抽题，快速检测';
+  }else{
+    hint.textContent='🎯 随机抽题，均衡练习';
+  }
 }
 
 function startQuiz(mode){
   const count=parseInt(document.getElementById('quizCount').value);
-  const pool=[...phrases].sort(()=>Math.random()-0.5);
-  const questions=[];
+  const isChallenge=count===20;
 
+  let pool;
+  if(isChallenge){
+    // Challenge mode: prioritize weak cards
+    // Score each card: lower = harder = pick first
+    pool=[...phrases].map(p=>{
+      let score=0;
+      // Mastered cards are lowest priority
+      if(p.mastered)score+=1000;
+      // Lower ease_factor = harder (default 2.5, min 1.3)
+      score+=(p.ease_factor||2.5)*100;
+      // Fewer reviews = less practiced
+      score-=Math.min(p.review_count||0,10)*5;
+      // Cards due for review get priority
+      if(p.next_review_at&&new Date(p.next_review_at)<=new Date())score-=200;
+      // Small random factor to avoid identical ordering
+      score+=Math.random()*30;
+      return{...p,_score:score};
+    }).sort((a,b)=>a._score-b._score);
+  }else{
+    pool=[...phrases].sort(()=>Math.random()-0.5);
+  }
+
+  const questions=[];
   for(let i=0;i<Math.min(count,pool.length)&&questions.length<count;i++){
     const card=pool[i];
     if(mode==='choice'){
@@ -863,7 +902,7 @@ function startQuiz(mode){
     }
   }
 
-  quizState={mode,questions,idx:0,score:0,answered:false,startTime:Date.now(),totalXp:0};
+  quizState={mode,questions,idx:0,score:0,answered:false,startTime:Date.now(),totalXp:0,isChallenge};
   showQuizQuestion();
 }
 
@@ -875,7 +914,7 @@ function showQuizQuestion(){
   const min=Math.floor(elapsed/60);const sec=elapsed%60;
 
   let html=`
-    <div class="quiz-header"><div class="qh-left"><span class="qh-progress">${idx+1} / ${total}</span></div><div class="quiz-timer">⏱ ${min}:${sec.toString().padStart(2,'0')}</div></div>
+    <div class="quiz-header"><div class="qh-left"><span class="qh-progress">${idx+1} / ${total}</span>${quizState.isChallenge?'<span style="font-size:11px;background:rgba(220,38,38,0.08);color:var(--danger);padding:2px 8px;border-radius:6px;font-weight:600;margin-left:6px">🔥 挑战</span>':''}</div><div class="quiz-timer">⏱ ${min}:${sec.toString().padStart(2,'0')}</div></div>
     <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
     <div class="quiz-question">`;
 
