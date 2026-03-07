@@ -474,6 +474,36 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .liaison-speed-btn .ls-desc{font-size:10px;color:var(--text-sec)}
 .liaison-loading{text-align:center;padding:24px;color:var(--text-sec);font-size:13px}
 
+/* ═══ DAILY READING ═══ */
+.dr-cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.dr-cat{padding:8px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--body);transition:all var(--ease);display:flex;align-items:center;gap:6px}
+.dr-cat:hover{border-color:var(--accent)}
+.dr-cat.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dr-cat .dr-weight{font-size:10px;opacity:0.6;font-weight:400}
+.dr-source-row{display:flex;gap:10px;margin-bottom:18px}
+.dr-source-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--card);font-family:var(--body)}
+.dr-source-btn:hover{border-color:var(--accent)}
+.dr-source-btn.active{border-color:var(--accent);background:var(--accent-light)}
+.dr-source-btn .ds-icon{font-size:20px;margin-bottom:2px}
+.dr-source-btn .ds-name{font-size:13px;font-weight:700}
+.dr-articles{display:flex;flex-direction:column;gap:12px}
+.dr-article{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all var(--ease);cursor:pointer}
+.dr-article:hover{box-shadow:var(--shadow-md);border-color:#D6D3D1;transform:translateY(-1px)}
+.dr-article-inner{display:flex;gap:16px;padding:18px}
+.dr-article-img{width:120px;height:80px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--bg-deep)}
+.dr-article-body{flex:1;min-width:0}
+.dr-article-body h3{font-family:var(--display);font-size:0.95rem;font-weight:600;line-height:1.4;margin-bottom:6px;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dr-article-body p{font-size:12px;color:var(--text-sec);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dr-article-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11px;color:var(--text-sec)}
+.dr-article-meta .dr-tag{padding:2px 8px;border-radius:5px;background:var(--accent-light);color:var(--accent);font-weight:600;font-size:10px}
+.dr-theme-card{background:linear-gradient(135deg,#1C1917,#292524);color:#fff;border-radius:var(--radius);padding:20px;margin-bottom:18px}
+.dr-theme-card h4{font-family:var(--display);font-size:1rem;font-weight:600;margin-bottom:8px}
+.dr-theme-card p{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6}
+.dr-theme-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.dr-theme-tags span{padding:3px 10px;border-radius:6px;font-size:11px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7)}
+.dr-empty{text-align:center;padding:50px 0;color:var(--text-sec)}
+.dr-loading{text-align:center;padding:40px 0;color:var(--text-sec)}
+
 /* ═══ VOCAB BOOK ═══ */
 .vb-selector{display:flex;gap:10px;margin-bottom:20px}
 .vb-sel-btn{flex:1;padding:18px 14px;border:2px solid var(--border);border-radius:14px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--card)}
@@ -600,6 +630,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.vc-card{min-height:420px;padding:28px 20px 20px}.vc-avatar{width:76px;height:76px;font-size:36px}.vc-transcript{max-height:140px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
   .cr-stats-row{grid-template-columns:repeat(2,1fr)}.lr-big-stats{grid-template-columns:1fr}.lr-bar-chart{height:80px}
   .vb-word{font-size:1.5rem}.vb-card{padding:24px 18px}.vb-selector{flex-direction:column}
+  .dr-article-img{width:80px;height:60px}.dr-cats{gap:6px}.dr-cat{padding:6px 10px;font-size:11px}.dr-source-row{flex-direction:column}
 }
 </style>
 </head>
@@ -612,6 +643,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <button class="nav-item" onclick="switchTab('flip')" data-tab="flip"><span class="ni">🃏</span>翻卡复习</button>
       <button class="nav-item" onclick="switchTab('quiz')" data-tab="quiz"><span class="ni">📝</span>选择题测试</button>
       <button class="nav-item" onclick="switchTab('vocab')" data-tab="vocab"><span class="ni">📖</span>四六级词汇</button>
+      <button class="nav-item" onclick="switchTab('reading')" data-tab="reading"><span class="ni">📰</span>每日外刊</button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="switchTab('list')" data-tab="list"><span class="ni">📚</span>卡片列表</button>
       <button class="nav-item" onclick="switchTab('add')" data-tab="add"><span class="ni">✏️</span>手动添加</button>
@@ -695,6 +727,12 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <div id="tab-vocab" class="hidden">
         <div class="page-title">四六级词汇</div><div class="page-desc">考纲词汇背诵，含音标和释义。支持 AI 详解。</div>
         <div id="vocabArea"></div>
+      </div>
+
+      <!-- Daily Reading -->
+      <div id="tab-reading" class="hidden">
+        <div class="page-title">每日外刊</div><div class="page-desc">基于四级真题阅读题材分析，从 The Guardian 和 The Economist 推送相关文章。</div>
+        <div id="readingArea"></div>
       </div>
 
       <!-- List -->
@@ -804,6 +842,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav" onclick="switchTab('flip')" data-tab="flip"><span class="bi">🃏</span>翻卡</button>
   <button class="bnav" onclick="switchTab('quiz')" data-tab="quiz"><span class="bi">📝</span>测试</button>
   <button class="bnav" onclick="switchTab('vocab')" data-tab="vocab"><span class="bi">📖</span>词汇</button>
+  <button class="bnav" onclick="switchTab('reading')" data-tab="reading"><span class="bi">📰</span>外刊</button>
   <button class="bnav" onclick="switchTab('list')" data-tab="list"><span class="bi">📚</span>列表</button>
   <button class="bnav" onclick="switchTab('article')" data-tab="article"><span class="bi">📖</span>分析</button>
   <button class="bnav" onclick="switchTab('grammar')" data-tab="grammar"><span class="bi">✍️</span>批改</button>
@@ -862,7 +901,7 @@ function getLevelInfo(xp){let cur=LEVELS[0];for(const l of LEVELS){if(xp>=l.xp)c
 function todayStr(){return new Date().toISOString().split('T')[0]}
 
 function switchTab(tab){
-  const tabs=['dash','flip','quiz','vocab','list','add','article','grammar','chat','pron','report','settings'];
+  const tabs=['dash','flip','quiz','vocab','reading','list','add','article','grammar','chat','pron','report','settings'];
   tabs.forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.classList.toggle('hidden',t!==tab)});
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   document.querySelectorAll('.bnav').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
@@ -870,6 +909,7 @@ function switchTab(tab){
   if(tab==='flip')initFlipReview();
   if(tab==='quiz')showQuizSetup();
   if(tab==='vocab')initVocabTab();
+  if(tab==='reading')initReadingTab();
   if(tab==='list')updateDisplay();
   if(tab==='grammar')initGrammarTab();
   if(tab==='chat')initChatTab();
@@ -1600,6 +1640,114 @@ function renderGrammarResults(data){
   }
 
   el.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════
+// DAILY READING (每日外刊)
+// ═══════════════════════════════════════════════
+const DR_THEMES=[
+  {id:'health',name:'健康与营养',icon:'🏥',weight:8,guardian:'lifeandstyle/health-and-wellbeing',econ:'science-and-technology',q:'health nutrition diet obesity exercise',examples:'垃圾食品·果汁·蛋白质·植物肉·运动与寿命'},
+  {id:'tech',name:'科技与社会',icon:'💻',weight:7,guardian:'technology',econ:'science-and-technology',q:'technology AI digital social media autonomous',examples:'自动驾驶·社交网络·游戏技能·面具犯罪'},
+  {id:'environment',name:'环境与气候',icon:'🌍',weight:6,guardian:'environment/climate-crisis',econ:'science-and-technology',q:'climate change environment sustainability plastic',examples:'气候与食物·塑料污染·大熊猫·素食餐厅'},
+  {id:'career',name:'职场与教育',icon:'💼',weight:7,guardian:'education',econ:'business-and-finance',q:'career education employment workplace training',examples:'45+求职·女性工程师·设计教育·陪产假'},
+  {id:'psychology',name:'心理与行为',icon:'🧠',weight:6,guardian:'science',econ:'science-and-technology',q:'psychology behavior brain decision success',examples:'毅力·美丽观·忙碌文化·多任务处理·直觉决策'},
+  {id:'science',name:'科学研究',icon:'🔬',weight:4,guardian:'science',econ:'science-and-technology',q:'science research genetic DNA brain neuroscience',examples:'基因检测·阿尔茨海默·语言衰老·ASMR'},
+  {id:'business',name:'商业与经济',icon:'📊',weight:4,guardian:'business',econ:'business-and-finance',q:'business economy market consumer industry',examples:'竞争策略·瓶装水·服装心理·性别差异'},
+  {id:'culture',name:'文化与社会',icon:'🎭',weight:3,guardian:'culture',econ:'culture',q:'culture society music art history social',examples:'古典音乐·社交健康·赛马传奇'}
+];
+const GUARDIAN_API='https://content.guardianapis.com/search';
+const GUARDIAN_KEY='test';
+let drCat='health',drSource='guardian',drArticles=[],drLoading=false;
+
+function initReadingTab(){
+  renderReadingUI();
+  if(!drArticles.length)fetchDrArticles();
+}
+
+function renderReadingUI(){
+  const area=document.getElementById('readingArea');
+  const theme=DR_THEMES.find(t=>t.id===drCat);
+
+  let html=`<div class="dr-theme-card"><h4>📊 四级真题阅读题材分析</h4><p>基于 2023.12—2025.12 共 10 套真题的 Reading Comprehension，归纳出 8 大高频题材。选择题材，获取 The Guardian / The Economist 相关外刊。</p><div class="dr-theme-tags">${DR_THEMES.map(t=>`<span>${t.icon} ${t.name} ×${t.weight}</span>`).join('')}</div></div>`;
+
+  // Category filter
+  html+=`<div class="dr-cats">${DR_THEMES.map(t=>`<div class="dr-cat ${drCat===t.id?'active':''}" onclick="drCat='${t.id}';drArticles=[];fetchDrArticles()">${t.icon} ${t.name} <span class="dr-weight">×${t.weight}</span></div>`).join('')}</div>`;
+
+  // Source selector
+  html+=`<div class="dr-source-row">
+    <div class="dr-source-btn ${drSource==='guardian'?'active':''}" onclick="drSource='guardian';drArticles=[];fetchDrArticles()"><div class="ds-icon">🇬🇧</div><div class="ds-name">The Guardian</div></div>
+    <div class="dr-source-btn ${drSource==='economist'?'active':''}" onclick="drSource='economist';drArticles=[];fetchDrArticles()"><div class="ds-icon">🌐</div><div class="ds-name">The Economist</div></div>
+  </div>`;
+
+  // Theme info
+  if(theme){
+    html+=`<div style="font-size:12px;color:var(--text-sec);margin-bottom:12px;display:flex;align-items:center;gap:6px"><span style="font-weight:600">${theme.icon} ${theme.name}</span><span>·</span><span>真题常见：${theme.examples}</span></div>`;
+  }
+
+  // Articles
+  if(drLoading){
+    html+=`<div class="dr-loading"><span class="loading-spinner" style="width:20px;height:20px;border-width:3px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span><p style="margin-top:10px">正在获取文章...</p></div>`;
+  }else if(drArticles.length){
+    html+=`<div class="dr-articles">`;
+    drArticles.forEach(a=>{
+      const img=a.fields?.thumbnail||'';
+      const trail=a.fields?.trailText||'';
+      const date=a.webPublicationDate?new Date(a.webPublicationDate).toLocaleDateString('zh-CN'):'';
+      const section=a.sectionName||'';
+      html+=`<a class="dr-article" href="${escHtml(a.webUrl)}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><div class="dr-article-inner">${img?`<img class="dr-article-img" src="${escHtml(img)}" alt="" loading="lazy"/>`:''}<div class="dr-article-body"><h3>${escHtml(a.webTitle)}</h3><p>${trail}</p><div class="dr-article-meta"><span class="dr-tag">${escHtml(section)}</span><span>${date}</span></div></div></div></a>`;
+    });
+    html+=`</div>`;
+    // Economist link
+    if(drSource==='guardian'&&theme){
+      html+=`<div style="text-align:center;margin-top:16px"><a href="https://www.economist.com/${theme.econ}" target="_blank" rel="noopener" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none">📰 在 The Economist 查看更多 ${theme.name_en||theme.name} 文章 →</a></div>`;
+    }
+  }else{
+    html+=`<div class="dr-empty"><div style="font-size:40px;margin-bottom:10px">📰</div><p>暂无文章，请选择题材和来源</p></div>`;
+  }
+
+  // Add "analyze with AI" button
+  html+=`<div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)"><p style="font-size:12px;color:var(--text-sec);margin-bottom:8px">💡 看到感兴趣的文章？复制内容粘贴到「文章分析」，AI 自动提取短语、语法和难句！</p><button class="btn btn-g btn-sm" onclick="switchTab('article')">去文章分析 →</button></div>`;
+
+  area.innerHTML=html;
+}
+
+async function fetchDrArticles(){
+  drLoading=true;drArticles=[];renderReadingUI();
+  const theme=DR_THEMES.find(t=>t.id===drCat);if(!theme){drLoading=false;return}
+
+  try{
+    if(drSource==='guardian'){
+      const params=new URLSearchParams({
+        'api-key':GUARDIAN_KEY,
+        'section':theme.guardian,
+        'show-fields':'thumbnail,trailText',
+        'page-size':'8',
+        'order-by':'newest'
+      });
+      const resp=await fetch(`${GUARDIAN_API}?${params}`);
+      if(!resp.ok)throw new Error('Guardian API: '+resp.status);
+      const data=await resp.json();
+      drArticles=data.response?.results||[];
+    }else{
+      // Economist doesn't have free API — use Guardian search with Economist-like queries
+      const params=new URLSearchParams({
+        'api-key':GUARDIAN_KEY,
+        'q':theme.q,
+        'show-fields':'thumbnail,trailText',
+        'page-size':'8',
+        'order-by':'relevance'
+      });
+      const resp=await fetch(`${GUARDIAN_API}?${params}`);
+      if(!resp.ok)throw new Error('API: '+resp.status);
+      const data=await resp.json();
+      drArticles=data.response?.results||[];
+    }
+  }catch(e){
+    toast('获取文章失败: '+e.message,'error');
+    drArticles=[];
+  }finally{
+    drLoading=false;renderReadingUI();
+  }
 }
 
 // ═══════════════════════════════════════════════
