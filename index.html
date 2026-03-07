@@ -1882,8 +1882,9 @@ function renderReaderView(){
     html+=`<div class="rv-cta"><p>AI 将自动翻译全文，并提取短语、语法点和难句</p><button class="rv-cta-btn" onclick="analyzeReaderArticle()">开始 AI 分析</button></div>`;
   }
 
-  // AI Results section
-  if(drAiResult){
+  // AI Results section (only when we have actual content)
+  const hasAiContent=drAiResult&&(drAiResult.summary||(drAiResult.items&&drAiResult.items.length));
+  if(hasAiContent){
     html+=`<div class="rv-divider"></div>`;
 
     // Summary
@@ -1917,6 +1918,11 @@ function renderReaderView(){
     }
   }
 
+  // Show loading for extraction phase (translation done, items still loading)
+  if(drAiLoading&&drAiResult&&drAiResult.translated_text&&!(drAiResult.items&&drAiResult.items.length)){
+    html+=`<div class="rv-divider"></div><div style="text-align:center;padding:24px 0;color:var(--text-sec);font-size:13px"><span class="loading-spinner" style="width:16px;height:16px;border-width:2px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent);display:inline-block;vertical-align:middle;margin-right:8px"></span>正在提取短语、语法和难句...</div>`;
+  }
+
   html+=`</div>`; // close .rv
   area.innerHTML=html;
   window.scrollTo({top:document.getElementById('tab-reading').offsetTop-80,behavior:'smooth'});
@@ -1926,28 +1932,41 @@ async function analyzeReaderArticle(bodyTextOverride){
   if(drAiLoading)return;
   const bodyText=bodyTextOverride||drCurrentArticle?.fields?.bodyText||'';
   if(!bodyText){toast('文章正文为空','error');return}
-  // Truncate to ~3000 words to avoid token limits
+  // Truncate to ~1500 words for speed
   const words=bodyText.split(/\s+/);
-  const truncated=words.length>3000?words.slice(0,3000).join(' ')+'...':bodyText;
+  const truncated=words.length>1500?words.slice(0,1500).join(' ')+'...':bodyText;
 
-  drAiLoading=true;drAiStep=1;renderReaderView();
-  const stepTimers=[
-    setTimeout(()=>{drAiStep=2;updateReaderSteps()},2000),
-    setTimeout(()=>{drAiStep=3;updateReaderSteps()},6000),
-    setTimeout(()=>{drAiStep=4;updateReaderSteps()},12000),
-    setTimeout(()=>{drAiStep=5;updateReaderSteps()},18000)
-  ];
+  drAiLoading=true;drAiStep=1;drAiResult={};renderReaderView();
 
+  // Fire translation & extraction in PARALLEL
+  const translateP=apiCall('/api/translate-article',{method:'POST',body:JSON.stringify({text:truncated})});
+  const extractP=apiCall('/api/extract-items',{method:'POST',body:JSON.stringify({text:truncated})});
+
+  // Translation comes back first (less output)
   try{
-    const data=await apiCall('/api/analyze-text',{method:'POST',body:JSON.stringify({text:truncated})});
-    stepTimers.forEach(clearTimeout);
-    drAiResult=data;
+    drAiStep=2;updateReaderSteps();
+    const tr=await translateP;
+    drAiResult.translated_text=tr.translated_text||'';
+    drAiStep=3;renderReaderView(); // immediately show translation
+  }catch(e){
+    console.warn('Translation failed:',e.message);
+  }
+
+  // Then extraction
+  try{
+    drAiStep=4;updateReaderSteps();
+    const ex=await extractP;
+    drAiResult.summary=ex.summary||'';
+    const items=[];
+    (ex.phrases||[]).forEach(x=>items.push({item_type:'短语',english:x.english||'',chinese:x.chinese||'',explanation:x.explanation||'',example:x.example||'',source_sentence:x.source_sentence||''}));
+    (ex.grammar||[]).forEach(x=>items.push({item_type:'语法',english:x.english||'',chinese:x.chinese||'',explanation:x.explanation||'',example:x.example||'',source_sentence:x.source_sentence||''}));
+    (ex.difficult_sentences||[]).forEach(x=>items.push({item_type:'难句',english:x.english||'',chinese:x.chinese||'',explanation:x.explanation||'',example:'',source_sentence:x.english||''}));
+    drAiResult.items=items;
+    drAiStep=5;updateReaderSteps();
     toast('分析完成！','success');
     await addXp(XP_RULES.analyze_article);await addLogField('articles_analyzed');
   }catch(e){
-    stepTimers.forEach(clearTimeout);
-    toast('AI 分析失败: '+e.message,'error');
-    drAiResult=null;
+    toast('AI 提取失败: '+e.message,'error');
   }finally{
     drAiLoading=false;renderReaderView();
   }
