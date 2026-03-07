@@ -297,24 +297,21 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 
 /* ═══ HEATMAP ═══ */
 .heatmap-wrap{margin-bottom:20px}
-.heatmap-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.heatmap-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .heatmap-title h4{font-family:var(--display);font-size:1rem;font-weight:600;display:flex;align-items:center;gap:8px}
 .heatmap-title .hm-total{font-size:12px;color:var(--text-sec);font-weight:400;font-family:var(--body)}
 .heatmap-legend{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-sec)}
 .heatmap-legend .hml-box{width:12px;height:12px;border-radius:3px}
-.heatmap-months{display:flex;gap:0;margin-bottom:4px;padding-left:28px;font-size:10px;color:var(--text-sec)}
-.heatmap-months span{flex:1;text-align:left}
-.heatmap-body{display:flex;gap:1px}
-.heatmap-days{display:flex;flex-direction:column;gap:1px;padding-top:0;margin-right:4px;font-size:10px;color:var(--text-sec)}
-.heatmap-days span{height:14px;line-height:14px;text-align:right;padding-right:2px}
-.heatmap-grid{display:flex;gap:1px;flex:1;overflow-x:auto}
-.heatmap-col{display:flex;flex-direction:column;gap:1px}
+.hm-grid{display:grid;gap:2px;overflow-x:auto}
+.hm-month{font-size:10px;color:var(--text-sec);line-height:1;padding-bottom:2px;white-space:nowrap;overflow:hidden}
+.hm-day-label{font-size:10px;color:var(--text-sec);text-align:right;padding-right:4px;line-height:14px;height:14px}
 .hm-cell{width:14px;height:14px;border-radius:3px;background:var(--border);cursor:default;transition:all 0.15s;position:relative}
 .hm-cell:hover{transform:scale(1.4);z-index:2}
 .hm-cell.lv1{background:#D1FAE5}
 .hm-cell.lv2{background:#6EE7B7}
 .hm-cell.lv3{background:#34D399}
 .hm-cell.lv4{background:#059669}
+.hm-cell.empty{visibility:hidden}
 .hm-tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1C1917;color:#fff;padding:6px 10px;border-radius:8px;font-size:11px;white-space:nowrap;z-index:10;pointer-events:none;box-shadow:var(--shadow-lg)}
 .hm-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1C1917}
 .hm-cell:hover .hm-tooltip{display:block}
@@ -365,7 +362,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .progress-ring-wrap{flex-direction:column;text-align:center}.flip-front h2{font-size:1.3rem}
   .xp-banner{flex-direction:column;text-align:center}.ach-grid{grid-template-columns:repeat(3,1fr)}
   .quiz-mode-grid{grid-template-columns:1fr}.flip-actions{gap:6px}.flip-btn{padding:8px 12px;font-size:12px;min-width:60px}
-  .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.heatmap-days span{height:12px;line-height:12px}
+  .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.hm-day-label{height:12px;line-height:12px}
 }
 </style>
 </head>
@@ -1088,10 +1085,10 @@ function renderHeatmap(){
   const days=91;
   const startDate=new Date(today);startDate.setDate(startDate.getDate()-days+1);
   // Align to Monday
-  const dayOfWeek=startDate.getDay();
-  const alignedStart=new Date(startDate);alignedStart.setDate(alignedStart.getDate()-(dayOfWeek===0?6:dayOfWeek-1));
+  const dow=startDate.getDay();
+  const alignedStart=new Date(startDate);alignedStart.setDate(alignedStart.getDate()-(dow===0?6:dow-1));
 
-  // Build weeks
+  // Build weeks (columns)
   const weeks=[];let cur=new Date(alignedStart);
   while(cur<=today||weeks.length===0){
     const week=[];
@@ -1107,43 +1104,63 @@ function renderHeatmap(){
     if(cur>today)break;
   }
 
-  // Month labels
-  const months=[];let lastMonth=-1;
-  weeks.forEach((w,i)=>{
-    const mid=w[3]||w[0];
-    const m=mid.date.getMonth();
-    if(m!==lastMonth){months.push({idx:i,name:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'][m]});lastMonth=m}
+  const numWeeks=weeks.length;
+  // cols = 1 (day-label) + numWeeks
+  const totalCols=1+numWeeks;
+
+  // Month spans: find which column each month starts at
+  const monthSpans=[];let lastMonth=-1;
+  weeks.forEach((w,wi)=>{
+    const m=w[3]?w[3].date.getMonth():w[0].date.getMonth();
+    if(m!==lastMonth){
+      if(monthSpans.length>0)monthSpans[monthSpans.length-1].endCol=wi+2; // +2 because col 1 is day-label, grid is 1-indexed
+      monthSpans.push({month:m,startCol:wi+2,endCol:totalCols+1});
+      lastMonth=m;
+    }
   });
 
-  const dayLabels=['','一','','三','','五',''];
+  const monthNames=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  const dayLabels=['一','二','三','四','五','六','日'];
+  const showDays=[0,2,4]; // Mon, Wed, Fri
+
   let html=`<div class="heatmap-wrap"><div class="heatmap-title"><h4>📅 学习日历 <span class="hm-total">${totalActive} 天活跃</span></h4><div class="heatmap-legend"><span>少</span>`;
   ['var(--border)','#D1FAE5','#6EE7B7','#34D399','#059669'].forEach(c=>{html+=`<div class="hml-box" style="background:${c}"></div>`});
   html+=`<span>多</span></div></div>`;
 
-  // Month row
-  html+=`<div class="heatmap-months">`;
-  const totalWeeks=weeks.length;
-  months.forEach((m,i)=>{
-    const next=months[i+1]?months[i+1].idx:totalWeeks;
-    const span=next-m.idx;
-    html+=`<span style="flex:${span}">${m.name}</span>`;
-  });
-  html+=`</div>`;
+  // Grid: columns = 24px (day label) + 14px per week
+  html+=`<div class="hm-grid" style="grid-template-columns:24px repeat(${numWeeks},14px);grid-template-rows:auto repeat(7,14px)">`;
 
-  html+=`<div class="heatmap-body"><div class="heatmap-days">${dayLabels.map(l=>`<span>${l}</span>`).join('')}</div><div class="heatmap-grid">`;
-  weeks.forEach(week=>{
-    html+=`<div class="heatmap-col">`;
-    week.forEach(day=>{
-      if(!day.inRange){html+=`<div class="hm-cell" style="visibility:hidden"></div>`;return}
-      let lvl='';
-      if(day.xp>100)lvl='lv4';else if(day.xp>50)lvl='lv3';else if(day.xp>20)lvl='lv2';else if(day.xp>0)lvl='lv1';
-      const dateLabel=`${day.date.getMonth()+1}月${day.date.getDate()}日`;
-      const detail=day.log?`复习 ${day.log.cards_reviewed||0} 张 · 添加 ${day.log.cards_added||0} 张 · ${day.xp} XP`:'未学习';
-      html+=`<div class="hm-cell ${lvl}"><div class="hm-tooltip">${dateLabel}：${detail}</div></div>`;
-    });
-    html+=`</div>`;
+  // Row 1: month labels (grid row 1)
+  html+=`<div></div>`; // empty cell for day-label column
+  monthSpans.forEach(ms=>{
+    const span=ms.endCol-ms.startCol;
+    html+=`<div class="hm-month" style="grid-column:${ms.startCol}/span ${span}">${monthNames[ms.month]}</div>`;
   });
-  html+=`</div></div></div>`;
+
+  // Rows 2-8: day-label + cells
+  for(let row=0;row<7;row++){
+    // Day label
+    if(showDays.includes(row)){
+      html+=`<div class="hm-day-label">${dayLabels[row]}</div>`;
+    }else{
+      html+=`<div></div>`;
+    }
+    // Cells for each week
+    for(let wi=0;wi<numWeeks;wi++){
+      const day=weeks[wi][row];
+      if(!day.inRange){
+        html+=`<div class="hm-cell empty"></div>`;
+      }else{
+        let lvl='';
+        if(day.xp>100)lvl='lv4';else if(day.xp>50)lvl='lv3';else if(day.xp>20)lvl='lv2';else if(day.xp>0)lvl='lv1';
+        const dateLabel=`${day.date.getMonth()+1}月${day.date.getDate()}日`;
+        const detail=day.log?`复习 ${day.log.cards_reviewed||0} 张 · 添加 ${day.log.cards_added||0} 张 · ${day.xp} XP`:'未学习';
+        html+=`<div class="hm-cell ${lvl}"><div class="hm-tooltip">${dateLabel}：${detail}</div></div>`;
+      }
+    }
+  }
+
+  html+=`</div></div>`;
   area.innerHTML=html;
 }
 
