@@ -450,6 +450,73 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .liaison-speed-btn .ls-desc{font-size:10px;color:var(--text-sec)}
 .liaison-loading{text-align:center;padding:24px;color:var(--text-sec);font-size:13px}
 
+/* ═══ CHAT REPORT ═══ */
+.chat-end-bar{display:flex;justify-content:center;padding:8px 0}
+.cr-wrap{animation:fadeUp 0.3s ease}
+.cr-header{background:linear-gradient(135deg,#1C1917,#292524);color:#fff;padding:24px;border-radius:var(--radius) var(--radius) 0 0}
+.cr-header h3{font-family:var(--display);font-size:1.2rem;margin-bottom:4px}
+.cr-header p{font-size:12px;color:rgba(255,255,255,0.5)}
+.cr-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.cr-stat{text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:12px 8px}
+.cr-stat .crs-num{font-family:var(--display);font-size:1.4rem;font-weight:700}
+.cr-stat .crs-label{font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px}
+.cr-body{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:20px}
+.cr-section{margin-bottom:18px}
+.cr-section h4{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.cr-vocab-grid{display:flex;flex-wrap:wrap;gap:6px}
+.cr-vocab{padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:600;border:1px solid var(--border);background:var(--bg)}
+.cr-vocab.new{border-color:var(--success);color:var(--success);background:var(--success-bg)}
+.cr-error-item{padding:10px 12px;border-radius:8px;background:var(--bg);margin-bottom:6px;font-size:12.5px;line-height:1.5}
+.cr-error-item .cr-wrong{color:var(--danger);text-decoration:line-through}
+.cr-error-item .cr-right{color:var(--success);font-weight:600}
+.cr-suggest{padding:10px 14px;border-radius:8px;background:var(--accent-light);font-size:12.5px;line-height:1.6;color:var(--accent);margin-bottom:6px}
+.cr-cards{display:flex;flex-wrap:wrap;gap:6px}
+.cr-card-tag{padding:5px 10px;border-radius:7px;font-size:11.5px;background:var(--purple-light);color:var(--purple);font-weight:600;cursor:pointer;transition:all var(--ease)}
+.cr-card-tag:hover{background:var(--purple);color:#fff}
+
+/* ═══ ENHANCED PRON ═══ */
+.pron-word-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:12px 0}
+.pron-word{padding:8px 12px;border-radius:10px;border:2px solid var(--border);font-size:14px;font-weight:600;text-align:center;min-width:50px;transition:all var(--ease);cursor:default;position:relative}
+.pron-word.perfect{border-color:var(--success);color:var(--success);background:var(--success-bg)}
+.pron-word.good{border-color:var(--info);color:var(--info);background:rgba(37,99,235,0.06)}
+.pron-word.fair{border-color:var(--warn);color:#92400E;background:rgba(245,158,11,0.08)}
+.pron-word.poor{border-color:var(--danger);color:var(--danger);background:rgba(220,38,38,0.06)}
+.pron-word .pw-score{font-size:9px;display:block;font-weight:400;margin-top:2px}
+.pron-word .pw-ipa{font-size:10px;display:block;color:var(--text-sec);font-weight:400;margin-top:1px}
+.pron-detail-panel{margin-top:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.pron-detail-head{padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border-lt);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+.pron-detail-body{padding:16px}
+.pron-tip{padding:10px 14px;border-radius:10px;margin-bottom:8px;font-size:12.5px;line-height:1.6;border-left:3px solid var(--accent);background:var(--bg)}
+.pron-tip .pt-word{font-weight:700;color:var(--accent)}
+.pron-tip .pt-ipa{font-family:'Segoe UI',system-ui;color:var(--info)}
+.pron-tip .pt-guide{color:var(--text-sec);margin-top:4px}
+
+/* ═══ LEARNING REPORT ═══ */
+.lr-period{display:flex;gap:8px;margin-bottom:20px}
+.lr-period-btn{padding:8px 18px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--body);transition:all var(--ease)}
+.lr-period-btn:hover{border-color:var(--accent)}
+.lr-period-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.lr-big-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.lr-big{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.lr-big .lrb-num{font-family:var(--display);font-size:2.2rem;font-weight:700;line-height:1}
+.lr-big .lrb-label{font-size:12px;color:var(--text-sec);margin-top:6px}
+.lr-big .lrb-change{font-size:11px;margin-top:4px;font-weight:600}
+.lr-big .lrb-change.up{color:var(--success)}
+.lr-big .lrb-change.down{color:var(--danger)}
+.lr-chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px}
+.lr-chart-title{font-family:var(--display);font-size:0.95rem;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.lr-bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:10px}
+.lr-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.lr-bar{width:100%;border-radius:6px 6px 0 0;background:var(--accent);min-height:2px;transition:height 0.6s ease}
+.lr-bar-label{font-size:10px;color:var(--text-sec)}
+.lr-bar-val{font-size:10px;font-weight:600;color:var(--text)}
+.lr-weak-list{display:flex;flex-direction:column;gap:8px}
+.lr-weak-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--border-lt)}
+.lr-weak-item .lw-word{font-weight:600;font-size:14px}
+.lr-weak-item .lw-detail{font-size:12px;color:var(--text-sec)}
+.lr-weak-item .lw-bar{width:80px;height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+.lr-weak-item .lw-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
+
 @media(max-width:768px){
   .sidebar{display:none}.main-content{margin-left:0}.page-wrap{padding:16px 14px 100px}
   .mobile-head{display:block}.bottom-nav{display:flex}
@@ -460,6 +527,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .quiz-mode-grid{grid-template-columns:1fr}.flip-actions{gap:6px}.flip-btn{padding:8px 12px;font-size:12px;min-width:60px}
   .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.hm-day-label{height:12px;line-height:12px}
   .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.chat-body{max-height:350px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
+  .cr-stats-row{grid-template-columns:repeat(2,1fr)}.lr-big-stats{grid-template-columns:1fr}.lr-bar-chart{height:80px}
 }
 </style>
 </head>
@@ -478,6 +546,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <button class="nav-item" onclick="switchTab('grammar')" data-tab="grammar"><span class="ni">✍️</span>写作批改</button>
       <button class="nav-item" onclick="switchTab('chat')" data-tab="chat"><span class="ni">💬</span>AI 对话</button>
       <button class="nav-item" onclick="switchTab('pron')" data-tab="pron"><span class="ni">🎤</span>发音跟读</button>
+      <button class="nav-item" onclick="switchTab('report')" data-tab="report"><span class="ni">📈</span>学习报告</button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="switchTab('settings')" data-tab="settings"><span class="ni">⚙️</span>AI 设置</button>
     </div>
@@ -611,6 +680,13 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         <div id="pronArea"></div>
       </div>
 
+      <!-- Learning Report -->
+      <div id="tab-report" class="hidden">
+        <div class="page-title">学习报告</div><div class="page-desc">查看你的学习数据趋势和薄弱环节分析。</div>
+        <div class="lr-period" id="lrPeriod"></div>
+        <div id="reportArea"></div>
+      </div>
+
       <!-- Settings -->
       <div id="tab-settings" class="hidden">
         <div class="page-title">AI 设置</div><div class="page-desc">选择大模型平台并配置 API Key。</div>
@@ -653,6 +729,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav" onclick="switchTab('grammar')" data-tab="grammar"><span class="bi">✍️</span>批改</button>
   <button class="bnav" onclick="switchTab('chat')" data-tab="chat"><span class="bi">💬</span>对话</button>
   <button class="bnav" onclick="switchTab('pron')" data-tab="pron"><span class="bi">🎤</span>跟读</button>
+  <button class="bnav" onclick="switchTab('report')" data-tab="report"><span class="bi">📈</span>报告</button>
   <button class="bnav" onclick="switchTab('settings')" data-tab="settings"><span class="bi">⚙️</span>设置</button>
 </div>
 
@@ -705,7 +782,7 @@ function getLevelInfo(xp){let cur=LEVELS[0];for(const l of LEVELS){if(xp>=l.xp)c
 function todayStr(){return new Date().toISOString().split('T')[0]}
 
 function switchTab(tab){
-  const tabs=['dash','flip','quiz','list','add','article','grammar','chat','pron','settings'];
+  const tabs=['dash','flip','quiz','list','add','article','grammar','chat','pron','report','settings'];
   tabs.forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.classList.toggle('hidden',t!==tab)});
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   document.querySelectorAll('.bnav').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
@@ -716,6 +793,7 @@ function switchTab(tab){
   if(tab==='grammar')initGrammarTab();
   if(tab==='chat')initChatTab();
   if(tab==='pron')initPronTab();
+  if(tab==='report')initReportTab();
 }
 
 // ═══════════════════════════════════════════════
@@ -1492,7 +1570,7 @@ function renderChatUI(){
   }).join('');
 
   area.innerHTML=`
-    <div class="chat-header"><div class="ch-info"><div class="ch-icon">${chatScene.icon}</div><div><div class="ch-name">${chatScene.name}</div><div class="ch-scene">AI 扮演：${chatScene.role} · 第 ${Math.ceil(chatMessages.filter(m=>m.role==='user').length+1)} 轮</div></div></div><button class="btn btn-g btn-xs" onclick="showChatSceneSelect()">换场景</button></div>
+    <div class="chat-header"><div class="ch-info"><div class="ch-icon">${chatScene.icon}</div><div><div class="ch-name">${chatScene.name}</div><div class="ch-scene">AI 扮演：${chatScene.role} · 第 ${Math.ceil(chatMessages.filter(m=>m.role==='user').length+1)} 轮</div></div></div><div style="display:flex;gap:6px">${chatMessages.filter(m=>m.role==='user').length>=2?'<button class="btn btn-s btn-xs" onclick="endChatAndReport()">📊 结束 & 报告</button>':''}<button class="btn btn-g btn-xs" onclick="showChatSceneSelect()">换场景</button></div></div>
     <div class="chat-body" id="chatBody">${msgHtml}<div id="chatTyping"></div></div>
     <div class="chat-input-bar"><input type="text" id="chatInput" placeholder="输入英文消息..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendChatMsg()"/><button class="btn btn-p btn-sm" onclick="sendChatMsg()" id="chatSendBtn">发送</button></div>`;
 
@@ -1534,6 +1612,87 @@ async function sendChatToAI(userMsg){
     chatSending=false;
     renderChatUI();
   }
+}
+
+// ═══════════════════════════════════════════════
+// CHAT REPORT
+// ═══════════════════════════════════════════════
+async function endChatAndReport(){
+  if(chatSending)return;
+  const userMsgs=chatMessages.filter(m=>m.role==='user');
+  if(userMsgs.length<2){toast('至少对话 2 轮才能生成报告','info');return}
+  chatSending=true;
+  const area=document.getElementById('chatArea');
+  area.innerHTML='<div style="text-align:center;padding:60px 0"><span class="loading-spinner" style="width:24px;height:24px;border-width:3px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span><p style="color:var(--text-sec);margin-top:12px;font-size:13px">📊 AI 正在分析你的对话表现...</p></div>';
+  try{
+    const data=await apiCall('/api/chat-report',{method:'POST',body:JSON.stringify({
+      scene:chatScene.name,messages:chatMessages
+    })});
+    renderChatReport(data);
+    await addXp(20);
+  }catch(e){
+    toast('报告生成失败: '+e.message,'error');
+    renderChatUI();
+  }finally{chatSending=false}
+}
+
+function renderChatReport(data){
+  const area=document.getElementById('chatArea');
+  const r=data;
+  const rounds=chatMessages.filter(m=>m.role==='user').length;
+  const scoreColor=r.score>=80?'var(--success)':r.score>=60?'var(--warn)':'var(--danger)';
+
+  let html=`<div class="cr-wrap"><div class="cr-header"><h3>📊 对话学习报告</h3><p>${chatScene.icon} ${chatScene.name} · ${rounds} 轮对话</p>
+    <div class="cr-stats-row">
+      <div class="cr-stat"><div class="crs-num" style="color:${scoreColor}">${r.score||0}</div><div class="crs-label">综合评分</div></div>
+      <div class="cr-stat"><div class="crs-num">${r.fluency||'?'}</div><div class="crs-label">流利度</div></div>
+      <div class="cr-stat"><div class="crs-num">${r.accuracy||'?'}</div><div class="crs-label">准确度</div></div>
+      <div class="cr-stat"><div class="crs-num">${r.vocabulary_score||'?'}</div><div class="crs-label">词汇</div></div>
+    </div></div>
+    <div class="cr-body">`;
+
+  // CEFR level
+  if(r.level)html+=`<div style="text-align:center;margin-bottom:16px"><span style="background:var(--purple-light);color:var(--purple);padding:6px 18px;border-radius:10px;font-size:14px;font-weight:700">📊 CEFR ${r.level}</span></div>`;
+
+  // Vocabulary used
+  if(r.vocabulary_used&&r.vocabulary_used.length){
+    html+=`<div class="cr-section"><h4>📝 使用的词汇</h4><div class="cr-vocab-grid">`;
+    r.vocabulary_used.forEach(v=>{
+      const isNew=r.new_vocabulary&&r.new_vocabulary.includes(v);
+      html+=`<span class="cr-vocab ${isNew?'new':''}">${escHtml(v)}${isNew?' ✨':''}</span>`;
+    });
+    html+=`</div></div>`;
+  }
+
+  // Grammar errors
+  if(r.grammar_errors&&r.grammar_errors.length){
+    html+=`<div class="cr-section"><h4>❌ 语法错误 (${r.grammar_errors.length})</h4>`;
+    r.grammar_errors.forEach(e=>{
+      html+=`<div class="cr-error-item"><span class="cr-wrong">${escHtml(e.wrong)}</span> → <span class="cr-right">${escHtml(e.correct)}</span><div style="color:var(--text-sec);margin-top:3px">${escHtml(e.explanation)}</div></div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Suggestions
+  if(r.suggestions&&r.suggestions.length){
+    html+=`<div class="cr-section"><h4>💡 改进建议</h4>`;
+    r.suggestions.forEach(s=>{html+=`<div class="cr-suggest">${escHtml(s)}</div>`});
+    html+=`</div>`;
+  }
+
+  // Cards to review
+  if(r.review_cards&&r.review_cards.length){
+    html+=`<div class="cr-section"><h4>🃏 建议复习的卡片</h4><div class="cr-cards">`;
+    r.review_cards.forEach(c=>{html+=`<span class="cr-card-tag">${escHtml(c)}</span>`});
+    html+=`</div></div>`;
+  }
+
+  html+=`<div style="display:flex;gap:10px;justify-content:center;margin-top:20px">
+    <button class="btn btn-p" onclick="showChatSceneSelect()">开始新对话</button>
+    <button class="btn btn-g" onclick="switchTab('dash')">返回仪表盘</button>
+  </div></div></div>`;
+
+  area.innerHTML=html;
 }
 
 // ═══════════════════════════════════════════════
@@ -1674,17 +1833,71 @@ function pronShowResult(userSaid,confidence){
   else if(score>=70){emoji='👍';msg='发音不错！';color='var(--info)'}
   else if(score>=50){emoji='💪';msg='继续加油！';color='var(--warn)'}
 
+  // Per-word comparison
+  const targetWords=target.split(/\s+/);
+  const userWords=userSaid.split(/\s+/);
+  let wordHtml='<div class="pron-word-grid">';
+  targetWords.forEach((tw,i)=>{
+    const uw=userWords[i]||'';
+    const ws=calcSimilarity(tw,uw);
+    let wc='poor';if(ws>=90)wc='perfect';else if(ws>=70)wc='good';else if(ws>=50)wc='fair';
+    wordHtml+=`<div class="pron-word ${wc}"><span>${escHtml(tw)}</span><span class="pw-score">${uw?ws+'%':'—'}</span></div>`;
+  });
+  wordHtml+='</div>';
+
   const el=document.getElementById('pronResult');
   el.innerHTML=`<div class="pron-result">
     <div style="font-size:36px;margin-bottom:4px">${emoji}</div>
     <div class="pron-score" style="color:${color}">${score}</div>
     <div class="pron-score-label">${msg}</div>
+    ${wordHtml}
     <div class="pron-diff">
       <div><span class="pd-target">🎯 标准：</span>${escHtml(target)}</div>
       <div style="margin-top:4px"><span class="pd-user">🗣️ 你说：</span>${escHtml(userSaid)}</div>
       <div style="margin-top:6px;font-size:11px;color:var(--text-sec)">文本匹配 ${similarity}% · 语音置信度 ${Math.round(confidence*100)}%</div>
     </div>
+    <div style="text-align:center;margin-top:12px"><button class="btn btn-i btn-sm" onclick="pronAIDetail('${escAttr(target)}','${escAttr(userSaid)}')">🔬 AI 逐词诊断</button></div>
+    <div id="pronDetailArea"></div>
   </div>`;
+}
+
+async function pronAIDetail(target,userSaid){
+  const area=document.getElementById('pronDetailArea');
+  if(!area)return;
+  area.innerHTML='<div class="liaison-loading"><span class="loading-spinner" style="border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span> AI 正在分析每个词的发音...</div>';
+  try{
+    const data=await apiCall('/api/pron-detail',{method:'POST',body:JSON.stringify({target,user_said:userSaid})});
+    renderPronDetail(data);
+  }catch(e){
+    area.innerHTML=`<div style="text-align:center;padding:12px;color:var(--danger);font-size:13px">❌ ${escHtml(e.message)}</div>`;
+  }
+}
+
+function renderPronDetail(data){
+  const area=document.getElementById('pronDetailArea');
+  const words=data.words||[];
+  const overall=data.overall_tips||[];
+
+  let html=`<div class="pron-detail-panel"><div class="pron-detail-head"><span>🔬 AI 逐词诊断</span><span style="color:var(--text-sec)">${words.length} 个词</span></div><div class="pron-detail-body">`;
+
+  // Per-word tips
+  words.forEach(w=>{
+    if(!w.has_issue)return;
+    html+=`<div class="pron-tip"><div><span class="pt-word">${escHtml(w.word)}</span>${w.ipa?` <span class="pt-ipa">${escHtml(w.ipa)}</span>`:''}</div><div class="pt-guide">${escHtml(w.issue)}</div>${w.mouth_tip?`<div style="margin-top:4px;font-size:11.5px;color:var(--info)">👄 ${escHtml(w.mouth_tip)}</div>`:''}</div>`;
+  });
+
+  // Overall tips
+  if(overall.length){
+    html+=`<div style="margin-top:12px;font-size:12px;font-weight:600;color:var(--text-sec);margin-bottom:6px">💡 整体建议</div>`;
+    overall.forEach(t=>{html+=`<div class="pron-tip" style="border-left-color:var(--info)">${escHtml(t)}</div>`});
+  }
+
+  if(!words.some(w=>w.has_issue)&&!overall.length){
+    html+=`<div style="text-align:center;padding:16px;color:var(--success);font-size:14px">🌟 发音非常标准，没有明显问题！</div>`;
+  }
+
+  html+=`</div></div>`;
+  area.innerHTML=html;
 }
 
 function pronPrev(){pronIdx=Math.max(0,pronIdx-1);showPronCard()}
@@ -1778,6 +1991,104 @@ function pronPlaySpeed(text,rate){
   const u=new SpeechSynthesisUtterance(text);
   u.lang='en-US';u.rate=rate;
   speechSynthesis.speak(u);
+}
+
+// ═══════════════════════════════════════════════
+// LEARNING REPORT
+// ═══════════════════════════════════════════════
+let reportPeriod=7;
+
+function initReportTab(){
+  document.getElementById('lrPeriod').innerHTML=[7,30,90].map(d=>
+    `<button class="lr-period-btn ${reportPeriod===d?'active':''}" onclick="reportPeriod=${d};loadReport()">${d===7?'本周':d===30?'本月':'3个月'}</button>`
+  ).join('');
+  loadReport();
+}
+
+async function loadReport(){
+  const area=document.getElementById('reportArea');
+  area.innerHTML='<div style="text-align:center;padding:40px"><span class="loading-spinner" style="width:20px;height:20px;border-width:3px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span></div>';
+  // Update period buttons
+  document.querySelectorAll('.lr-period-btn').forEach(b=>b.classList.toggle('active',b.textContent===(reportPeriod===7?'本周':reportPeriod===30?'本月':'3个月')));
+
+  try{
+    const d=new Date();d.setDate(d.getDate()-reportPeriod);
+    const since=d.toISOString().split('T')[0];
+    const{data,error}=await client.from('learning_logs').select('*').eq('user_id',currentUser.id).gte('log_date',since).order('log_date',{ascending:true});
+    if(error)throw error;
+    renderReport(data||[]);
+  }catch(e){
+    area.innerHTML=`<div style="text-align:center;padding:40px;color:var(--danger)">加载失败: ${escHtml(e.message)}</div>`;
+  }
+}
+
+function renderReport(logs){
+  const area=document.getElementById('reportArea');
+  const totalReviewed=logs.reduce((s,l)=>s+(l.cards_reviewed||0),0);
+  const totalAdded=logs.reduce((s,l)=>s+(l.cards_added||0),0);
+  const totalXp=logs.reduce((s,l)=>s+(l.xp_earned||0),0);
+  const totalTests=logs.reduce((s,l)=>s+(l.tests_completed||0),0);
+  const totalArticles=logs.reduce((s,l)=>s+(l.articles_analyzed||0),0);
+  const activeDays=logs.filter(l=>(l.xp_earned||0)>0).length;
+  const avgXp=activeDays?Math.round(totalXp/activeDays):0;
+
+  // Mastery stats
+  const mastered=phrases.filter(p=>p.mastered).length;
+  const total=phrases.length;
+  const masteryPct=total?Math.round(mastered/total*100):0;
+
+  // Weak cards (lowest ease_factor, not mastered)
+  const weakCards=[...phrases].filter(p=>!p.mastered&&p.ease_factor).sort((a,b)=>(a.ease_factor||2.5)-(b.ease_factor||2.5)).slice(0,5);
+
+  let html=`<div class="lr-big-stats">
+    <div class="lr-big"><div class="lrb-num" style="color:var(--accent)">${totalXp}</div><div class="lrb-label">总经验值</div><div class="lrb-change up">日均 ${avgXp} XP</div></div>
+    <div class="lr-big"><div class="lrb-num" style="color:var(--success)">${activeDays}</div><div class="lrb-label">活跃天数</div><div class="lrb-change">${reportPeriod} 天中</div></div>
+    <div class="lr-big"><div class="lrb-num" style="color:var(--info)">${masteryPct}%</div><div class="lrb-label">总掌握率</div><div class="lrb-change">${mastered}/${total} 张</div></div>
+  </div>`;
+
+  // XP trend chart
+  html+=`<div class="lr-chart-card"><div class="lr-chart-title">📊 每日 XP 趋势</div><div class="lr-bar-chart">`;
+  const maxXp=Math.max(...logs.map(l=>l.xp_earned||0),1);
+  // Show last N days aligned
+  const dayMap={};logs.forEach(l=>{dayMap[l.log_date]=l});
+  const chartDays=[];
+  for(let i=reportPeriod-1;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);chartDays.push(d.toISOString().split('T')[0])}
+  // For readability, show max ~14 bars
+  const step=Math.max(1,Math.floor(chartDays.length/14));
+  const displayDays=chartDays.filter((_,i)=>i%step===0||i===chartDays.length-1);
+  displayDays.forEach(day=>{
+    const log=dayMap[day];const xp=log?.xp_earned||0;
+    const h=Math.max(2,Math.round(xp/maxXp*100));
+    const label=day.slice(5);// MM-DD
+    html+=`<div class="lr-bar-col"><div class="lr-bar-val">${xp}</div><div class="lr-bar" style="height:${h}%;background:${xp>0?'var(--accent)':'var(--border)'}"></div><div class="lr-bar-label">${label}</div></div>`;
+  });
+  html+=`</div></div>`;
+
+  // Activity breakdown
+  html+=`<div class="lr-chart-card"><div class="lr-chart-title">📋 学习活动明细</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <div style="padding:12px;background:var(--bg);border-radius:10px;text-align:center"><div style="font-size:24px">🃏</div><div style="font-family:var(--display);font-size:1.3rem;font-weight:700">${totalReviewed}</div><div style="font-size:11px;color:var(--text-sec)">卡片复习</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;text-align:center"><div style="font-size:24px">✏️</div><div style="font-family:var(--display);font-size:1.3rem;font-weight:700">${totalAdded}</div><div style="font-size:11px;color:var(--text-sec)">新增卡片</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;text-align:center"><div style="font-size:24px">📝</div><div style="font-family:var(--display);font-size:1.3rem;font-weight:700">${totalTests}</div><div style="font-size:11px;color:var(--text-sec)">完成测试</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;text-align:center"><div style="font-size:24px">📖</div><div style="font-family:var(--display);font-size:1.3rem;font-weight:700">${totalArticles}</div><div style="font-size:11px;color:var(--text-sec)">文章分析</div></div>
+    </div></div>`;
+
+  // Weak cards
+  if(weakCards.length){
+    html+=`<div class="lr-chart-card"><div class="lr-chart-title">🎯 薄弱环节 — 优先复习</div><div class="lr-weak-list">`;
+    weakCards.forEach(c=>{
+      const ef=c.ease_factor||2.5;const pct=Math.round(Math.min(100,((ef-1.3)/1.2)*100));
+      const color=pct<30?'var(--danger)':pct<60?'var(--warn)':'var(--info)';
+      html+=`<div class="lr-weak-item"><div><div class="lw-word">${escHtml(c.english)}</div><div class="lw-detail">${escHtml(c.chinese||'')} · 复习 ${c.review_count||0} 次</div></div><div style="text-align:right"><div style="font-size:11px;color:var(--text-sec);margin-bottom:3px">难度 ${ef.toFixed(1)}</div><div class="lw-bar"><div class="lw-fill" style="width:${pct}%;background:${color}"></div></div></div></div>`;
+    });
+    html+=`</div></div>`;
+  }
+
+  if(!logs.length){
+    html=`<div style="text-align:center;padding:60px 0;color:var(--text-sec)"><div style="font-size:48px;margin-bottom:12px">📊</div><p>该时段暂无学习数据</p><p style="margin-top:8px;font-size:12px">去复习或分析文章积累数据吧！</p></div>`;
+  }
+
+  area.innerHTML=html;
 }
 
 // ═══════════════════════════════════════════════
