@@ -504,24 +504,55 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .dr-empty{text-align:center;padding:50px 0;color:var(--text-sec)}
 .dr-loading{text-align:center;padding:40px 0;color:var(--text-sec)}
 
-/* Reader View */
-.reader-topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0;margin-bottom:16px;border-bottom:1px solid var(--border)}
-.reader-topbar .rt-back{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--body);padding:6px 12px;border-radius:8px;transition:all var(--ease)}
-.reader-topbar .rt-back:hover{background:var(--accent-light)}
-.reader-topbar .rt-actions{display:flex;gap:6px}
-.reader-title{font-family:var(--display);font-size:1.3rem;font-weight:700;line-height:1.4;margin-bottom:6px}
-.reader-meta{font-size:12px;color:var(--text-sec);margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.reader-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-.reader-pane{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.reader-pane-head{padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border-lt);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-sec);display:flex;align-items:center;gap:6px}
-.reader-pane-body{padding:20px;font-size:14px;line-height:2;color:var(--text);max-height:600px;overflow-y:auto}
-.reader-pane-body.cn{color:var(--text-sec);font-size:13.5px}
-.reader-pane-body p{margin-bottom:14px}
-.reader-ai-section{margin-top:20px}
-.reader-loading{text-align:center;padding:60px 0;color:var(--text-sec)}
-.reader-loading .rl-steps{margin-top:16px;font-size:13px}
-.reader-loading .rl-step{padding:4px 0;opacity:0.4;transition:all 0.3s}
-.reader-loading .rl-step.active{opacity:1;color:var(--accent);font-weight:600}
+/* Reader View — Apple-inspired */
+.rv{max-width:720px;margin:0 auto;padding:0 4px}
+.rv-back{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--text-sec);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--body);padding:8px 0;transition:color .2s}
+.rv-back:hover{color:var(--accent)}
+.rv-head{padding:36px 0 28px;border-bottom:1px solid var(--border-lt)}
+.rv-section-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:12px}
+.rv-title{font-family:var(--display);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;line-height:1.25;color:var(--text);letter-spacing:-.02em;margin-bottom:14px}
+.rv-meta{display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--text-sec);flex-wrap:wrap}
+.rv-meta a{color:var(--accent);text-decoration:none;font-weight:600}
+.rv-meta a:hover{text-decoration:underline}
+.rv-body{padding:36px 0}
+.rv-para-group{margin-bottom:28px}
+.rv-para-en{font-size:clamp(15.5px,1.15vw,17.5px);line-height:1.85;color:var(--text);font-family:Georgia,'Times New Roman',serif;letter-spacing:.01em}
+.rv-para-cn{font-size:13.5px;line-height:1.75;color:var(--accent);opacity:.72;margin-top:8px;padding-left:16px;border-left:2px solid rgba(196,93,62,.18);font-family:var(--body)}
+.rv-para-cn.placeholder{color:var(--text-sec);opacity:.35;border-left-color:var(--border-lt);font-style:italic;font-family:var(--body)}
+.rv-divider{width:40px;height:1px;background:var(--border);margin:40px auto}
+.rv-progress{position:sticky;top:64px;z-index:10;background:rgba(250,248,245,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:14px 0;margin:0 -4px;border-bottom:1px solid rgba(0,0,0,.05);display:flex;align-items:center;gap:14px}
+.rv-progress-bar{flex:1;height:3px;background:var(--border-lt);border-radius:3px;overflow:hidden}
+.rv-progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width .6s ease}
+.rv-progress-text{font-size:11px;color:var(--text-sec);font-weight:600;white-space:nowrap;min-width:72px;text-align:right}
+.rv-steps{display:flex;gap:6px;margin-left:8px}
+.rv-step-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .3s}
+.rv-step-dot.done{background:var(--accent)}
+.rv-step-dot.active{background:var(--accent);box-shadow:0 0 0 3px rgba(196,93,62,.2);animation:rvPulse 1.2s infinite}
+@keyframes rvPulse{0%,100%{box-shadow:0 0 0 3px rgba(196,93,62,.15)}50%{box-shadow:0 0 0 6px rgba(196,93,62,.06)}}
+.rv-summary{background:var(--card);border-radius:16px;padding:24px 28px;margin-bottom:32px;border:1px solid var(--border-lt)}
+.rv-summary-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
+.rv-summary p{font-size:14px;line-height:1.8;color:var(--text-sec)}
+.rv-ai-title{font-family:var(--display);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.rv-ai-desc{font-size:12.5px;color:var(--text-sec);margin-bottom:16px}
+.rv-ai-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.rv-ai-card{background:var(--card);border:1px solid var(--border-lt);border-radius:14px;padding:18px 20px;transition:all .2s}
+.rv-ai-card:hover{border-color:var(--border);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.rv-ai-card .ai-en{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:4px;font-family:Georgia,serif}
+.rv-ai-card .ai-cn{font-size:13px;color:var(--accent);margin-bottom:6px}
+.rv-ai-card .ai-exp{font-size:12.5px;color:var(--text-sec);line-height:1.6}
+.rv-ai-card .ai-src{font-size:11.5px;color:#A8A29E;margin-top:6px;line-height:1.5;font-style:italic}
+.rv-ai-card .ai-add{background:none;border:1.5px solid var(--border);color:var(--text-sec);font-size:11px;font-weight:600;padding:4px 14px;border-radius:8px;cursor:pointer;font-family:var(--body);transition:all .2s;float:right;margin-top:-4px}
+.rv-ai-card .ai-add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.rv-ai-card .ai-add.added{border-color:var(--success);color:var(--success);pointer-events:none}
+.rv-sec-head{display:flex;align-items:center;gap:10px;padding:20px 0 12px;cursor:pointer;user-select:none}
+.rv-sec-head h3{font-family:var(--display);font-size:1rem;font-weight:600;flex:1}
+.rv-sec-head .rv-cnt{font-size:11px;font-weight:700;color:#fff;background:var(--accent);padding:1px 8px;border-radius:10px}
+.rv-sec-head .rv-batch{font-size:11px;color:var(--accent);font-weight:600;background:none;border:none;cursor:pointer;font-family:var(--body);padding:4px 8px}
+.rv-sec-head .rv-batch:hover{text-decoration:underline}
+.rv-cta{text-align:center;padding:44px 0}
+.rv-cta p{font-size:13px;color:var(--text-sec);margin-bottom:14px}
+.rv-cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--text);color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--body);transition:all .2s;letter-spacing:.01em}
+.rv-cta-btn:hover{opacity:.85;transform:scale(1.02)}
 
 /* ═══ VOCAB BOOK ═══ */
 .vb-selector{display:flex;gap:10px;margin-bottom:20px}
@@ -650,7 +681,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .cr-stats-row{grid-template-columns:repeat(2,1fr)}.lr-big-stats{grid-template-columns:1fr}.lr-bar-chart{height:80px}
   .vb-word{font-size:1.5rem}.vb-card{padding:24px 18px}.vb-selector{flex-direction:column}
   .dr-article-img{width:80px;height:60px}.dr-cats{gap:6px}.dr-cat{padding:6px 10px;font-size:11px}.dr-source-row{flex-direction:column}
-  .reader-split{grid-template-columns:1fr}.reader-pane-body{max-height:400px}.reader-title{font-size:1.1rem}
+  .rv{padding:0}.rv-title{font-size:1.4rem}.rv-para-en{font-size:15px;line-height:1.8}.rv-head{padding:24px 0 18px}
 }
 </style>
 </head>
@@ -1757,65 +1788,96 @@ function renderReaderView(){
   const bodyText=a.fields?.bodyText||'';
   const date=a.webPublicationDate?new Date(a.webPublicationDate).toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'}):'';
   const section=a.sectionName||'';
-
-  // Format English text into paragraphs
   const enParas=bodyText.split(/\n+/).filter(p=>p.trim().length>20);
+  const wordCount=bodyText.split(/\s+/).length;
 
-  let html=`<div class="reader-topbar"><button class="rt-back" onclick="drReaderMode=false;renderReadingUI()">← 返回文章列表</button><div class="rt-actions"><a href="${escHtml(a.webUrl)}" target="_blank" rel="noopener" class="btn btn-g btn-xs">原文链接 ↗</a></div></div>`;
-
-  html+=`<div class="reader-title">${escHtml(a.webTitle)}</div>`;
-  html+=`<div class="reader-meta"><span class="dr-tag">${escHtml(section)}</span><span>${date}</span><span>${enParas.length} 段</span><span>约 ${bodyText.split(/\s+/).length} 词</span></div>`;
-
-  // Split view: English | Chinese
-  html+=`<div class="reader-split">`;
-
-  // English pane
-  html+=`<div class="reader-pane"><div class="reader-pane-head">🇬🇧 English 原文</div><div class="reader-pane-body">${enParas.map(p=>`<p>${escHtml(p)}</p>`).join('')}</div></div>`;
-
-  // Chinese pane
-  html+=`<div class="reader-pane"><div class="reader-pane-head">🇨🇳 中文翻译</div><div class="reader-pane-body cn" id="readerCnPane">`;
+  // Get CN paragraphs if available
+  let cnParas=[];
   if(drAiResult&&drAiResult.translated_text){
-    const cnParas=drAiResult.translated_text.split(/\n+/).filter(p=>p.trim());
-    html+=cnParas.map(p=>`<p>${escHtml(p)}</p>`).join('');
-  }else if(drAiLoading){
-    html+=`<div class="dr-loading" style="padding:30px 0"><span class="loading-spinner" style="width:18px;height:18px;border-width:2.5px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span><div class="rl-steps" id="readerSteps">
-      <div class="rl-step ${drAiStep>=1?'active':''}">📡 连接 AI...</div>
-      <div class="rl-step ${drAiStep>=2?'active':''}">📝 翻译全文...</div>
-      <div class="rl-step ${drAiStep>=3?'active':''}">🔤 提取短语...</div>
-      <div class="rl-step ${drAiStep>=4?'active':''}">📐 分析语法...</div>
-      <div class="rl-step ${drAiStep>=5?'active':''}">💡 解析难句...</div>
-    </div></div>`;
-  }else{
-    html+=`<p style="color:var(--text-sec);text-align:center;padding:30px 0">点击下方按钮开始 AI 翻译</p>`;
+    cnParas=drAiResult.translated_text.split(/\n+/).filter(p=>p.trim());
   }
-  html+=`</div></div></div>`;
 
-  // AI extracted items
+  let html=`<div class="rv">`;
+
+  // Back button
+  html+=`<button class="rv-back" onclick="drReaderMode=false;renderReadingUI()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> 返回</button>`;
+
+  // Header
+  html+=`<div class="rv-head">`;
+  html+=`<div class="rv-section-tag">${escHtml(section)}</div>`;
+  html+=`<h1 class="rv-title">${escHtml(a.webTitle)}</h1>`;
+  html+=`<div class="rv-meta"><span>${date}</span><span>·</span><span>${enParas.length} 段</span><span>·</span><span>约 ${wordCount} 词</span><span>·</span><a href="${escHtml(a.webUrl)}" target="_blank" rel="noopener">阅读原文 ↗</a></div>`;
+  html+=`</div>`;
+
+  // Sticky progress bar during AI loading
+  if(drAiLoading){
+    const pct=[0,15,40,65,85,100][drAiStep]||0;
+    const labels=['准备中','连接 AI','翻译全文','提取短语','分析语法','解析难句'];
+    html+=`<div class="rv-progress" id="rvProgress">
+      <div class="rv-progress-bar"><div class="rv-progress-fill" style="width:${pct}%"></div></div>
+      <div class="rv-steps" id="readerSteps">${[1,2,3,4,5].map(i=>`<div class="rv-step-dot ${drAiStep>i?'done':drAiStep===i?'active':''}"></div>`).join('')}</div>
+      <div class="rv-progress-text">${labels[drAiStep]||'分析中'}...</div>
+    </div>`;
+  }
+
+  // Article body — interleaved paragraphs
+  html+=`<div class="rv-body">`;
+  enParas.forEach((p,i)=>{
+    html+=`<div class="rv-para-group">`;
+    html+=`<div class="rv-para-en">${escHtml(p)}</div>`;
+    if(cnParas[i]){
+      html+=`<div class="rv-para-cn">${escHtml(cnParas[i])}</div>`;
+    }else if(drAiLoading){
+      html+=`<div class="rv-para-cn placeholder">翻译中...</div>`;
+    }else if(!drAiResult){
+      html+=`<div class="rv-para-cn placeholder">等待 AI 翻译</div>`;
+    }
+    html+=`</div>`;
+  });
+  html+=`</div>`;
+
+  // CTA if not yet analyzed
+  if(!drAiResult&&!drAiLoading){
+    html+=`<div class="rv-cta"><p>AI 将自动翻译全文，并提取短语、语法点和难句</p><button class="rv-cta-btn" onclick="analyzeReaderArticle()">开始 AI 分析</button></div>`;
+  }
+
+  // AI Results section
   if(drAiResult){
-    const items=drAiResult.items||[];
+    html+=`<div class="rv-divider"></div>`;
+
+    // Summary
     if(drAiResult.summary){
-      html+=`<div class="card" style="margin-top:16px"><div class="card-title">📌 文章摘要</div><p style="font-size:13.5px;color:var(--text-sec);line-height:1.7">${escHtml(drAiResult.summary)}</p></div>`;
+      html+=`<div class="rv-summary"><div class="rv-summary-label">文章摘要</div><p>${escHtml(drAiResult.summary)}</p></div>`;
     }
-    // Render the same article analysis sections
+
+    const items=drAiResult.items||[];
     if(items.length){
-      const types={'短语':{i:'🔤',items:[]},'语法':{i:'📐',items:[]},'难句':{i:'💡',items:[]}};
+      const types={'短语':{icon:'🔤',color:'var(--info)',items:[]},'语法':{icon:'📐',color:'var(--purple)',items:[]},'难句':{icon:'💡',color:'var(--warn)',items:[]}};
       items.forEach((item,idx)=>{item._idx=idx;if(types[item.item_type])types[item.item_type].items.push(item)});
-      lastArticleItems=items; // reuse existing add-to-review functions
+      lastArticleItems=items;
 
-      html+=`<div style="display:flex;align-items:center;justify-content:space-between;margin:16px 0 10px"><div style="font-family:var(--display);font-size:1rem;font-weight:600">📚 AI 提取的短语、语法和难句</div><button class="btn btn-p btn-sm" onclick="addAllItems()">📥 全部添加到复习</button></div>`;
+      html+=`<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px"><div class="rv-ai-title">AI 学习笔记</div><button class="btn btn-p btn-sm" onclick="addAllItems()" style="flex-shrink:0">全部添加到复习</button></div>`;
+      html+=`<div class="rv-ai-desc">从本文中提取的高价值短语、语法结构和难句，点击添加到你的复习卡片。</div>`;
 
-      Object.keys(types).forEach(type=>{const g=types[type];if(!g.items.length)return;
-        html+=`<div class="ar-section"><div class="ar-sh open" id="sh-r${type}" onclick="toggleSection('r${type}')"><div class="ar-sl">${g.i} ${type} <span class="ar-cnt">${g.items.length}</span></div><div style="display:flex;align-items:center;gap:8px"><button class="btn btn-xs btn-p" onclick="event.stopPropagation();addAllOfType('${type}')">全部添加</button><span class="ar-arr" style="transform:rotate(180deg)">▼</span></div></div><div class="ar-sb" id="sb-r${type}">`;
-        g.items.forEach(item=>{const idx=item._idx;
-          html+=`<div class="ar-item" id="ai-${idx}"><div class="ar-item-top"><h4>${escHtml(item.english)}</h4><button class="btn-add" id="ab-${idx}" onclick="addItemToReview(${idx})">+ 添加</button></div><p><span class="lbl">释义：</span>${escHtml(item.chinese)}</p>${item.explanation?`<p><span class="lbl">解释：</span>${escHtml(item.explanation)}</p>`:''}${item.example?`<p><span class="lbl">例句：</span>${escHtml(item.example)}</p>`:''}${item.source_sentence?`<p style="color:#A8A29E;font-size:12px;margin-top:3px"><span class="lbl">原文：</span>${escHtml(item.source_sentence)}</p>`:''}</div>`});
-        html+='</div></div>'});
+      Object.keys(types).forEach(type=>{
+        const g=types[type];if(!g.items.length)return;
+        html+=`<div class="rv-sec-head" onclick="document.getElementById('rvSec_${type}').classList.toggle('hidden')"><h3>${g.icon} ${type}</h3><span class="rv-cnt">${g.items.length}</span><button class="rv-batch" onclick="event.stopPropagation();addAllOfType('${type}')">全部添加</button></div>`;
+        html+=`<div class="rv-ai-grid" id="rvSec_${type}">`;
+        g.items.forEach(item=>{
+          const idx=item._idx;
+          html+=`<div class="rv-ai-card" id="ai-${idx}"><button class="ai-add" id="ab-${idx}" onclick="event.stopPropagation();addItemToReview(${idx})">+ 添加</button><div class="ai-en">${escHtml(item.english)}</div><div class="ai-cn">${escHtml(item.chinese)}</div>`;
+          if(item.explanation)html+=`<div class="ai-exp">${escHtml(item.explanation)}</div>`;
+          if(item.example)html+=`<div class="ai-exp" style="margin-top:4px">💬 ${escHtml(item.example)}</div>`;
+          if(item.source_sentence)html+=`<div class="ai-src">"${escHtml(item.source_sentence)}"</div>`;
+          html+=`</div>`;
+        });
+        html+=`</div>`;
+      });
     }
-  }else if(!drAiLoading){
-    html+=`<div style="text-align:center;margin-top:16px"><button class="btn btn-s" onclick="analyzeReaderArticle()">🚀 AI 翻译 & 提取短语/语法</button></div>`;
   }
 
+  html+=`</div>`; // close .rv
   area.innerHTML=html;
-  // Scroll to top
   window.scrollTo({top:document.getElementById('tab-reading').offsetTop-80,behavior:'smooth'});
 }
 
@@ -1851,8 +1913,19 @@ async function analyzeReaderArticle(bodyTextOverride){
 }
 
 function updateReaderSteps(){
+  // Update progress bar
+  const pct=[0,15,40,65,85,100][drAiStep]||0;
+  const labels=['准备中','连接 AI','翻译全文','提取短语','分析语法','解析难句'];
+  const bar=document.querySelector('.rv-progress-fill');
+  if(bar)bar.style.width=pct+'%';
+  const txt=document.querySelector('.rv-progress-text');
+  if(txt)txt.textContent=(labels[drAiStep]||'分析中')+'...';
+  // Update dots
   const steps=document.getElementById('readerSteps');if(!steps)return;
-  steps.querySelectorAll('.rl-step').forEach((el,i)=>{el.classList.toggle('active',i<drAiStep)});
+  steps.querySelectorAll('.rv-step-dot').forEach((el,i)=>{
+    const stepNum=i+1;
+    el.className='rv-step-dot'+(drAiStep>stepNum?' done':drAiStep===stepNum?' active':'');
+  });
 }
 
 // ═══════════════════════════════════════════════
