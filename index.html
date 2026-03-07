@@ -504,8 +504,8 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .dr-empty{text-align:center;padding:50px 0;color:var(--text-sec)}
 .dr-loading{text-align:center;padding:40px 0;color:var(--text-sec)}
 
-/* Reader View — Apple-inspired */
-.rv{max-width:720px;margin:0 auto;padding:0 4px}
+/* Reader View */
+.rv{max-width:760px;margin:0 auto;padding:0 4px}
 .rv-back{display:inline-flex;align-items:center;gap:5px;background:none;border:none;color:var(--text-sec);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--body);padding:8px 0;transition:color .2s}
 .rv-back:hover{color:var(--accent)}
 .rv-head{padding:36px 0 28px;border-bottom:1px solid var(--border-lt)}
@@ -514,11 +514,13 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .rv-meta{display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--text-sec);flex-wrap:wrap}
 .rv-meta a{color:var(--accent);text-decoration:none;font-weight:600}
 .rv-meta a:hover{text-decoration:underline}
-.rv-body{padding:36px 0}
-.rv-para-group{margin-bottom:28px}
-.rv-para-en{font-size:clamp(15.5px,1.15vw,17.5px);line-height:1.85;color:var(--text);font-family:Georgia,'Times New Roman',serif;letter-spacing:.01em}
-.rv-para-cn{font-size:13.5px;line-height:1.75;color:var(--accent);opacity:.72;margin-top:8px;padding-left:16px;border-left:2px solid rgba(196,93,62,.18);font-family:var(--body)}
-.rv-para-cn.placeholder{color:var(--text-sec);opacity:.35;border-left-color:var(--border-lt);font-style:italic;font-family:var(--body)}
+.rv-hint{display:flex;align-items:center;gap:8px;margin-top:20px;padding:12px 16px;background:rgba(196,93,62,.06);border-radius:10px;font-size:12px;color:var(--accent);font-weight:500}
+.rv-body{padding:32px 0}
+.rv-para-group{margin-bottom:32px}
+.rv-para-en{font-size:clamp(17px,1.3vw,19px);line-height:1.9;color:var(--text);font-family:Georgia,'Times New Roman',serif;letter-spacing:.012em;cursor:text;-webkit-user-select:text;user-select:text;text-indent:2em}
+.rv-para-en:first-child{text-indent:0}
+.rv-para-cn{font-size:14px;line-height:1.75;color:var(--accent);opacity:.68;margin-top:10px;padding-left:18px;border-left:2.5px solid rgba(196,93,62,.15);font-family:var(--body)}
+.rv-para-cn.placeholder{color:var(--text-sec);opacity:.3;border-left-color:var(--border-lt);font-style:italic}
 .rv-divider{width:40px;height:1px;background:var(--border);margin:40px auto}
 .rv-progress{position:sticky;top:64px;z-index:10;background:rgba(250,248,245,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:14px 0;margin:0 -4px;border-bottom:1px solid rgba(0,0,0,.05);display:flex;align-items:center;gap:14px}
 .rv-progress-bar{flex:1;height:3px;background:var(--border-lt);border-radius:3px;overflow:hidden}
@@ -553,6 +555,27 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .rv-cta p{font-size:13px;color:var(--text-sec);margin-bottom:14px}
 .rv-cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--text);color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--body);transition:all .2s;letter-spacing:.01em}
 .rv-cta-btn:hover{opacity:.85;transform:scale(1.02)}
+
+/* Word Lookup Tooltip */
+#wlTip{position:fixed;z-index:9999;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}
+#wlTip.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.wl-inner{background:#fff;color:var(--text);border-radius:12px;padding:14px 18px;max-width:340px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.06);font-family:var(--body)}
+.wl-arrow{position:absolute;left:50%;transform:translateX(-50%)}
+.wl-arrow.above{bottom:-6px;width:12px;height:6px;overflow:hidden}
+.wl-arrow.above::after{content:'';position:absolute;width:10px;height:10px;background:#fff;transform:rotate(45deg);left:1px;top:-5px;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.wl-arrow.below{top:-6px;width:12px;height:6px;overflow:hidden}
+.wl-arrow.below::after{content:'';position:absolute;width:10px;height:10px;background:#fff;transform:rotate(45deg);left:1px;bottom:-5px;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.wl-head{display:flex;align-items:baseline;gap:8px;margin-bottom:2px}
+.wl-word{font-size:17px;font-weight:700;font-family:Georgia,serif;color:var(--text)}
+.wl-pos{font-size:11px;font-weight:600;color:var(--text-sec);font-style:italic}
+.wl-phonetic{font-size:11.5px;color:var(--text-sec);margin-bottom:8px;font-family:var(--body)}
+.wl-meaning{font-size:14.5px;line-height:1.5;color:var(--text);font-weight:500}
+.wl-note{font-size:11.5px;color:var(--text-sec);line-height:1.4;margin-top:6px;padding-top:6px;border-top:1px solid var(--border-lt)}
+.wl-loading{display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 0}
+.wl-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:wlBounce .5s infinite alternate}
+.wl-dot:nth-child(2){animation-delay:.12s}
+.wl-dot:nth-child(3){animation-delay:.24s}
+@keyframes wlBounce{to{opacity:.2;transform:translateY(-5px)}}
 
 /* ═══ VOCAB BOOK ═══ */
 .vb-selector{display:flex;gap:10px;margin-bottom:20px}
@@ -1807,6 +1830,7 @@ function renderReaderView(){
   html+=`<div class="rv-section-tag">${escHtml(section)}</div>`;
   html+=`<h1 class="rv-title">${escHtml(a.webTitle)}</h1>`;
   html+=`<div class="rv-meta"><span>${date}</span><span>·</span><span>${enParas.length} 段</span><span>·</span><span>约 ${wordCount} 词</span><span>·</span><a href="${escHtml(a.webUrl)}" target="_blank" rel="noopener">阅读原文 ↗</a></div>`;
+  html+=`<div class="rv-hint">👆 划选英文单词，即可查看在句中的释义</div>`;
   html+=`</div>`;
 
   // Sticky progress bar during AI loading
@@ -1913,19 +1937,130 @@ async function analyzeReaderArticle(bodyTextOverride){
 }
 
 function updateReaderSteps(){
-  // Update progress bar
   const pct=[0,15,40,65,85,100][drAiStep]||0;
   const labels=['准备中','连接 AI','翻译全文','提取短语','分析语法','解析难句'];
   const bar=document.querySelector('.rv-progress-fill');
   if(bar)bar.style.width=pct+'%';
   const txt=document.querySelector('.rv-progress-text');
   if(txt)txt.textContent=(labels[drAiStep]||'分析中')+'...';
-  // Update dots
   const steps=document.getElementById('readerSteps');if(!steps)return;
   steps.querySelectorAll('.rv-step-dot').forEach((el,i)=>{
     const stepNum=i+1;
     el.className='rv-step-dot'+(drAiStep>stepNum?' done':drAiStep===stepNum?' active':'');
   });
+}
+
+// ═══════════════════════════════════════════════
+// WORD LOOKUP (划词查义)
+// ═══════════════════════════════════════════════
+let wlAbort=null,wlCache={};
+
+// Get the sentence that contains the selected word
+function getSentenceAround(node,offset){
+  const text=node.textContent||'';
+  // Find sentence boundaries (. ! ? or end of text)
+  let start=0,end=text.length;
+  for(let i=offset-1;i>=0;i--){if(/[.!?]/.test(text[i])&&i<offset-2){start=i+1;break}}
+  for(let i=offset;i<text.length;i++){if(/[.!?]/.test(text[i])){end=i+1;break}}
+  return text.slice(start,end).trim();
+}
+
+function showWlTip(rect,contentHtml){
+  const tip=document.getElementById('wlTip');
+  const inner=document.getElementById('wlContent');
+  inner.innerHTML=contentHtml;
+  tip.classList.add('show');
+  // Position
+  const tipW=tip.offsetWidth||260;
+  const tipH=tip.offsetHeight||80;
+  let left=rect.left+rect.width/2-tipW/2;
+  left=Math.max(8,Math.min(left,window.innerWidth-tipW-8));
+  const arrow=tip.querySelector('.wl-arrow');
+  // Prefer below selection
+  let top=rect.bottom+8;
+  if(top+tipH>window.innerHeight-16){
+    top=rect.top-tipH-8;
+    arrow.className='wl-arrow below';
+  }else{
+    arrow.className='wl-arrow above';
+  }
+  // Adjust arrow position relative to word center
+  const arrowLeft=Math.max(16,Math.min(rect.left+rect.width/2-left,tipW-16));
+  arrow.style.left=arrowLeft+'px';
+  tip.style.left=left+'px';
+  tip.style.top=top+'px';
+}
+
+function hideWlTip(){
+  const tip=document.getElementById('wlTip');
+  if(tip)tip.classList.remove('show');
+  if(wlAbort){wlAbort.abort();wlAbort=null}
+}
+
+async function doWordLookup(word,sentence,rect){
+  const cacheKey=word.toLowerCase()+'|||'+sentence.slice(0,60);
+  // Show loading
+  showWlTip(rect,`<div class="wl-head"><span class="wl-word">${escHtml(word)}</span></div><div class="wl-loading"><span class="wl-dot"></span><span class="wl-dot"></span><span class="wl-dot"></span></div>`);
+
+  if(wlCache[cacheKey]){
+    renderWlResult(wlCache[cacheKey],rect);return;
+  }
+
+  try{
+    if(wlAbort)wlAbort.abort();
+    wlAbort=new AbortController();
+    const data=await apiCall('/api/word-lookup',{
+      method:'POST',
+      body:JSON.stringify({word,sentence}),
+      signal:wlAbort.signal
+    });
+    wlCache[cacheKey]=data;
+    renderWlResult(data,rect);
+  }catch(e){
+    if(e.name==='AbortError')return;
+    showWlTip(rect,`<div class="wl-head"><span class="wl-word">${escHtml(word)}</span></div><div class="wl-meaning" style="color:var(--text-sec)">查询失败</div>`);
+  }
+}
+
+function renderWlResult(data,rect){
+  let html=`<div class="wl-head"><span class="wl-word">${escHtml(data.word||'')}</span>`;
+  if(data.pos)html+=`<span class="wl-pos">${escHtml(data.pos)}</span>`;
+  html+=`</div>`;
+  if(data.phonetic)html+=`<div class="wl-phonetic">${escHtml(data.phonetic)}</div>`;
+  html+=`<div class="wl-meaning">${escHtml(data.meaning||'')}</div>`;
+  if(data.note)html+=`<div class="wl-note">${escHtml(data.note)}</div>`;
+  showWlTip(rect,html);
+}
+
+// Listen for text selection on reader paragraphs
+document.addEventListener('mouseup',handleWordSelect);
+document.addEventListener('touchend',handleWordSelect);
+document.addEventListener('mousedown',e=>{
+  if(!e.target.closest('#wlTip'))hideWlTip();
+});
+
+function handleWordSelect(e){
+  // Only on reader English paragraphs
+  const paraEl=e.target.closest('.rv-para-en');
+  if(!paraEl)return;
+
+  const sel=window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.toString().trim())return;
+
+  let word=sel.toString().trim();
+  // Clean: remove punctuation at edges, max 3 words
+  word=word.replace(/^[^a-zA-Z]+|[^a-zA-Z]+$/g,'');
+  if(!word||word.split(/\s+/).length>4)return;
+
+  // Get sentence context
+  const anchorNode=sel.anchorNode;
+  const sentence=getSentenceAround(anchorNode,sel.anchorOffset);
+
+  // Get position of the selection
+  const range=sel.getRangeAt(0);
+  const rect=range.getBoundingClientRect();
+
+  doWordLookup(word,sentence,rect);
 }
 
 // ═══════════════════════════════════════════════
@@ -2826,5 +2961,6 @@ async function onLogin(){
 
 init();
 </script>
+<div id="wlTip"><div class="wl-arrow above"></div><div class="wl-inner" id="wlContent"></div></div>
 </body>
 </html>
