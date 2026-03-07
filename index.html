@@ -354,32 +354,56 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .gc-empty{text-align:center;padding:50px 0;color:var(--text-sec)}
 .gc-empty .gc-em{font-size:48px;margin-bottom:12px}
 
-/* ═══ AI CHAT ═══ */
+/* ═══ AI CHAT / VOICE CALL ═══ */
 .chat-scene-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:20px 0}
 .chat-scene{padding:18px 12px;border:2px solid var(--border);border-radius:14px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--card)}
 .chat-scene:hover{border-color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .chat-scene .cs-icon{font-size:32px;margin-bottom:6px}
 .chat-scene .cs-name{font-size:13px;font-weight:700}
 .chat-scene .cs-role{font-size:11px;color:var(--text-sec);margin-top:2px}
-.chat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;margin-top:12px}
-.chat-header .ch-info{display:flex;align-items:center;gap:10px}
-.chat-header .ch-icon{width:36px;height:36px;border-radius:12px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:20px}
-.chat-header .ch-name{font-weight:600;font-size:14px}
-.chat-header .ch-scene{font-size:11px;color:var(--text-sec)}
-.chat-body{background:var(--bg-deep);border-left:1px solid var(--border);border-right:1px solid var(--border);padding:20px 16px;min-height:300px;max-height:460px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
-.chat-msg{max-width:82%;animation:fadeUp 0.3s ease}
-.chat-msg.ai{align-self:flex-start}
-.chat-msg.user{align-self:flex-end}
-.chat-bubble{padding:12px 16px;border-radius:16px;font-size:13.5px;line-height:1.7;word-break:break-word}
-.chat-msg.ai .chat-bubble{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text)}
-.chat-msg.user .chat-bubble{background:var(--accent);color:#fff;border-bottom-right-radius:4px}
-.chat-feedback{margin-top:6px;padding:10px 14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.15);border-radius:12px;font-size:12px;color:#92400E;line-height:1.6}
-.chat-feedback strong{color:var(--warn)}
-.chat-input-bar{display:flex;gap:8px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:0 0 var(--radius) var(--radius);border-top:none}
-.chat-input-bar input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;font-family:var(--body);outline:none;transition:all var(--ease)}
-.chat-input-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.vc-wrap{max-width:480px;margin:0 auto}
+.vc-card{background:linear-gradient(165deg,#1C1917 0%,#292524 50%,#1C1917 100%);border-radius:24px;padding:36px 28px 28px;text-align:center;color:#fff;position:relative;overflow:hidden;min-height:480px;display:flex;flex-direction:column;align-items:center}
+.vc-card::before{content:'';position:absolute;top:-60%;left:-30%;width:160%;height:160%;background:radial-gradient(ellipse,rgba(196,93,62,0.08) 0%,transparent 60%);pointer-events:none}
+.vc-scene-tag{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-bottom:20px}
+.vc-avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--warn));display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:12px;position:relative;box-shadow:0 8px 32px rgba(196,93,62,0.3)}
+.vc-avatar.speaking{animation:vcPulseRing 1.5s infinite}
+@keyframes vcPulseRing{0%{box-shadow:0 8px 32px rgba(196,93,62,0.3),0 0 0 0 rgba(196,93,62,0.3)}50%{box-shadow:0 8px 32px rgba(196,93,62,0.3),0 0 0 18px rgba(196,93,62,0)}100%{box-shadow:0 8px 32px rgba(196,93,62,0.3),0 0 0 0 rgba(196,93,62,0)}}
+.vc-name{font-family:var(--display);font-size:1.2rem;font-weight:700;margin-bottom:2px}
+.vc-role{font-size:12px;color:rgba(255,255,255,0.4)}
+.vc-status{font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px;min-height:20px;display:flex;align-items:center;gap:6px;justify-content:center}
+.vc-status .vc-dot{width:8px;height:8px;border-radius:50%;background:var(--success);animation:vcDotPulse 1s infinite}
+@keyframes vcDotPulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.vc-timer{font-size:13px;color:rgba(255,255,255,0.3);margin-top:4px;font-variant-numeric:tabular-nums}
+.vc-wave{display:flex;align-items:center;justify-content:center;gap:3px;height:48px;margin:16px 0}
+.vc-wave span{width:4px;border-radius:99px;background:var(--accent);transition:height 0.15s}
+.vc-wave.ai-speaking span{background:linear-gradient(180deg,var(--warn),var(--accent))}
+.vc-wave.user-speaking span{background:linear-gradient(180deg,var(--success),var(--info))}
+.vc-transcript{flex:1;width:100%;margin:12px 0;overflow-y:auto;max-height:180px;display:flex;flex-direction:column;gap:8px;padding:0 4px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent}
+.vc-line{padding:8px 14px;border-radius:12px;font-size:13px;line-height:1.6;animation:fadeUp 0.3s ease;text-align:left;max-width:92%}
+.vc-line.ai{background:rgba(255,255,255,0.08);align-self:flex-start;color:rgba(255,255,255,0.85)}
+.vc-line.user{background:rgba(196,93,62,0.25);align-self:flex-end;color:rgba(255,255,255,0.9)}
+.vc-line .vc-fb{display:block;margin-top:6px;padding:6px 10px;background:rgba(245,158,11,0.15);border-radius:8px;font-size:11px;color:rgba(245,158,11,0.9);line-height:1.5}
+.vc-controls{display:flex;gap:16px;align-items:center;justify-content:center;margin-top:auto;padding-top:16px}
+.vc-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:all var(--ease);position:relative}
+.vc-btn:hover{transform:scale(1.08)}
+.vc-btn:disabled{opacity:0.3;cursor:not-allowed;transform:none}
+.vc-btn.mic{background:var(--success);color:#fff;width:72px;height:72px;font-size:28px}
+.vc-btn.mic.active{background:var(--danger);animation:pulse 1s infinite}
+.vc-btn.mic.active::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(220,38,38,0.4);animation:vcMicRing 1.5s infinite}
+@keyframes vcMicRing{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.4);opacity:0}}
+.vc-btn.hangup{background:var(--danger);color:#fff}
+.vc-btn.hangup:hover{background:#B91C1C}
+.vc-btn.text{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
+.vc-btn.text:hover{background:rgba(255,255,255,0.15);color:#fff}
+.vc-btn.report{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
+.vc-btn.report:hover{background:rgba(37,99,235,0.3);color:#fff}
+.vc-text-input{display:flex;gap:8px;width:100%;margin-top:12px}
+.vc-text-input input{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:10px 14px;color:#fff;font-size:13px;font-family:var(--body);outline:none}
+.vc-text-input input::placeholder{color:rgba(255,255,255,0.25)}
+.vc-text-input input:focus{border-color:var(--accent);background:rgba(255,255,255,0.12)}
+.vc-text-input button{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--body)}
 .chat-typing{display:flex;gap:4px;padding:8px 16px;align-self:flex-start}
-.chat-typing span{width:8px;height:8px;background:var(--text-sec);border-radius:50%;animation:chatDot 1.2s infinite}
+.chat-typing span{width:8px;height:8px;background:rgba(255,255,255,0.4);border-radius:50%;animation:chatDot 1.2s infinite}
 .chat-typing span:nth-child(2){animation-delay:0.2s}
 .chat-typing span:nth-child(3){animation-delay:0.4s}
 @keyframes chatDot{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
@@ -526,7 +550,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .xp-banner{flex-direction:column;text-align:center}.ach-grid{grid-template-columns:repeat(3,1fr)}
   .quiz-mode-grid{grid-template-columns:1fr}.flip-actions{gap:6px}.flip-btn{padding:8px 12px;font-size:12px;min-width:60px}
   .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.hm-day-label{height:12px;line-height:12px}
-  .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.chat-body{max-height:350px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
+  .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.vc-card{min-height:420px;padding:28px 20px 20px}.vc-avatar{width:76px;height:76px;font-size:36px}.vc-transcript{max-height:140px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
   .cr-stats-row{grid-template-columns:repeat(2,1fr)}.lr-big-stats{grid-template-columns:1fr}.lr-bar-chart{height:80px}
 }
 </style>
@@ -544,7 +568,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <button class="nav-item" onclick="switchTab('add')" data-tab="add"><span class="ni">✏️</span>手动添加</button>
       <button class="nav-item" onclick="switchTab('article')" data-tab="article"><span class="ni">📖</span>文章分析</button>
       <button class="nav-item" onclick="switchTab('grammar')" data-tab="grammar"><span class="ni">✍️</span>写作批改</button>
-      <button class="nav-item" onclick="switchTab('chat')" data-tab="chat"><span class="ni">💬</span>AI 对话</button>
+      <button class="nav-item" onclick="switchTab('chat')" data-tab="chat"><span class="ni">📞</span>AI 通话</button>
       <button class="nav-item" onclick="switchTab('pron')" data-tab="pron"><span class="ni">🎤</span>发音跟读</button>
       <button class="nav-item" onclick="switchTab('report')" data-tab="report"><span class="ni">📈</span>学习报告</button>
       <div class="nav-sep"></div>
@@ -670,7 +694,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 
       <!-- AI Chat -->
       <div id="tab-chat" class="hidden">
-        <div class="page-title">AI 英文对话</div><div class="page-desc">选择场景或自由聊天，练习英文表达。AI 会纠正你的语法错误。</div>
+        <div class="page-title">AI 语音通话</div><div class="page-desc">选择场景，和 AI 进行语音对话练习。支持语音输入和打字输入两种模式。</div>
         <div id="chatArea"></div>
       </div>
 
@@ -727,7 +751,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav" onclick="switchTab('list')" data-tab="list"><span class="bi">📚</span>列表</button>
   <button class="bnav" onclick="switchTab('article')" data-tab="article"><span class="bi">📖</span>分析</button>
   <button class="bnav" onclick="switchTab('grammar')" data-tab="grammar"><span class="bi">✍️</span>批改</button>
-  <button class="bnav" onclick="switchTab('chat')" data-tab="chat"><span class="bi">💬</span>对话</button>
+  <button class="bnav" onclick="switchTab('chat')" data-tab="chat"><span class="bi">📞</span>通话</button>
   <button class="bnav" onclick="switchTab('pron')" data-tab="pron"><span class="bi">🎤</span>跟读</button>
   <button class="bnav" onclick="switchTab('report')" data-tab="report"><span class="bi">📈</span>报告</button>
   <button class="bnav" onclick="switchTab('settings')" data-tab="settings"><span class="bi">⚙️</span>设置</button>
@@ -1522,7 +1546,7 @@ function renderGrammarResults(data){
 }
 
 // ═══════════════════════════════════════════════
-// AI CHAT
+// AI CHAT — VOICE CALL MODE
 // ═══════════════════════════════════════════════
 const CHAT_SCENES=[
   {id:'coffee',icon:'☕',name:'咖啡厅点餐',role:'咖啡店店员',prompt:'You are a barista at a coffee shop. Greet the customer and take their order.'},
@@ -1535,68 +1559,149 @@ const CHAT_SCENES=[
   {id:'free',icon:'💬',name:'自由聊天',role:'英语伙伴',prompt:'You are a friendly English conversation partner. Chat naturally about any topic.'}
 ];
 let chatMessages=[],chatSessionId=null,chatScene=null,chatSending=false;
+let vcRecognition=null,vcIsRecording=false,vcCallTimer=null,vcCallSeconds=0,vcShowText=false;
+let vcWaveInterval=null,vcAiSpeaking=false;
 
 function initChatTab(){
-  if(chatScene&&chatMessages.length>0){renderChatUI();return}
+  if(chatScene&&chatMessages.length>0){renderVoiceCallUI();return}
   showChatSceneSelect();
 }
 
 function showChatSceneSelect(){
-  chatMessages=[];chatSessionId=null;chatScene=null;
+  chatMessages=[];chatSessionId=null;chatScene=null;vcCallSeconds=0;vcShowText=false;
+  clearInterval(vcCallTimer);vcCallTimer=null;
   const area=document.getElementById('chatArea');
   area.innerHTML=`
-    <div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px">💬</div><h3 style="font-family:var(--display);font-size:1.1rem">选择对话场景</h3><p style="font-size:12.5px;color:var(--text-sec);margin-top:4px">AI 将扮演对应角色与你英文对话</p></div>
+    <div style="text-align:center;margin-bottom:16px"><div style="font-size:48px;margin-bottom:8px">📞</div><h3 style="font-family:var(--display);font-size:1.1rem">语音通话练习</h3><p style="font-size:12.5px;color:var(--text-sec);margin-top:4px">选择场景，AI 将扮演对应角色与你语音对话</p></div>
     <div class="chat-scene-grid">${CHAT_SCENES.map(s=>`<div class="chat-scene" onclick="startChat('${s.id}')"><div class="cs-icon">${s.icon}</div><div class="cs-name">${s.name}</div><div class="cs-role">扮演：${s.role}</div></div>`).join('')}</div>`;
 }
 
 async function startChat(sceneId){
   chatScene=CHAT_SCENES.find(s=>s.id===sceneId);if(!chatScene)return;
-  chatMessages=[];chatSending=false;
-  renderChatUI();
-  // Send initial AI greeting
+  chatMessages=[];chatSending=false;vcCallSeconds=0;vcShowText=false;
+  // Start call timer
+  clearInterval(vcCallTimer);
+  vcCallTimer=setInterval(()=>{vcCallSeconds++;const el=document.getElementById('vcTimer');if(el)el.textContent=formatVcTime(vcCallSeconds)},1000);
+  renderVoiceCallUI();
   await sendChatToAI(null);
 }
 
-function renderChatUI(){
+function formatVcTime(s){const m=Math.floor(s/60);const sec=s%60;return`${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`}
+
+function renderVoiceCallUI(){
   const area=document.getElementById('chatArea');
-  let msgHtml=chatMessages.map(m=>{
-    if(m.role==='ai'){
-      let h=`<div class="chat-msg ai"><div class="chat-bubble">${escHtml(m.text)}</div>`;
-      if(m.feedback)h+=`<div class="chat-feedback">📝 <strong>语法提示：</strong>${escHtml(m.feedback)}</div>`;
-      return h+'</div>';
-    }else{
-      return`<div class="chat-msg user"><div class="chat-bubble">${escHtml(m.text)}</div></div>`;
-    }
+  const rounds=chatMessages.filter(m=>m.role==='user').length;
+  const hasReport=rounds>=2;
+
+  // Build transcript
+  let transHtml=chatMessages.map(m=>{
+    let h=`<div class="vc-line ${m.role==='ai'?'ai':'user'}">${escHtml(m.text)}`;
+    if(m.role==='ai'&&m.feedback)h+=`<span class="vc-fb">📝 ${escHtml(m.feedback)}</span>`;
+    return h+'</div>';
   }).join('');
 
-  area.innerHTML=`
-    <div class="chat-header"><div class="ch-info"><div class="ch-icon">${chatScene.icon}</div><div><div class="ch-name">${chatScene.name}</div><div class="ch-scene">AI 扮演：${chatScene.role} · 第 ${Math.ceil(chatMessages.filter(m=>m.role==='user').length+1)} 轮</div></div></div><div style="display:flex;gap:6px">${chatMessages.filter(m=>m.role==='user').length>=2?'<button class="btn btn-s btn-xs" onclick="endChatAndReport()">📊 结束 & 报告</button>':''}<button class="btn btn-g btn-xs" onclick="showChatSceneSelect()">换场景</button></div></div>
-    <div class="chat-body" id="chatBody">${msgHtml}<div id="chatTyping"></div></div>
-    <div class="chat-input-bar"><input type="text" id="chatInput" placeholder="输入英文消息..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendChatMsg()"/><button class="btn btn-p btn-sm" onclick="sendChatMsg()" id="chatSendBtn">发送</button></div>`;
+  area.innerHTML=`<div class="vc-wrap"><div class="vc-card">
+    <div class="vc-scene-tag">${chatScene.name}</div>
+    <div class="vc-avatar ${vcAiSpeaking?'speaking':''}" id="vcAvatar">${chatScene.icon}</div>
+    <div class="vc-name">${chatScene.role}</div>
+    <div class="vc-role">AI 角色扮演</div>
+    <div class="vc-status" id="vcStatus"><div class="vc-dot"></div> 通话中 · 第 ${rounds+1} 轮</div>
+    <div class="vc-timer" id="vcTimer">${formatVcTime(vcCallSeconds)}</div>
+    <div class="vc-wave" id="vcWave">${buildWaveBars(12)}</div>
+    <div class="vc-transcript" id="vcTranscript">${transHtml}</div>
+    ${vcShowText?`<div class="vc-text-input"><input type="text" id="vcTextInput" placeholder="打字输入..." onkeydown="if(event.key==='Enter')vcSendText()"/><button onclick="vcSendText()">发送</button></div>`:''}
+    <div class="vc-controls">
+      <button class="vc-btn text" onclick="vcToggleText()" title="打字模式">⌨️</button>
+      <button class="vc-btn mic ${vcIsRecording?'active':''}" id="vcMicBtn" onclick="vcToggleMic()" title="${vcIsRecording?'松开结束':'按下说话'}">🎤</button>
+      ${hasReport?'<button class="vc-btn report" onclick="endChatAndReport()" title="学习报告">📊</button>':'<div style="width:60px"></div>'}
+      <button class="vc-btn hangup" onclick="vcHangup()" title="挂断">📕</button>
+    </div>
+  </div></div>`;
 
-  const body=document.getElementById('chatBody');
-  if(body)body.scrollTop=body.scrollHeight;
+  const ts=document.getElementById('vcTranscript');
+  if(ts)ts.scrollTop=ts.scrollHeight;
 }
 
-async function sendChatMsg(){
-  if(chatSending)return;
-  const inp=document.getElementById('chatInput');
+function buildWaveBars(n){let h='';for(let i=0;i<n;i++)h+=`<span style="height:${4+Math.random()*8}px"></span>`;return h}
+
+function vcAnimateWave(type){
+  const wave=document.getElementById('vcWave');if(!wave)return;
+  wave.className='vc-wave'+(type==='ai'?' ai-speaking':type==='user'?' user-speaking':'');
+  clearInterval(vcWaveInterval);
+  if(type){
+    vcWaveInterval=setInterval(()=>{
+      const spans=wave.querySelectorAll('span');
+      spans.forEach(s=>{s.style.height=`${4+Math.random()*(type==='user'?32:24)}px`});
+    },120);
+  }else{
+    const spans=wave.querySelectorAll('span');
+    spans.forEach(s=>{s.style.height=`${4+Math.random()*8}px`});
+  }
+}
+
+function vcToggleText(){
+  vcShowText=!vcShowText;
+  renderVoiceCallUI();
+  if(vcShowText)setTimeout(()=>{const inp=document.getElementById('vcTextInput');if(inp)inp.focus()},100);
+}
+
+async function vcSendText(){
+  const inp=document.getElementById('vcTextInput');
   const text=(inp?.value||'').trim();
-  if(!text)return;
+  if(!text||chatSending)return;
   inp.value='';
   chatMessages.push({role:'user',text});
-  renderChatUI();
+  renderVoiceCallUI();
   await sendChatToAI(text);
+}
+
+function vcToggleMic(){
+  if(chatSending)return;
+  if(vcIsRecording){vcStopListening();return}
+  vcStartListening();
+}
+
+function vcStartListening(){
+  if(!SpeechRecognition){toast('浏览器不支持语音识别，请使用 Chrome','error');return}
+  vcIsRecording=true;
+  const btn=document.getElementById('vcMicBtn');if(btn)btn.classList.add('active');
+  const status=document.getElementById('vcStatus');if(status)status.innerHTML='<div class="vc-dot" style="background:var(--danger)"></div> 正在听你说...';
+  vcAnimateWave('user');
+
+  vcRecognition=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+  vcRecognition.lang='en-US';vcRecognition.interimResults=false;vcRecognition.maxAlternatives=1;
+  vcRecognition.onresult=async(event)=>{
+    const text=event.results[0][0].transcript;
+    vcStopListeningUI();
+    chatMessages.push({role:'user',text});
+    renderVoiceCallUI();
+    await sendChatToAI(text);
+  };
+  vcRecognition.onerror=(e)=>{
+    vcStopListeningUI();
+    if(e.error==='no-speech')toast('没有检测到语音，再试一次','info');
+    else if(e.error==='not-allowed')toast('请允许麦克风权限','error');
+  };
+  vcRecognition.onend=()=>{vcStopListeningUI()};
+  try{vcRecognition.start()}catch(e){vcStopListeningUI()}
+}
+
+function vcStopListening(){
+  if(vcRecognition){try{vcRecognition.stop()}catch(e){}}
+  vcStopListeningUI();
+}
+
+function vcStopListeningUI(){
+  vcIsRecording=false;
+  vcAnimateWave(null);
+  const btn=document.getElementById('vcMicBtn');if(btn)btn.classList.remove('active');
 }
 
 async function sendChatToAI(userMsg){
   chatSending=true;
-  const typing=document.getElementById('chatTyping');
-  if(typing)typing.innerHTML='<div class="chat-typing"><span></span><span></span><span></span></div>';
-  const body=document.getElementById('chatBody');
-  if(body)body.scrollTop=body.scrollHeight;
-  const sendBtn=document.getElementById('chatSendBtn');
-  if(sendBtn)sendBtn.disabled=true;
+  const status=document.getElementById('vcStatus');
+  if(status)status.innerHTML='<div class="chat-typing"><span></span><span></span><span></span></div> AI 思考中...';
+  const btn=document.getElementById('vcMicBtn');if(btn)btn.disabled=true;
 
   try{
     const history=chatMessages.map(m=>({role:m.role==='ai'?'assistant':'user',content:m.text}));
@@ -1604,14 +1709,54 @@ async function sendChatToAI(userMsg){
       scene_id:chatScene.id,scene_prompt:chatScene.prompt,scene_role:chatScene.role,
       user_message:userMsg,history
     })});
-    chatMessages.push({role:'ai',text:data.reply||'...',feedback:data.feedback||''});
+    const reply=data.reply||'Sorry, I didn\'t catch that.';
+    const feedback=data.feedback||'';
+    chatMessages.push({role:'ai',text:reply,feedback});
+    renderVoiceCallUI();
+    // Speak the AI reply
+    await vcSpeakAI(reply);
   }catch(e){
-    chatMessages.push({role:'ai',text:'Sorry, something went wrong. Please try again.',feedback:''});
+    chatMessages.push({role:'ai',text:'Sorry, something went wrong.',feedback:''});
     toast('对话失败: '+e.message,'error');
+    renderVoiceCallUI();
   }finally{
     chatSending=false;
-    renderChatUI();
+    if(btn)btn.disabled=false;
   }
+}
+
+function vcSpeakAI(text){
+  return new Promise(resolve=>{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';u.rate=0.9;
+    vcAiSpeaking=true;
+    const avatar=document.getElementById('vcAvatar');if(avatar)avatar.classList.add('speaking');
+    vcAnimateWave('ai');
+    const status=document.getElementById('vcStatus');
+    if(status)status.innerHTML='<div class="vc-dot" style="background:var(--warn)"></div> AI 正在说话...';
+    u.onend=()=>{
+      vcAiSpeaking=false;
+      vcAnimateWave(null);
+      if(avatar)avatar.classList.remove('speaking');
+      const rounds=chatMessages.filter(m=>m.role==='user').length;
+      if(status)status.innerHTML=`<div class="vc-dot"></div> 通话中 · 第 ${rounds+1} 轮`;
+      resolve();
+    };
+    u.onerror=()=>{vcAiSpeaking=false;vcAnimateWave(null);resolve()};
+    speechSynthesis.speak(u);
+  });
+}
+
+function vcHangup(){
+  clearInterval(vcCallTimer);vcCallTimer=null;
+  clearInterval(vcWaveInterval);vcWaveInterval=null;
+  speechSynthesis.cancel();
+  if(vcRecognition){try{vcRecognition.stop()}catch(e){}}
+  vcIsRecording=false;vcAiSpeaking=false;
+  const rounds=chatMessages.filter(m=>m.role==='user').length;
+  if(rounds>=2){endChatAndReport()}
+  else{showChatSceneSelect()}
 }
 
 // ═══════════════════════════════════════════════
@@ -1621,6 +1766,9 @@ async function endChatAndReport(){
   if(chatSending)return;
   const userMsgs=chatMessages.filter(m=>m.role==='user');
   if(userMsgs.length<2){toast('至少对话 2 轮才能生成报告','info');return}
+  clearInterval(vcCallTimer);vcCallTimer=null;
+  clearInterval(vcWaveInterval);speechSynthesis.cancel();
+  if(vcRecognition){try{vcRecognition.stop()}catch(e){}}
   chatSending=true;
   const area=document.getElementById('chatArea');
   area.innerHTML='<div style="text-align:center;padding:60px 0"><span class="loading-spinner" style="width:24px;height:24px;border-width:3px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span><p style="color:var(--text-sec);margin-top:12px;font-size:13px">📊 AI 正在分析你的对话表现...</p></div>';
@@ -1632,7 +1780,7 @@ async function endChatAndReport(){
     await addXp(20);
   }catch(e){
     toast('报告生成失败: '+e.message,'error');
-    renderChatUI();
+    renderVoiceCallUI();
   }finally{chatSending=false}
 }
 
