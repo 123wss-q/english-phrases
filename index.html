@@ -361,47 +361,49 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .chat-scene .cs-icon{font-size:32px;margin-bottom:6px}
 .chat-scene .cs-name{font-size:13px;font-weight:700}
 .chat-scene .cs-role{font-size:11px;color:var(--text-sec);margin-top:2px}
-.vc-wrap{max-width:480px;margin:0 auto}
-.vc-card{background:linear-gradient(165deg,#1C1917 0%,#292524 50%,#1C1917 100%);border-radius:24px;padding:36px 28px 28px;text-align:center;color:#fff;position:relative;overflow:hidden;min-height:480px;display:flex;flex-direction:column;align-items:center}
-.vc-card::before{content:'';position:absolute;top:-60%;left:-30%;width:160%;height:160%;background:radial-gradient(ellipse,rgba(196,93,62,0.08) 0%,transparent 60%);pointer-events:none}
-.vc-scene-tag{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-bottom:20px}
-.vc-avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--warn));display:flex;align-items:center;justify-content:center;font-size:44px;margin-bottom:12px;position:relative;box-shadow:0 8px 32px rgba(196,93,62,0.3)}
-.vc-avatar.speaking{animation:vcPulseRing 1.5s infinite}
-@keyframes vcPulseRing{0%{box-shadow:0 8px 32px rgba(196,93,62,0.3),0 0 0 0 rgba(196,93,62,0.3)}50%{box-shadow:0 8px 32px rgba(196,93,62,0.3),0 0 0 18px rgba(196,93,62,0)}100%{box-shadow:0 8px 32px rgba(196,93,62,0.3),0 0 0 0 rgba(196,93,62,0)}}
-.vc-name{font-family:var(--display);font-size:1.2rem;font-weight:700;margin-bottom:2px}
-.vc-role{font-size:12px;color:rgba(255,255,255,0.4)}
-.vc-status{font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px;min-height:20px;display:flex;align-items:center;gap:6px;justify-content:center}
-.vc-status .vc-dot{width:8px;height:8px;border-radius:50%;background:var(--success);animation:vcDotPulse 1s infinite}
-@keyframes vcDotPulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.vc-timer{font-size:13px;color:rgba(255,255,255,0.3);margin-top:4px;font-variant-numeric:tabular-nums}
-.vc-wave{display:flex;align-items:center;justify-content:center;gap:3px;height:48px;margin:16px 0}
-.vc-wave span{width:4px;border-radius:99px;background:var(--accent);transition:height 0.15s}
-.vc-wave.ai-speaking span{background:linear-gradient(180deg,var(--warn),var(--accent))}
-.vc-wave.user-speaking span{background:linear-gradient(180deg,var(--success),var(--info))}
-.vc-transcript{flex:1;width:100%;margin:12px 0;overflow-y:auto;max-height:180px;display:flex;flex-direction:column;gap:8px;padding:0 4px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.1) transparent}
-.vc-line{padding:8px 14px;border-radius:12px;font-size:13px;line-height:1.6;animation:fadeUp 0.3s ease;text-align:left;max-width:92%}
-.vc-line.ai{background:rgba(255,255,255,0.08);align-self:flex-start;color:rgba(255,255,255,0.85)}
-.vc-line.user{background:rgba(196,93,62,0.25);align-self:flex-end;color:rgba(255,255,255,0.9)}
-.vc-line .vc-fb{display:block;margin-top:6px;padding:6px 10px;background:rgba(245,158,11,0.15);border-radius:8px;font-size:11px;color:rgba(245,158,11,0.9);line-height:1.5}
-.vc-controls{display:flex;gap:16px;align-items:center;justify-content:center;margin-top:auto;padding-top:16px}
-.vc-btn{width:60px;height:60px;border-radius:50%;border:none;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:all var(--ease);position:relative}
-.vc-btn:hover{transform:scale(1.08)}
-.vc-btn:disabled{opacity:0.3;cursor:not-allowed;transform:none}
-.vc-btn.mic{background:var(--success);color:#fff;width:72px;height:72px;font-size:28px}
-.vc-btn.mic.active{background:var(--danger);animation:pulse 1s infinite}
-.vc-btn.mic.active::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(220,38,38,0.4);animation:vcMicRing 1.5s infinite}
-@keyframes vcMicRing{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.4);opacity:0}}
-.vc-btn.hangup{background:var(--danger);color:#fff}
-.vc-btn.hangup:hover{background:#B91C1C}
-.vc-btn.text{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
-.vc-btn.text:hover{background:rgba(255,255,255,0.15);color:#fff}
-.vc-btn.report{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
-.vc-btn.report:hover{background:rgba(37,99,235,0.3);color:#fff}
+.vc-wrap{max-width:500px;margin:0 auto}
+.vc-card{background:#fff;border-radius:28px;padding:40px 28px 28px;text-align:center;position:relative;overflow:hidden;min-height:520px;display:flex;flex-direction:column;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.04)}
+.vc-scene-tag{font-size:11px;color:var(--text-sec);letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-bottom:24px}
+.vc-avatar-ring{width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;background:linear-gradient(135deg,#F3E8FF,#FCE7F3,#FEF3C7)}
+.vc-avatar-ring.speaking::before{content:'';position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(var(--accent),var(--warn),var(--purple),var(--accent));animation:vcGlow 2s linear infinite;opacity:.5;z-index:0}
+.vc-avatar-ring.speaking::after{content:'';position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,#F3E8FF,#FCE7F3,#FEF3C7);z-index:1}
+@keyframes vcGlow{to{transform:rotate(360deg)}}
+.vc-avatar-inner{width:96px;height:96px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:44px;z-index:2;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.vc-name{font-family:var(--display);font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.vc-role{font-size:12px;color:var(--text-sec)}
+.vc-status{font-size:12.5px;color:var(--text-sec);margin-top:10px;min-height:20px;display:flex;align-items:center;gap:6px;justify-content:center}
+.vc-status .vc-dot{width:7px;height:7px;border-radius:50%;background:var(--success);animation:vcDotPulse 1s infinite}
+@keyframes vcDotPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.vc-timer{font-size:28px;font-weight:300;color:var(--text);margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:.04em;font-family:var(--body)}
+.vc-wave{display:flex;align-items:center;justify-content:center;gap:3px;height:44px;margin:20px 0}
+.vc-wave span{width:3px;border-radius:99px;background:#E7E5E4;transition:height .12s,background .2s}
+.vc-wave.ai-speaking span{background:linear-gradient(180deg,var(--purple),var(--accent))}
+.vc-wave.user-speaking span{background:linear-gradient(180deg,var(--success),#34D399)}
+.vc-transcript{flex:1;width:100%;margin:8px 0;overflow-y:auto;max-height:200px;display:flex;flex-direction:column;gap:8px;padding:0 4px;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.06) transparent}
+.vc-line{padding:10px 16px;border-radius:18px;font-size:13.5px;line-height:1.65;animation:fadeUp .3s ease;text-align:left;max-width:88%}
+.vc-line.ai{background:#F5F5F4;align-self:flex-start;color:var(--text)}
+.vc-line.user{background:var(--accent);align-self:flex-end;color:#fff}
+.vc-line .vc-fb{display:block;margin-top:8px;padding:8px 10px;background:rgba(245,158,11,.08);border-radius:10px;font-size:11.5px;color:#B45309;line-height:1.5}
+.vc-controls{display:flex;gap:20px;align-items:center;justify-content:center;margin-top:auto;padding-top:20px}
+.vc-btn{width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+.vc-btn:hover{transform:scale(1.06)}
+.vc-btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.vc-btn.mic{background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;width:68px;height:68px;font-size:26px;box-shadow:0 4px 16px rgba(22,163,74,.25)}
+.vc-btn.mic.active{background:linear-gradient(135deg,#EF4444,#DC2626);box-shadow:0 4px 16px rgba(220,38,38,.25)}
+.vc-btn.mic.active::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(220,38,38,.25);animation:vcMicRing 1.5s infinite}
+@keyframes vcMicRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.3);opacity:0}}
+.vc-btn.hangup{background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;box-shadow:0 4px 12px rgba(220,38,38,.2)}
+.vc-btn.hangup:hover{box-shadow:0 4px 16px rgba(220,38,38,.35)}
+.vc-btn.text{background:#F5F5F4;color:var(--text-sec)}
+.vc-btn.text:hover{background:#E7E5E4;color:var(--text)}
+.vc-btn.report{background:#F5F5F4;color:var(--text-sec)}
+.vc-btn.report:hover{background:#EDE9FE;color:var(--purple)}
 .vc-text-input{display:flex;gap:8px;width:100%;margin-top:12px}
-.vc-text-input input{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:10px 14px;color:#fff;font-size:13px;font-family:var(--body);outline:none}
-.vc-text-input input::placeholder{color:rgba(255,255,255,0.25)}
-.vc-text-input input:focus{border-color:var(--accent);background:rgba(255,255,255,0.12)}
-.vc-text-input button{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--body)}
+.vc-text-input input{flex:1;padding:12px 16px;border:1.5px solid var(--border);border-radius:14px;font-size:14px;font-family:var(--body);background:#FAFAF9;transition:border-color .2s;outline:none}
+.vc-text-input input:focus{border-color:var(--accent)}
+.vc-text-input input::placeholder{color:var(--text-sec)}
+.vc-text-input button{background:var(--accent);color:#fff;border:none;border-radius:14px;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--body);transition:opacity .2s}
+.vc-text-input button:hover{opacity:.85}
 .chat-typing{display:flex;gap:4px;padding:8px 16px;align-self:flex-start}
 .chat-typing span{width:8px;height:8px;background:rgba(255,255,255,0.4);border-radius:50%;animation:chatDot 1.2s infinite}
 .chat-typing span:nth-child(2){animation-delay:0.2s}
@@ -699,7 +701,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .xp-banner{flex-direction:column;text-align:center}.ach-grid{grid-template-columns:repeat(3,1fr)}
   .quiz-mode-grid{grid-template-columns:1fr}.flip-actions{gap:6px}.flip-btn{padding:8px 12px;font-size:12px;min-width:60px}
   .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.hm-day-label{height:12px;line-height:12px}
-  .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.vc-card{min-height:420px;padding:28px 20px 20px}.vc-avatar{width:76px;height:76px;font-size:36px}.vc-transcript{max-height:140px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
+  .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.vc-card{min-height:460px;padding:28px 20px 20px}.vc-avatar-ring{width:90px;height:90px}.vc-avatar-inner{width:78px;height:78px;font-size:36px}.vc-transcript{max-height:160px}.vc-timer{font-size:22px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
   .cr-stats-row{grid-template-columns:repeat(2,1fr)}.lr-big-stats{grid-template-columns:1fr}.lr-bar-chart{height:80px}
   .vb-word{font-size:1.5rem}.vb-card{padding:24px 18px}.vb-selector{flex-direction:column}
   .dr-article-img{width:80px;height:60px}.dr-cats{gap:6px}.dr-cat{padding:6px 10px;font-size:11px}.dr-source-row{flex-direction:column}
@@ -2323,18 +2325,18 @@ function renderVoiceCallUI(){
 
   area.innerHTML=`<div class="vc-wrap"><div class="vc-card">
     <div class="vc-scene-tag">${chatScene.name}</div>
-    <div class="vc-avatar ${vcAiSpeaking?'speaking':''}" id="vcAvatar">${chatScene.icon}</div>
+    <div class="vc-avatar-ring ${vcAiSpeaking?'speaking':''}" id="vcAvatar"><div class="vc-avatar-inner">${chatScene.icon}</div></div>
     <div class="vc-name">${chatScene.role}</div>
     <div class="vc-role">AI 角色扮演</div>
     <div class="vc-status" id="vcStatus"><div class="vc-dot"></div> 通话中 · 第 ${rounds+1} 轮</div>
     <div class="vc-timer" id="vcTimer">${formatVcTime(vcCallSeconds)}</div>
-    <div class="vc-wave" id="vcWave">${buildWaveBars(12)}</div>
+    <div class="vc-wave" id="vcWave">${buildWaveBars(16)}</div>
     <div class="vc-transcript" id="vcTranscript">${transHtml}</div>
-    ${vcShowText?`<div class="vc-text-input"><input type="text" id="vcTextInput" placeholder="打字输入..." onkeydown="if(event.key==='Enter')vcSendText()"/><button onclick="vcSendText()">发送</button></div>`:''}
+    ${vcShowText?`<div class="vc-text-input"><input type="text" id="vcTextInput" placeholder="输入你想说的..." onkeydown="if(event.key==='Enter')vcSendText()"/><button onclick="vcSendText()">发送</button></div>`:''}
     <div class="vc-controls">
       <button class="vc-btn text" onclick="vcToggleText()" title="打字模式">⌨️</button>
       <button class="vc-btn mic ${vcIsRecording?'active':''}" id="vcMicBtn" onclick="vcToggleMic()" title="${vcIsRecording?'松开结束':'按下说话'}">🎤</button>
-      ${hasReport?'<button class="vc-btn report" onclick="endChatAndReport()" title="学习报告">📊</button>':'<div style="width:60px"></div>'}
+      ${hasReport?'<button class="vc-btn report" onclick="endChatAndReport()" title="学习报告">📊</button>':'<div style="width:56px"></div>'}
       <button class="vc-btn hangup" onclick="vcHangup()" title="挂断">📕</button>
     </div>
   </div></div>`;
