@@ -415,6 +415,41 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .pron-nav{display:flex;gap:10px;justify-content:center;margin-top:16px}
 .pron-unsupported{text-align:center;padding:40px;color:var(--text-sec)}
 
+/* ═══ LIAISON GUIDE ═══ */
+.liaison-panel{margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;animation:fadeUp 0.3s ease}
+.liaison-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border-lt);background:var(--bg)}
+.liaison-head h4{font-family:var(--display);font-size:0.95rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.liaison-body{padding:18px}
+.liaison-flow{font-size:1.15rem;line-height:2.2;margin-bottom:16px;font-family:var(--display);font-weight:500;letter-spacing:0.01em}
+.liaison-flow .lk{color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent);padding-bottom:1px;cursor:default;position:relative}
+.liaison-flow .el{color:var(--text-sec);text-decoration:line-through;opacity:0.5}
+.liaison-flow .st{color:var(--info);font-weight:700;font-size:1.25rem}
+.liaison-flow .wk{color:var(--text-sec);font-size:0.95rem}
+.liaison-flow .pause{display:inline-block;width:8px}
+.liaison-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding:10px 14px;background:var(--bg);border-radius:10px;font-size:11.5px;color:var(--text-sec)}
+.liaison-legend span{display:flex;align-items:center;gap:4px}
+.liaison-legend .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.liaison-rules{display:flex;flex-direction:column;gap:10px}
+.liaison-rule{padding:12px 14px;border-radius:10px;border:1px solid var(--border-lt);background:var(--bg);font-size:13px;line-height:1.6}
+.liaison-rule .lr-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:6px}
+.liaison-rule .lr-type.linking{background:rgba(196,93,62,0.1);color:var(--accent)}
+.liaison-rule .lr-type.elision{background:rgba(120,113,108,0.1);color:var(--text-sec)}
+.liaison-rule .lr-type.assimilation{background:rgba(124,58,237,0.1);color:var(--purple)}
+.liaison-rule .lr-type.stress{background:rgba(37,99,235,0.1);color:var(--info)}
+.liaison-rule .lr-type.weakening{background:rgba(245,158,11,0.1);color:#92400E}
+.liaison-rule .lr-words{font-weight:600;color:var(--text)}
+.liaison-rule .lr-exp{color:var(--text-sec);margin-top:3px}
+.liaison-ipa{margin-top:14px;padding:12px 16px;background:var(--bg);border-radius:10px;font-size:13px;text-align:center}
+.liaison-ipa .ipa-label{font-size:11px;color:var(--text-sec);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
+.liaison-ipa .ipa-text{font-family:'Segoe UI',system-ui,sans-serif;font-size:1.1rem;color:var(--text);letter-spacing:0.5px}
+.liaison-speeds{display:flex;gap:10px;margin-top:14px}
+.liaison-speed-btn{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;text-align:center;transition:all var(--ease);font-family:var(--body)}
+.liaison-speed-btn:hover{border-color:var(--accent);background:var(--accent-light)}
+.liaison-speed-btn .ls-icon{font-size:20px;margin-bottom:2px}
+.liaison-speed-btn .ls-label{font-size:11px;font-weight:600;color:var(--text)}
+.liaison-speed-btn .ls-desc{font-size:10px;color:var(--text-sec)}
+.liaison-loading{text-align:center;padding:24px;color:var(--text-sec);font-size:13px}
+
 @media(max-width:768px){
   .sidebar{display:none}.main-content{margin-left:0}.page-wrap{padding:16px 14px 100px}
   .mobile-head{display:block}.bottom-nav{display:flex}
@@ -1539,6 +1574,8 @@ function showPronCard(){
       <div id="pronWave"></div>
       <div id="pronResult"></div>
     </div>
+    <div style="text-align:center;margin-top:12px"><button class="btn btn-g btn-sm" id="liaisonBtn" onclick="loadLiaisonGuide()" style="gap:6px">🔗 连读指导</button></div>
+    <div id="liaisonArea"></div>
     <div class="pron-nav">
       <button class="btn btn-g btn-sm" onclick="pronPrev()">← 上一个</button>
       <button class="btn btn-g btn-sm" onclick="pronRandom()">🎲 随机</button>
@@ -1653,6 +1690,95 @@ function pronShowResult(userSaid,confidence){
 function pronPrev(){pronIdx=Math.max(0,pronIdx-1);showPronCard()}
 function pronNext(){pronIdx=Math.min(pronPool.length-1,pronIdx+1);showPronCard()}
 function pronRandom(){pronIdx=Math.floor(Math.random()*pronPool.length);showPronCard()}
+
+// ═══════════════════════════════════════════════
+// LIAISON GUIDE (连读指导)
+// ═══════════════════════════════════════════════
+let liaisonCache={};
+
+async function loadLiaisonGuide(){
+  const card=pronPool[pronIdx];if(!card)return;
+  const text=card.english;
+  const area=document.getElementById('liaisonArea');
+  const btn=document.getElementById('liaisonBtn');
+
+  // Check cache
+  if(liaisonCache[text]){renderLiaisonGuide(liaisonCache[text],text);return}
+
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="loading-spinner" style="border-color:rgba(0,0,0,0.15);border-top-color:var(--accent);width:14px;height:14px"></span> AI 分析中...';}
+  area.innerHTML='<div class="liaison-loading"><span class="loading-spinner" style="border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span> 正在分析连读规则...</div>';
+
+  try{
+    const data=await apiCall('/api/liaison-guide',{method:'POST',body:JSON.stringify({text})});
+    liaisonCache[text]=data;
+    renderLiaisonGuide(data,text);
+  }catch(e){
+    area.innerHTML=`<div style="text-align:center;padding:16px;color:var(--danger);font-size:13px">❌ ${escHtml(e.message)}</div>`;
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='🔗 连读指导'}
+  }
+}
+
+function renderLiaisonGuide(data,originalText){
+  const area=document.getElementById('liaisonArea');
+  const rules=data.rules||[];
+  const ipa=data.ipa||'';
+  const natural=data.natural_reading||originalText;
+  const slow=data.slow_reading||originalText;
+  const annotated=data.annotated_text||'';
+
+  // Build annotated flow display
+  let flowHtml=annotated||escHtml(originalText);
+
+  let html=`<div class="liaison-panel">
+    <div class="liaison-head"><h4>🔗 连读指导</h4></div>
+    <div class="liaison-body">`;
+
+  // Annotated text
+  html+=`<div class="liaison-flow">${flowHtml}</div>`;
+
+  // Legend
+  html+=`<div class="liaison-legend">
+    <span><div class="dot" style="background:var(--accent)"></div>连读 (Linking)</span>
+    <span><div class="dot" style="background:var(--text-sec)"></div>省音 (Elision)</span>
+    <span><div class="dot" style="background:var(--purple)"></div>同化 (Assimilation)</span>
+    <span><div class="dot" style="background:var(--info)"></div>重读 (Stress)</span>
+    <span><div class="dot" style="background:var(--warn)"></div>弱读 (Weakening)</span>
+  </div>`;
+
+  // Speed buttons
+  html+=`<div class="liaison-speeds">
+    <div class="liaison-speed-btn" onclick="pronPlaySpeed('${escAttr(slow)}',0.6)"><div class="ls-icon">🐢</div><div class="ls-label">慢速逐词</div><div class="ls-desc">0.6x 清晰发音</div></div>
+    <div class="liaison-speed-btn" onclick="pronPlaySpeed('${escAttr(natural)}',0.85)"><div class="ls-icon">🚶</div><div class="ls-label">正常连读</div><div class="ls-desc">0.85x 自然语速</div></div>
+    <div class="liaison-speed-btn" onclick="pronPlaySpeed('${escAttr(natural)}',1.1)"><div class="ls-icon">🏃</div><div class="ls-label">快速流利</div><div class="ls-desc">1.1x 母语语速</div></div>
+  </div>`;
+
+  // IPA
+  if(ipa){
+    html+=`<div class="liaison-ipa"><div class="ipa-label">IPA 音标</div><div class="ipa-text">${escHtml(ipa)}</div></div>`;
+  }
+
+  // Rules
+  if(rules.length){
+    html+=`<div style="font-size:12px;font-weight:600;color:var(--text-sec);text-transform:uppercase;letter-spacing:0.04em;margin-top:16px;margin-bottom:8px">详细规则</div><div class="liaison-rules">`;
+    rules.forEach(r=>{
+      const typeClass=r.type||'linking';
+      const typeLabels={linking:'连读',elision:'省音',assimilation:'同化',stress:'重读',weakening:'弱读',reduction:'缩读'};
+      html+=`<div class="liaison-rule"><span class="lr-type ${typeClass}">${typeLabels[typeClass]||typeClass}</span><div class="lr-words">${escHtml(r.words||'')}</div><div class="lr-exp">${escHtml(r.explanation||'')}</div></div>`;
+    });
+    html+=`</div>`;
+  }
+
+  html+=`</div></div>`;
+  area.innerHTML=html;
+}
+
+function pronPlaySpeed(text,rate){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US';u.rate=rate;
+  speechSynthesis.speak(u);
+}
 
 // ═══════════════════════════════════════════════
 // SETTINGS
