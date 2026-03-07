@@ -484,7 +484,9 @@ async function extractPdfText(f){
     const c=await pg.getTextContent();
     t+=c.items.map(x=>x.str).join(' ')+'\n';
   }
-  if(!t.trim()) throw new Error('PDF 中没有可提取的文字');
+ t = t.replace(/\u0000/g, '');
+if(!t.trim()) throw new Error('PDF 中没有可提取的文字');
+return t.trim();
   return t.trim();
 }
 
@@ -530,4 +532,5 @@ init();
 </script>
 </body>
 </html>
+
 
