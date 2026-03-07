@@ -295,6 +295,68 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 @keyframes popIn{0%{transform:scale(0.8);opacity:0}50%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 .pop-in{animation:popIn 0.4s ease}
 
+/* ═══ HEATMAP ═══ */
+.heatmap-wrap{margin-bottom:20px}
+.heatmap-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.heatmap-title h4{font-family:var(--display);font-size:1rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.heatmap-title .hm-total{font-size:12px;color:var(--text-sec);font-weight:400;font-family:var(--body)}
+.heatmap-legend{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-sec)}
+.heatmap-legend .hml-box{width:12px;height:12px;border-radius:3px}
+.heatmap-months{display:flex;gap:0;margin-bottom:4px;padding-left:28px;font-size:10px;color:var(--text-sec)}
+.heatmap-months span{flex:1;text-align:left}
+.heatmap-body{display:flex;gap:1px}
+.heatmap-days{display:flex;flex-direction:column;gap:1px;padding-top:0;margin-right:4px;font-size:10px;color:var(--text-sec)}
+.heatmap-days span{height:14px;line-height:14px;text-align:right;padding-right:2px}
+.heatmap-grid{display:flex;gap:1px;flex:1;overflow-x:auto}
+.heatmap-col{display:flex;flex-direction:column;gap:1px}
+.hm-cell{width:14px;height:14px;border-radius:3px;background:var(--border);cursor:default;transition:all 0.15s;position:relative}
+.hm-cell:hover{transform:scale(1.4);z-index:2}
+.hm-cell.lv1{background:#D1FAE5}
+.hm-cell.lv2{background:#6EE7B7}
+.hm-cell.lv3{background:#34D399}
+.hm-cell.lv4{background:#059669}
+.hm-tooltip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1C1917;color:#fff;padding:6px 10px;border-radius:8px;font-size:11px;white-space:nowrap;z-index:10;pointer-events:none;box-shadow:var(--shadow-lg)}
+.hm-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1C1917}
+.hm-cell:hover .hm-tooltip{display:block}
+
+/* ═══ GRAMMAR CHECK ═══ */
+.gc-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.gc-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;min-height:200px}
+.gc-panel-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-sec);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.gc-input-area{width:100%;min-height:180px;border:none;outline:none;font-size:14px;font-family:var(--body);color:var(--text);line-height:1.8;resize:vertical;background:transparent}
+.gc-output{font-size:14px;line-height:1.8;min-height:180px}
+.gc-output .gc-err{background:rgba(220,38,38,0.08);text-decoration:line-through;color:var(--danger);padding:1px 2px;border-radius:3px;cursor:pointer;position:relative}
+.gc-output .gc-fix{background:rgba(22,163,74,0.08);color:var(--success);font-weight:600;padding:1px 2px;border-radius:3px}
+.gc-score-bar{display:flex;align-items:center;gap:20px;padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px}
+.gc-score-ring{width:80px;height:80px;flex-shrink:0}
+.gc-score-ring .ring-bg{fill:none;stroke:var(--border);stroke-width:8}
+.gc-score-ring .ring-fg{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 0.8s ease;transform:rotate(-90deg);transform-origin:center}
+.gc-score-ring .ring-text{font-family:var(--display);font-size:1.3rem;font-weight:700}
+.gc-score-ring .ring-sub{font-size:9px;fill:var(--text-sec)}
+.gc-score-meta{flex:1}
+.gc-score-meta h3{font-family:var(--display);font-size:1rem;font-weight:600;margin-bottom:4px}
+.gc-score-meta p{font-size:12.5px;color:var(--text-sec);line-height:1.5}
+.gc-cefr{display:inline-flex;align-items:center;gap:4px;background:var(--purple-light);color:var(--purple);padding:4px 12px;border-radius:8px;font-size:12px;font-weight:700;margin-left:auto;flex-shrink:0}
+.gc-errors-list{margin-top:16px}
+.gc-error-item{padding:14px 16px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--card);transition:all var(--ease)}
+.gc-error-item:hover{box-shadow:var(--shadow-sm)}
+.gc-error-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:6px}
+.gc-error-type.grammar{background:rgba(220,38,38,0.08);color:var(--danger)}
+.gc-error-type.spelling{background:rgba(245,158,11,0.1);color:#92400E}
+.gc-error-type.word_choice{background:rgba(37,99,235,0.08);color:var(--info)}
+.gc-error-type.punctuation{background:rgba(124,58,237,0.08);color:var(--purple)}
+.gc-error-diff{font-size:13.5px;margin-bottom:6px}
+.gc-error-diff .gc-old{text-decoration:line-through;color:var(--danger);background:rgba(220,38,38,0.06);padding:1px 4px;border-radius:3px}
+.gc-error-diff .gc-new{color:var(--success);font-weight:600;background:var(--success-bg);padding:1px 4px;border-radius:3px}
+.gc-error-exp{font-size:12.5px;color:var(--text-sec);line-height:1.5}
+.gc-suggestions{margin-top:16px;padding:16px;background:var(--bg);border-radius:12px;border:1px solid var(--border-lt)}
+.gc-suggestions h4{font-size:13px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.gc-suggestions ul{list-style:none;padding:0}
+.gc-suggestions li{font-size:13px;color:var(--text-sec);line-height:1.6;padding:3px 0;padding-left:16px;position:relative}
+.gc-suggestions li::before{content:'💡';position:absolute;left:0;top:3px;font-size:11px}
+.gc-empty{text-align:center;padding:50px 0;color:var(--text-sec)}
+.gc-empty .gc-em{font-size:48px;margin-bottom:12px}
+
 @media(max-width:768px){
   .sidebar{display:none}.main-content{margin-left:0}.page-wrap{padding:16px 14px 100px}
   .mobile-head{display:block}.bottom-nav{display:flex}
@@ -303,6 +365,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .progress-ring-wrap{flex-direction:column;text-align:center}.flip-front h2{font-size:1.3rem}
   .xp-banner{flex-direction:column;text-align:center}.ach-grid{grid-template-columns:repeat(3,1fr)}
   .quiz-mode-grid{grid-template-columns:1fr}.flip-actions{gap:6px}.flip-btn{padding:8px 12px;font-size:12px;min-width:60px}
+  .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.heatmap-days span{height:12px;line-height:12px}
 }
 </style>
 </head>
@@ -318,6 +381,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <button class="nav-item" onclick="switchTab('list')" data-tab="list"><span class="ni">📚</span>卡片列表</button>
       <button class="nav-item" onclick="switchTab('add')" data-tab="add"><span class="ni">✏️</span>手动添加</button>
       <button class="nav-item" onclick="switchTab('article')" data-tab="article"><span class="ni">📖</span>文章分析</button>
+      <button class="nav-item" onclick="switchTab('grammar')" data-tab="grammar"><span class="ni">✍️</span>写作批改</button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="switchTab('settings')" data-tab="settings"><span class="ni">⚙️</span>AI 设置</button>
     </div>
@@ -364,12 +428,13 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         <div class="stats-grid" id="statsGrid"></div>
         <div class="progress-ring-wrap" id="progressRing"></div>
         <div class="card"><div class="card-title">📊 分类掌握度</div><div id="chartArea"></div></div>
+        <div class="card" id="heatmapCard"><div id="heatmapArea"></div></div>
         <div class="card" id="achCard"><div class="card-title">🏆 成就</div><div class="ach-grid" id="achGrid"></div></div>
         <div class="quick-actions">
           <button class="qa-btn" onclick="switchTab('flip')"><span class="qa-icon">🃏</span>翻卡复习</button>
           <button class="qa-btn" onclick="switchTab('quiz')"><span class="qa-icon">📝</span>选择题</button>
           <button class="qa-btn" onclick="switchTab('article')"><span class="qa-icon">📖</span>文章分析</button>
-          <button class="qa-btn" onclick="switchTab('add')"><span class="qa-icon">✏️</span>手动添加</button>
+          <button class="qa-btn" onclick="switchTab('grammar')"><span class="qa-icon">✍️</span>写作批改</button>
         </div>
       </div>
 
@@ -423,6 +488,21 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
         <div id="articleResults"></div>
       </div>
 
+      <!-- Grammar Check -->
+      <div id="tab-grammar" class="hidden">
+        <div class="page-title">写作批改</div><div class="page-desc">输入英文段落，AI 检查语法、拼写和用词问题。</div>
+        <div class="card">
+          <div class="input-group">
+            <textarea id="gcInput" rows="6" placeholder="在这里输入你的英文段落...&#10;&#10;例如：Yesterday I go to the store and buyed some apple. The weather was very good so I decide to walking home." class="gc-input-area" style="border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;background:var(--bg)"></textarea>
+            <div style="display:flex;gap:10px;align-items:center">
+              <button class="btn btn-p" id="gcBtn" onclick="runGrammarCheck()">✍️ 开始批改</button>
+              <span style="font-size:12px;color:var(--text-sec)" id="gcCharCount">0 字符</span>
+            </div>
+          </div>
+        </div>
+        <div id="gcResults"></div>
+      </div>
+
       <!-- Settings -->
       <div id="tab-settings" class="hidden">
         <div class="page-title">AI 设置</div><div class="page-desc">选择大模型平台并配置 API Key。</div>
@@ -462,6 +542,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav" onclick="switchTab('quiz')" data-tab="quiz"><span class="bi">📝</span>测试</button>
   <button class="bnav" onclick="switchTab('list')" data-tab="list"><span class="bi">📚</span>列表</button>
   <button class="bnav" onclick="switchTab('article')" data-tab="article"><span class="bi">📖</span>分析</button>
+  <button class="bnav" onclick="switchTab('grammar')" data-tab="grammar"><span class="bi">✍️</span>批改</button>
   <button class="bnav" onclick="switchTab('settings')" data-tab="settings"><span class="bi">⚙️</span>设置</button>
 </div>
 
@@ -514,7 +595,7 @@ function getLevelInfo(xp){let cur=LEVELS[0];for(const l of LEVELS){if(xp>=l.xp)c
 function todayStr(){return new Date().toISOString().split('T')[0]}
 
 function switchTab(tab){
-  const tabs=['dash','flip','quiz','list','add','article','settings'];
+  const tabs=['dash','flip','quiz','list','add','article','grammar','settings'];
   tabs.forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.classList.toggle('hidden',t!==tab)});
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   document.querySelectorAll('.bnav').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
@@ -522,6 +603,7 @@ function switchTab(tab){
   if(tab==='flip')initFlipReview();
   if(tab==='quiz')showQuizSetup();
   if(tab==='list')updateDisplay();
+  if(tab==='grammar')initGrammarTab();
 }
 
 // ═══════════════════════════════════════════════
@@ -535,7 +617,7 @@ async function sendOtp(){const email=document.getElementById("emailInput").value
 async function resendOtp(){if(!otpEmail)return;try{const{error}=await client.auth.signInWithOtp({email:otpEmail,options:{shouldCreateUser:true}});if(error)throw error;setupOtpInputs();document.querySelector('.otp-input').focus();startCD(60)}catch(e){alert("发送失败: "+e.message)}}
 async function verifyOtp(){const code=getOtp();if(code.length!==8)return;document.getElementById("verifyBtn").disabled=true;try{const{error}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'email'});if(error){const{error:e2}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'magiclink'});if(e2)throw e2}setTimeout(async()=>{if(!currentUser){const u=getLocalUser();if(u){currentUser=u;await onLogin()}}},2000)}catch(e){const c=document.getElementById("otpContainer");c.style.animation='shake 0.4s ease';setTimeout(()=>c.style.animation='',400);alert("验证码错误");setupOtpInputs();document.querySelector('.otp-input').focus()}finally{document.getElementById("verifyBtn").disabled=false}}
 function backToEmail(){clearInterval(countdownTimer);showStep(1)}
-async function logout(){await client.auth.signOut();currentUser=null;phrases=[];userStats={total_xp:0,current_streak:0,longest_streak:0,level:1};userAchievements=[];showStep(1);updateDisplay()}
+async function logout(){await client.auth.signOut();currentUser=null;phrases=[];learningLogs=[];userStats={total_xp:0,current_streak:0,longest_streak:0,level:1};userAchievements=[];showStep(1);updateDisplay()}
 
 // ═══════════════════════════════════════════════
 // DATA LOADING
@@ -688,6 +770,9 @@ function renderDashboard(){
   grid.innerHTML=ACHIEVEMENTS.map(a=>{
     const unlocked=userAchievements.find(u=>u.achievement_key===a.key);
     return`<div class="ach-item ${unlocked?'unlocked':''}"><div class="ach-icon">${a.name.split(' ')[0]}</div><div class="ach-name">${a.name.split(' ').slice(1).join(' ')}</div>${unlocked?`<div class="ach-date">${new Date(unlocked.unlocked_at).toLocaleDateString('zh-CN')}</div>`:`<div class="ach-date">${a.desc}</div>`}</div>`}).join('');
+
+  // Heatmap
+  renderHeatmap();
 }
 
 // ═══════════════════════════════════════════════
@@ -979,6 +1064,215 @@ function renderArticleResults(data){
 }
 
 // ═══════════════════════════════════════════════
+// HEATMAP (Learning Calendar)
+// ═══════════════════════════════════════════════
+let learningLogs=[];
+
+async function loadLearningLogs(){
+  if(!currentUser)return;
+  try{
+    const d=new Date();d.setDate(d.getDate()-90);
+    const since=d.toISOString().split('T')[0];
+    const{data,error}=await client.from('learning_logs').select('*').eq('user_id',currentUser.id).gte('log_date',since).order('log_date',{ascending:true});
+    if(error)throw error;
+    learningLogs=data||[];
+  }catch(e){console.error('loadLogs:',e)}
+}
+
+function renderHeatmap(){
+  const area=document.getElementById('heatmapArea');if(!area)return;
+  const logMap={};let totalActive=0;
+  learningLogs.forEach(l=>{logMap[l.log_date]=l;if((l.xp_earned||0)>0)totalActive++});
+
+  const today=new Date();today.setHours(0,0,0,0);
+  const days=91;
+  const startDate=new Date(today);startDate.setDate(startDate.getDate()-days+1);
+  // Align to Monday
+  const dayOfWeek=startDate.getDay();
+  const alignedStart=new Date(startDate);alignedStart.setDate(alignedStart.getDate()-(dayOfWeek===0?6:dayOfWeek-1));
+
+  // Build weeks
+  const weeks=[];let cur=new Date(alignedStart);
+  while(cur<=today||weeks.length===0){
+    const week=[];
+    for(let d=0;d<7;d++){
+      const dateStr=cur.toISOString().split('T')[0];
+      const log=logMap[dateStr];
+      const xp=log?.xp_earned||0;
+      const inRange=cur>=startDate&&cur<=today;
+      week.push({date:new Date(cur),dateStr,xp,log,inRange});
+      cur.setDate(cur.getDate()+1);
+    }
+    weeks.push(week);
+    if(cur>today)break;
+  }
+
+  // Month labels
+  const months=[];let lastMonth=-1;
+  weeks.forEach((w,i)=>{
+    const mid=w[3]||w[0];
+    const m=mid.date.getMonth();
+    if(m!==lastMonth){months.push({idx:i,name:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'][m]});lastMonth=m}
+  });
+
+  const dayLabels=['','一','','三','','五',''];
+  let html=`<div class="heatmap-wrap"><div class="heatmap-title"><h4>📅 学习日历 <span class="hm-total">${totalActive} 天活跃</span></h4><div class="heatmap-legend"><span>少</span>`;
+  ['var(--border)','#D1FAE5','#6EE7B7','#34D399','#059669'].forEach(c=>{html+=`<div class="hml-box" style="background:${c}"></div>`});
+  html+=`<span>多</span></div></div>`;
+
+  // Month row
+  html+=`<div class="heatmap-months">`;
+  const totalWeeks=weeks.length;
+  months.forEach((m,i)=>{
+    const next=months[i+1]?months[i+1].idx:totalWeeks;
+    const span=next-m.idx;
+    html+=`<span style="flex:${span}">${m.name}</span>`;
+  });
+  html+=`</div>`;
+
+  html+=`<div class="heatmap-body"><div class="heatmap-days">${dayLabels.map(l=>`<span>${l}</span>`).join('')}</div><div class="heatmap-grid">`;
+  weeks.forEach(week=>{
+    html+=`<div class="heatmap-col">`;
+    week.forEach(day=>{
+      if(!day.inRange){html+=`<div class="hm-cell" style="visibility:hidden"></div>`;return}
+      let lvl='';
+      if(day.xp>100)lvl='lv4';else if(day.xp>50)lvl='lv3';else if(day.xp>20)lvl='lv2';else if(day.xp>0)lvl='lv1';
+      const dateLabel=`${day.date.getMonth()+1}月${day.date.getDate()}日`;
+      const detail=day.log?`复习 ${day.log.cards_reviewed||0} 张 · 添加 ${day.log.cards_added||0} 张 · ${day.xp} XP`:'未学习';
+      html+=`<div class="hm-cell ${lvl}"><div class="hm-tooltip">${dateLabel}：${detail}</div></div>`;
+    });
+    html+=`</div>`;
+  });
+  html+=`</div></div></div>`;
+  area.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════
+// GRAMMAR CHECK
+// ═══════════════════════════════════════════════
+function initGrammarTab(){
+  const inp=document.getElementById('gcInput');
+  if(inp){
+    inp.removeEventListener('input',updateGcCount);
+    inp.addEventListener('input',updateGcCount);
+    updateGcCount();
+  }
+}
+
+function updateGcCount(){
+  const inp=document.getElementById('gcInput');
+  const cnt=document.getElementById('gcCharCount');
+  if(inp&&cnt)cnt.textContent=`${(inp.value||'').length} 字符`;
+}
+
+function getErrorTypeLabel(type){
+  const map={grammar:'语法',spelling:'拼写',word_choice:'用词',punctuation:'标点'};
+  return map[type]||type;
+}
+
+function buildCorrectedHtml(original,errors){
+  if(!errors||!errors.length)return escHtml(original);
+  let text=original;
+  // Sort errors by position in text (reverse order to avoid offset issues)
+  const sorted=[...errors].sort((a,b)=>{
+    const ia=text.lastIndexOf(a.original);const ib=text.lastIndexOf(b.original);
+    return ib-ia;
+  });
+  sorted.forEach(err=>{
+    if(!err.original)return;
+    const idx=text.indexOf(err.original);
+    if(idx===-1)return;
+    const before=text.slice(0,idx);
+    const after=text.slice(idx+err.original.length);
+    text=before+`\u0000ERR_START\u0000${err.original}\u0000ERR_MID\u0000${err.corrected||''}\u0000ERR_END\u0000`+after;
+  });
+  // Now escape and replace markers
+  let html=escHtml(text);
+  html=html.replace(/\u0000ERR_START\u0000/g,'<span class="gc-err">');
+  html=html.replace(/\u0000ERR_MID\u0000/g,'</span> <span class="gc-fix">');
+  html=html.replace(/\u0000ERR_END\u0000/g,'</span>');
+  return html;
+}
+
+async function runGrammarCheck(){
+  const text=(document.getElementById('gcInput')?.value||'').trim();
+  if(!text)return toast('请输入英文段落','error');
+  if(text.length<10)return toast('请输入更多内容','error');
+
+  const btn=document.getElementById('gcBtn');
+  const old=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML=`<span class="loading-spinner"></span> AI 批改中...`;
+  document.getElementById('gcResults').innerHTML='';
+
+  try{
+    const data=await apiCall('/api/grammar-check',{method:'POST',body:JSON.stringify({text})});
+    renderGrammarResults(data);
+    toast('批改完成！','success');
+  }catch(e){
+    toast('批改失败: '+e.message,'error');
+    document.getElementById('gcResults').innerHTML=`<p style="color:var(--danger);margin-top:12px">❌ ${escHtml(e.message)}</p>`;
+  }finally{
+    btn.disabled=false;btn.innerHTML=old;
+  }
+}
+
+function renderGrammarResults(data){
+  const el=document.getElementById('gcResults');
+  const score=data.score||0;
+  const errors=data.errors||[];
+  const suggestions=data.suggestions||[];
+  const level=data.level||'?';
+  const correctedText=data.corrected_text||'';
+
+  let scoreColor='var(--success)';
+  if(score<60)scoreColor='var(--danger)';else if(score<80)scoreColor='var(--warn)';
+
+  const circ=2*Math.PI*32;const offset=circ-(score/100)*circ;
+
+  let html=`<div class="gc-score-bar" style="animation:fadeUp 0.3s ease">
+    <svg class="gc-score-ring" viewBox="0 0 80 80">
+      <circle class="ring-bg" cx="40" cy="40" r="32"/>
+      <circle class="ring-fg" cx="40" cy="40" r="32" stroke="${scoreColor}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/>
+      <text class="ring-text" x="40" y="38" text-anchor="middle" fill="${scoreColor}">${score}</text>
+      <text class="ring-sub" x="40" y="50" text-anchor="middle">分</text>
+    </svg>
+    <div class="gc-score-meta">
+      <h3>${score>=80?'✨ 写得不错！':score>=60?'👍 还不错，有改进空间':'💪 继续加油！'}</h3>
+      <p>发现 ${errors.length} 个问题${suggestions.length?`，${suggestions.length} 条改进建议`:''}</p>
+    </div>
+    <div class="gc-cefr">📊 ${level}</div>
+  </div>`;
+
+  // Side-by-side layout
+  html+=`<div class="gc-layout">
+    <div class="gc-panel"><div class="gc-panel-title">📝 原文</div><div class="gc-output" style="color:var(--text-sec);line-height:1.8">${escHtml(document.getElementById('gcInput').value.trim())}</div></div>
+    <div class="gc-panel"><div class="gc-panel-title">✅ 修正后</div><div class="gc-output">${buildCorrectedHtml(document.getElementById('gcInput').value.trim(),errors)}</div></div>
+  </div>`;
+
+  // Error list
+  if(errors.length){
+    html+=`<div class="gc-errors-list" style="animation:fadeUp 0.3s ease 0.1s both"><div style="font-family:var(--display);font-size:1rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px">🔍 问题详情 <span style="font-size:11px;color:var(--text-sec);font-weight:400;font-family:var(--body)">${errors.length} 处</span></div>`;
+    errors.forEach((err,i)=>{
+      html+=`<div class="gc-error-item" style="animation:fadeUp 0.3s ease ${0.05*i}s both">
+        <span class="gc-error-type ${err.type||'grammar'}">${getErrorTypeLabel(err.type)}</span>
+        <div class="gc-error-diff"><span class="gc-old">${escHtml(err.original)}</span> → <span class="gc-new">${escHtml(err.corrected)}</span></div>
+        <div class="gc-error-exp">${escHtml(err.explanation)}</div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // Suggestions
+  if(suggestions.length){
+    html+=`<div class="gc-suggestions" style="animation:fadeUp 0.3s ease 0.2s both"><h4>💡 改进建议</h4><ul>`;
+    suggestions.forEach(s=>{html+=`<li>${escHtml(s)}</li>`});
+    html+=`</ul></div>`;
+  }
+
+  el.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════
 // SETTINGS
 // ═══════════════════════════════════════════════
 function selectPlatform(p){selectedPlatform=p;document.querySelectorAll('.platform-card').forEach(e=>e.classList.toggle('selected',e.dataset.platform===p))}
@@ -1008,7 +1302,7 @@ async function onLogin(){
   document.getElementById("userText").textContent=email;
   document.getElementById("userAvatar").textContent=ini;
   if(document.getElementById("mAvatar"))document.getElementById("mAvatar").textContent=ini;
-  await loadData();await loadStats();await loadAchievements();await loadAISettings();
+  await loadData();await loadStats();await loadAchievements();await loadLearningLogs();await loadAISettings();
   await recordDailyLogin();
   updateSidebarXp();switchTab('dash');setStatus("已登录");
 }
