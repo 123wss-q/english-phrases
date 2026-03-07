@@ -474,6 +474,53 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
 .liaison-speed-btn .ls-desc{font-size:10px;color:var(--text-sec)}
 .liaison-loading{text-align:center;padding:24px;color:var(--text-sec);font-size:13px}
 
+/* ═══ VOCAB BOOK ═══ */
+.vb-selector{display:flex;gap:10px;margin-bottom:20px}
+.vb-sel-btn{flex:1;padding:18px 14px;border:2px solid var(--border);border-radius:14px;text-align:center;cursor:pointer;transition:all var(--ease);background:var(--card)}
+.vb-sel-btn:hover{border-color:var(--accent);box-shadow:var(--shadow-md)}
+.vb-sel-btn.active{border-color:var(--accent);background:var(--accent-light)}
+.vb-sel-btn .vb-icon{font-size:28px;margin-bottom:4px}
+.vb-sel-btn .vb-name{font-size:14px;font-weight:700}
+.vb-sel-btn .vb-count{font-size:11px;color:var(--text-sec);margin-top:2px}
+.vb-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.vb-progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-sec)}
+.vb-progress-bar{width:160px;height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.vb-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--success));border-radius:99px;transition:width 0.6s ease}
+.vb-filter-row{display:flex;gap:8px;flex-wrap:wrap}
+.vb-filter-btn{padding:6px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--body);transition:all var(--ease)}
+.vb-filter-btn:hover{border-color:var(--accent)}
+.vb-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.vb-card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:32px 24px;text-align:center;max-width:520px;margin:0 auto 16px;transition:all var(--ease);position:relative;overflow:hidden}
+.vb-card.known{border-color:var(--success);background:linear-gradient(145deg,#fff,#F0FAF4)}
+.vb-card.unknown{border-color:var(--accent);background:linear-gradient(145deg,#fff,#FDF8F4)}
+.vb-word{font-family:var(--display);font-size:2rem;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:-0.01em}
+.vb-phonetic{font-size:13px;color:var(--text-sec);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:12px}
+.vb-phonetic span{cursor:pointer;padding:2px 8px;border-radius:6px;transition:all var(--ease)}
+.vb-phonetic span:hover{background:var(--accent-light);color:var(--accent)}
+.vb-trans{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:16px;min-height:24px}
+.vb-trans.blurred{filter:blur(6px);cursor:pointer;user-select:none;transition:filter 0.3s}
+.vb-trans.blurred:hover{filter:blur(3px)}
+.vb-btns{display:flex;gap:10px;justify-content:center}
+.vb-btn{padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:var(--body);transition:all var(--ease);display:flex;align-items:center;gap:6px}
+.vb-btn.know{background:var(--success);color:#fff}
+.vb-btn.know:hover{background:#15803D;transform:translateY(-1px)}
+.vb-btn.dunno{background:#FEE2E2;color:var(--danger)}
+.vb-btn.dunno:hover{background:#FECACA}
+.vb-btn.show{background:var(--bg-deep);color:var(--text-sec)}
+.vb-btn.show:hover{background:var(--border)}
+.vb-detail{margin-top:16px;text-align:left;padding:16px;background:var(--bg);border-radius:14px;border:1px solid var(--border-lt);animation:fadeUp 0.3s ease}
+.vb-detail .vd-section{margin-bottom:12px}
+.vb-detail .vd-label{font-size:11px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
+.vb-detail .vd-content{font-size:13px;color:var(--text);line-height:1.7}
+.vb-detail .vd-example{font-style:italic;color:var(--text-sec)}
+.vb-detail .vd-example b{font-style:normal;color:var(--accent);font-weight:600}
+.vb-counter{font-size:13px;color:var(--text-sec);text-align:center;margin-bottom:12px}
+.vb-counter b{color:var(--text);font-weight:700}
+.vb-nav{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.vb-add-btn{margin-top:12px;width:100%;padding:10px;border-radius:10px;border:1.5px dashed var(--border);background:transparent;color:var(--text-sec);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--body);transition:all var(--ease)}
+.vb-add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.vb-loading{text-align:center;padding:50px 0;color:var(--text-sec)}
+
 /* ═══ CHAT REPORT ═══ */
 .chat-end-bar{display:flex;justify-content:center;padding:8px 0}
 .cr-wrap{animation:fadeUp 0.3s ease}
@@ -552,6 +599,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   .gc-layout{grid-template-columns:1fr}.gc-score-bar{flex-wrap:wrap}.hm-cell{width:12px;height:12px}.hm-day-label{height:12px;line-height:12px}
   .chat-scene-grid{grid-template-columns:repeat(2,1fr)}.vc-card{min-height:420px;padding:28px 20px 20px}.vc-avatar{width:76px;height:76px;font-size:36px}.vc-transcript{max-height:140px}.pron-phrase{font-size:1.2rem}.pron-btn{width:56px;height:56px;font-size:20px}
   .cr-stats-row{grid-template-columns:repeat(2,1fr)}.lr-big-stats{grid-template-columns:1fr}.lr-bar-chart{height:80px}
+  .vb-word{font-size:1.5rem}.vb-card{padding:24px 18px}.vb-selector{flex-direction:column}
 }
 </style>
 </head>
@@ -563,6 +611,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <button class="nav-item active" onclick="switchTab('dash')" data-tab="dash"><span class="ni">📊</span>学习仪表盘</button>
       <button class="nav-item" onclick="switchTab('flip')" data-tab="flip"><span class="ni">🃏</span>翻卡复习</button>
       <button class="nav-item" onclick="switchTab('quiz')" data-tab="quiz"><span class="ni">📝</span>选择题测试</button>
+      <button class="nav-item" onclick="switchTab('vocab')" data-tab="vocab"><span class="ni">📖</span>四六级词汇</button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="switchTab('list')" data-tab="list"><span class="ni">📚</span>卡片列表</button>
       <button class="nav-item" onclick="switchTab('add')" data-tab="add"><span class="ni">✏️</span>手动添加</button>
@@ -640,6 +689,12 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
       <div id="tab-quiz" class="hidden">
         <div class="page-title">选择题测试</div><div class="page-desc">主动回忆检验真实掌握程度。</div>
         <div id="quizArea"></div>
+      </div>
+
+      <!-- Vocab Book -->
+      <div id="tab-vocab" class="hidden">
+        <div class="page-title">四六级词汇</div><div class="page-desc">考纲词汇背诵，含音标和释义。支持 AI 详解。</div>
+        <div id="vocabArea"></div>
       </div>
 
       <!-- List -->
@@ -748,6 +803,7 @@ input[type="file"]::file-selector-button{font-family:var(--body);font-size:12px;
   <button class="bnav active" onclick="switchTab('dash')" data-tab="dash"><span class="bi">📊</span>仪表盘</button>
   <button class="bnav" onclick="switchTab('flip')" data-tab="flip"><span class="bi">🃏</span>翻卡</button>
   <button class="bnav" onclick="switchTab('quiz')" data-tab="quiz"><span class="bi">📝</span>测试</button>
+  <button class="bnav" onclick="switchTab('vocab')" data-tab="vocab"><span class="bi">📖</span>词汇</button>
   <button class="bnav" onclick="switchTab('list')" data-tab="list"><span class="bi">📚</span>列表</button>
   <button class="bnav" onclick="switchTab('article')" data-tab="article"><span class="bi">📖</span>分析</button>
   <button class="bnav" onclick="switchTab('grammar')" data-tab="grammar"><span class="bi">✍️</span>批改</button>
@@ -806,13 +862,14 @@ function getLevelInfo(xp){let cur=LEVELS[0];for(const l of LEVELS){if(xp>=l.xp)c
 function todayStr(){return new Date().toISOString().split('T')[0]}
 
 function switchTab(tab){
-  const tabs=['dash','flip','quiz','list','add','article','grammar','chat','pron','report','settings'];
+  const tabs=['dash','flip','quiz','vocab','list','add','article','grammar','chat','pron','report','settings'];
   tabs.forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.classList.toggle('hidden',t!==tab)});
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   document.querySelectorAll('.bnav').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   if(tab==='dash')renderDashboard();
   if(tab==='flip')initFlipReview();
   if(tab==='quiz')showQuizSetup();
+  if(tab==='vocab')initVocabTab();
   if(tab==='list')updateDisplay();
   if(tab==='grammar')initGrammarTab();
   if(tab==='chat')initChatTab();
@@ -831,7 +888,7 @@ async function sendOtp(){const email=document.getElementById("emailInput").value
 async function resendOtp(){if(!otpEmail)return;try{const{error}=await client.auth.signInWithOtp({email:otpEmail,options:{shouldCreateUser:true}});if(error)throw error;setupOtpInputs();document.querySelector('.otp-input').focus();startCD(60)}catch(e){alert("发送失败: "+e.message)}}
 async function verifyOtp(){const code=getOtp();if(code.length!==8)return;document.getElementById("verifyBtn").disabled=true;try{const{error}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'email'});if(error){const{error:e2}=await client.auth.verifyOtp({email:otpEmail,token:code,type:'magiclink'});if(e2)throw e2}setTimeout(async()=>{if(!currentUser){const u=getLocalUser();if(u){currentUser=u;await onLogin()}}},2000)}catch(e){const c=document.getElementById("otpContainer");c.style.animation='shake 0.4s ease';setTimeout(()=>c.style.animation='',400);alert("验证码错误");setupOtpInputs();document.querySelector('.otp-input').focus()}finally{document.getElementById("verifyBtn").disabled=false}}
 function backToEmail(){clearInterval(countdownTimer);showStep(1)}
-async function logout(){await client.auth.signOut();currentUser=null;phrases=[];learningLogs=[];userStats={total_xp:0,current_streak:0,longest_streak:0,level:1};userAchievements=[];showStep(1);updateDisplay()}
+async function logout(){await client.auth.signOut();currentUser=null;phrases=[];learningLogs=[];userStats={total_xp:0,current_streak:0,longest_streak:0,level:1};userAchievements=[];vbData=null;vbBookId=null;showStep(1);updateDisplay()}
 
 // ═══════════════════════════════════════════════
 // DATA LOADING
@@ -1543,6 +1600,173 @@ function renderGrammarResults(data){
   }
 
   el.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════
+// VOCAB BOOK (四六级词汇)
+// ═══════════════════════════════════════════════
+const VB_CDN='https://cdn.jsdelivr.net/gh/RealKai42/qwerty-learner@master/public/dicts';
+const VB_BOOKS=[
+  {id:'cet4',name:'CET-4 四级',icon:'📗',file:'CET4_T.json'},
+  {id:'cet6',name:'CET-6 六级',icon:'📕',file:'CET6_T.json'}
+];
+let vbData=null,vbBookId=null,vbIdx=0,vbFilter='all',vbShowTrans=false,vbKnown={};
+const VB_STORAGE_KEY='linguaflow_vocab_known';
+
+function loadVbKnown(){try{vbKnown=JSON.parse(localStorage.getItem(VB_STORAGE_KEY)||'{}');}catch(e){vbKnown={}}}
+function saveVbKnown(){try{localStorage.setItem(VB_STORAGE_KEY,JSON.stringify(vbKnown))}catch(e){}}
+
+function initVocabTab(){
+  loadVbKnown();
+  const area=document.getElementById('vocabArea');
+  if(vbData&&vbBookId){showVbCard();return}
+  // Show book selector
+  area.innerHTML=`
+    <div style="text-align:center;margin-bottom:20px"><div style="font-size:48px;margin-bottom:8px">📖</div><h3 style="font-family:var(--display);font-size:1.1rem">选择词汇书</h3><p style="font-size:12.5px;color:var(--text-sec);margin-top:4px">基于考纲，来自 qwerty-learner 开源词库（GPL-3.0）</p></div>
+    <div class="vb-selector">${VB_BOOKS.map(b=>{
+      const known=Object.keys(vbKnown).filter(k=>k.startsWith(b.id+'_')).length;
+      return`<div class="vb-sel-btn" onclick="loadVbBook('${b.id}')"><div class="vb-icon">${b.icon}</div><div class="vb-name">${b.name}</div><div class="vb-count">${known>0?`已认识 ${known} 词`:'点击加载'}</div></div>`;
+    }).join('')}</div>`;
+}
+
+async function loadVbBook(bookId){
+  const area=document.getElementById('vocabArea');
+  const book=VB_BOOKS.find(b=>b.id===bookId);
+  if(!book)return;
+  area.innerHTML='<div class="vb-loading"><span class="loading-spinner" style="width:20px;height:20px;border-width:3px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span><p style="margin-top:10px">加载 ${book.name} 词库...</p></div>';
+  try{
+    const resp=await fetch(`${VB_CDN}/${book.file}`);
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    vbData=await resp.json();
+    vbBookId=bookId;vbIdx=0;vbFilter='all';vbShowTrans=false;
+    toast(`已加载 ${vbData.length} 个词`,'success');
+    showVbCard();
+  }catch(e){
+    area.innerHTML=`<div class="vb-loading"><p style="color:var(--danger)">❌ 加载失败：${escHtml(e.message)}</p><p style="font-size:12px;color:var(--text-sec);margin-top:8px">请检查网络连接后重试</p><button class="btn btn-p btn-sm" onclick="loadVbBook('${bookId}')" style="margin-top:12px">重试</button></div>`;
+  }
+}
+
+function getVbFiltered(){
+  if(!vbData)return[];
+  if(vbFilter==='known')return vbData.filter((_,i)=>vbKnown[vbBookId+'_'+i]);
+  if(vbFilter==='unknown')return vbData.filter((_,i)=>!vbKnown[vbBookId+'_'+i]);
+  return vbData;
+}
+
+function getVbTotalKnown(){
+  if(!vbData)return 0;
+  return vbData.filter((_,i)=>vbKnown[vbBookId+'_'+i]).length;
+}
+
+function showVbCard(){
+  const area=document.getElementById('vocabArea');
+  const filtered=getVbFiltered();
+  const total=vbData?vbData.length:0;
+  const known=getVbTotalKnown();
+  const pct=total?Math.round(known/total*100):0;
+  const book=VB_BOOKS.find(b=>b.id===vbBookId);
+
+  if(vbIdx>=filtered.length)vbIdx=Math.max(0,filtered.length-1);
+  if(!filtered.length){
+    area.innerHTML=`<div class="vb-loading"><p style="font-size:40px;margin-bottom:12px">🎉</p><p style="font-size:15px;font-weight:600">${vbFilter==='unknown'?'所有单词都认识了！':'当前筛选无单词'}</p><div class="vb-nav" style="margin-top:16px"><button class="btn btn-g btn-sm" onclick="vbFilter='all';vbIdx=0;showVbCard()">查看全部</button><button class="btn btn-g btn-sm" onclick="vbBookId=null;vbData=null;initVocabTab()">换词汇书</button></div></div>`;
+    return;
+  }
+
+  const w=filtered[vbIdx];
+  const origIdx=vbData.indexOf(w);
+  const isKnown=!!vbKnown[vbBookId+'_'+origIdx];
+  const trans=(w.trans||[]).join('；');
+
+  let html=`
+    <div class="vb-topbar">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">${book.icon}</span><span style="font-weight:600;font-size:14px">${book.name}</span><button class="btn btn-g btn-xs" onclick="vbBookId=null;vbData=null;initVocabTab()">切换</button></div>
+      <div class="vb-progress"><span>${known}/${total}</span><div class="vb-progress-bar"><div class="vb-progress-fill" style="width:${pct}%"></div></div><span>${pct}%</span></div>
+    </div>
+    <div class="vb-filter-row">
+      <button class="vb-filter-btn ${vbFilter==='all'?'active':''}" onclick="vbFilter='all';vbIdx=0;showVbCard()">全部 (${total})</button>
+      <button class="vb-filter-btn ${vbFilter==='unknown'?'active':''}" onclick="vbFilter='unknown';vbIdx=0;showVbCard()">未认识 (${total-known})</button>
+      <button class="vb-filter-btn ${vbFilter==='known'?'active':''}" onclick="vbFilter='known';vbIdx=0;showVbCard()">已认识 (${known})</button>
+    </div>
+    <div class="vb-counter">第 <b>${vbIdx+1}</b> / ${filtered.length} 个</div>
+    <div class="vb-card ${isKnown?'known':''}">
+      <div class="vb-word">${escHtml(w.name)}</div>
+      <div class="vb-phonetic">
+        ${w.usphone?`<span onclick="vbSpeak('${escAttr(w.name)}')">🇺🇸 /${escHtml(w.usphone)}/</span>`:''}
+        ${w.ukphone?`<span onclick="vbSpeak('${escAttr(w.name)}','en-GB')">🇬🇧 /${escHtml(w.ukphone)}/</span>`:''}
+        <span onclick="vbSpeak('${escAttr(w.name)}')" style="cursor:pointer">🔊</span>
+      </div>
+      <div class="vb-trans ${vbShowTrans?'':'blurred'}" onclick="vbShowTrans=true;showVbCard()">${escHtml(trans)}</div>
+      <div class="vb-btns">
+        <button class="vb-btn dunno" onclick="vbMark(${origIdx},false)">😕 不认识</button>
+        <button class="vb-btn show" onclick="vbShowTrans=true;showVbCard()">👁 显示释义</button>
+        <button class="vb-btn know" onclick="vbMark(${origIdx},true)">😊 认识</button>
+      </div>
+      <button class="vb-add-btn" onclick="vbAddToCards(${origIdx})">＋ 添加到复习卡片</button>
+      <div style="text-align:center;margin-top:10px"><button class="btn btn-i btn-xs" onclick="vbAIDetail('${escAttr(w.name)}')">🤖 AI 详解</button></div>
+      <div id="vbDetailArea"></div>
+    </div>
+    <div class="vb-nav">
+      <button class="btn btn-g btn-sm" onclick="vbPrev()" ${vbIdx<=0?'disabled':''}>← 上一个</button>
+      <button class="btn btn-g btn-sm" onclick="vbRandom()">🎲 随机</button>
+      <button class="btn btn-p btn-sm" onclick="vbNext()">下一个 →</button>
+    </div>`;
+  area.innerHTML=html;
+}
+
+function vbSpeak(word,lang='en-US'){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(word);u.lang=lang;u.rate=0.85;speechSynthesis.speak(u);
+}
+
+function vbMark(origIdx,known){
+  const key=vbBookId+'_'+origIdx;
+  if(known)vbKnown[key]=true;else delete vbKnown[key];
+  saveVbKnown();vbShowTrans=false;vbNext();
+}
+
+function vbPrev(){if(vbIdx>0){vbIdx--;vbShowTrans=false;showVbCard()}}
+function vbNext(){const f=getVbFiltered();if(vbIdx<f.length-1){vbIdx++;vbShowTrans=false;showVbCard()}else{showVbCard()}}
+function vbRandom(){const f=getVbFiltered();if(f.length>1){vbIdx=Math.floor(Math.random()*f.length);vbShowTrans=false;showVbCard()}}
+
+async function vbAddToCards(origIdx){
+  if(!currentUser||!vbData)return;
+  const w=vbData[origIdx];if(!w)return;
+  try{
+    const{error}=await client.from('phrases').insert([{
+      user_id:currentUser.id,type:'短语',english:w.name,
+      chinese:(w.trans||[]).join('；'),mastered:false
+    }]);
+    if(error)throw error;
+    toast('已添加到复习卡片！','success');
+    await addXp(XP_RULES.add_card);await loadData();
+  }catch(e){toast('添加失败: '+e.message,'error')}
+}
+
+async function vbAIDetail(word){
+  const area=document.getElementById('vbDetailArea');
+  if(!area)return;
+  area.innerHTML='<div class="vb-detail" style="text-align:center"><span class="loading-spinner" style="width:16px;height:16px;border-width:2.5px;border-color:rgba(0,0,0,0.1);border-top-color:var(--accent)"></span> AI 分析中...</div>';
+  try{
+    const data=await apiCall('/api/vocab-detail',{method:'POST',body:JSON.stringify({word,exam:vbBookId==='cet6'?'CET-6':'CET-4'})});
+    renderVbDetail(data,word);
+  }catch(e){area.innerHTML=`<div class="vb-detail" style="text-align:center;color:var(--danger)">❌ ${escHtml(e.message)}</div>`}
+}
+
+function renderVbDetail(data,word){
+  const area=document.getElementById('vbDetailArea');
+  let html='<div class="vb-detail">';
+  if(data.pos)html+=`<div class="vd-section"><div class="vd-label">词性 & 释义</div><div class="vd-content">${escHtml(data.pos)}</div></div>`;
+  if(data.roots)html+=`<div class="vd-section"><div class="vd-label">词根词缀</div><div class="vd-content">${escHtml(data.roots)}</div></div>`;
+  if(data.collocations)html+=`<div class="vd-section"><div class="vd-label">常考搭配</div><div class="vd-content">${escHtml(data.collocations)}</div></div>`;
+  if(data.examples&&data.examples.length){
+    html+=`<div class="vd-section"><div class="vd-label">考试级别例句</div>`;
+    data.examples.forEach(ex=>{html+=`<div class="vd-content vd-example">${ex.en?escHtml(ex.en).replace(new RegExp(word,'gi'),m=>`<b>${m}</b>`):''}${ex.cn?`<br><span style="color:var(--text-sec);font-style:normal;font-size:12px">${escHtml(ex.cn)}</span>`:''}</div>`});
+    html+=`</div>`;
+  }
+  if(data.confusing)html+=`<div class="vd-section"><div class="vd-label">易混词辨析</div><div class="vd-content">${escHtml(data.confusing)}</div></div>`;
+  if(data.memory_tip)html+=`<div class="vd-section"><div class="vd-label">记忆技巧</div><div class="vd-content">${escHtml(data.memory_tip)}</div></div>`;
+  html+='</div>';
+  area.innerHTML=html;
 }
 
 // ═══════════════════════════════════════════════
